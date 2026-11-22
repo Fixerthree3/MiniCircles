@@ -1,0 +1,617 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mini Circles</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout concept: sticky tab bar over a rotating banner, league table straight under it, then audience strips and press. Brand circles (ball + reading circle) are the one recurring motif. */
+:root{
+  --bg:#F4F5F8; --surface:#FFFFFF; --soft:#ECEEF3; --ink:#12151C; --muted:#566073; --line:#DDE1E9;
+  --accent:#B3182A; --pick:#1B2A41; --btn:#C81E2E; --btn-ink:#FFFFFF; --yellow:#FFC20E; --navy:#1B2A41; --ok:#1E7B4B; --warn:#8A5A00;
+  --s1-bg:#1B2A41; --s2-bg:#C81E2E; --s3-bg:#FFC20E; --s4-bg:#243B55;
+  --font-d:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --font-b:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1117; --surface:#171B24; --soft:#202634; --ink:#F0F2F7; --muted:#A5AEBD; --line:#2B3342;
+  --accent:#FF7A86; --pick:#35507A; --ok:#5BD39A; --warn:#F2BF5E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1117; --surface:#171B24; --soft:#202634; --ink:#F0F2F7; --muted:#A5AEBD; --line:#2B3342;
+  --accent:#FF7A86; --pick:#35507A; --ok:#5BD39A; --warn:#F2BF5E; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-b);padding-block:0;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+h1,h2,h3{font-family:var(--font-d);line-height:1.12;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* header + tabs */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);min-width:0}
+.mark{width:38px;height:38px;border-radius:50%;background:var(--yellow);position:relative;flex:none}
+.mark::before{content:"";position:absolute;inset:7px;border-radius:50%;border:4px solid var(--btn)}
+.mark::after{content:"";position:absolute;inset:15px;border-radius:50%;background:var(--navy)}
+.brand b{font-family:var(--font-d);font-size:1.25rem;font-weight:800;display:block;line-height:1}
+.brand small{display:block;color:var(--muted);font-size:.72rem;line-height:1.2;margin-top:2px}
+.tabs{display:flex;gap:4px;overflow-x:auto;margin-left:auto;scrollbar-width:none;max-width:100%}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{white-space:nowrap;text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;padding:9px 14px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+.tabs a:hover{background:var(--soft)}
+.tabs a[aria-current="page"]{background:var(--pick);color:#fff}
+.tabs svg{width:14px;height:14px}
+@media (max-width:760px){.tabs{margin-left:0;width:100%;padding-bottom:8px}}
+
+main{display:block;padding-block:20px 48px;outline:none}
+section{margin-top:36px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.sec-head p{color:var(--muted);max-width:60ch}
+.eyebrow{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);margin-bottom:6px;display:block}
+
+/* buttons, chips, fields */
+.btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:700;background:var(--btn);color:var(--btn-ink);padding:11px 18px;border-radius:999px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;min-height:44px}
+.btn:hover{filter:brightness(1.08)}
+.btn.alt{background:var(--soft);color:var(--ink)}
+.btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+.btn.sm{min-height:36px;padding:6px 14px;font-size:.9rem}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:.9rem;padding:8px 14px;border-radius:999px;background:var(--soft);color:var(--ink);min-height:40px}
+.chip[aria-pressed="true"],.chip[aria-selected="true"]{background:var(--pick);color:#fff}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--yellow);color:#12151C;letter-spacing:.02em}
+.badge.soft{background:var(--soft);color:var(--muted)}
+label{display:block;font-weight:600;font-size:.92rem;margin-bottom:5px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:11px 13px;width:100%;min-height:46px}
+textarea{min-height:100px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--yellow)}
+.field{min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:640px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:500}
+.check input{width:22px;height:22px;min-height:0;margin-top:2px;flex:none}
+.note{color:var(--muted);font-size:.9rem}
+.msg{padding:12px 14px;border-radius:12px;background:var(--soft);font-weight:500}
+.msg.ok{box-shadow:inset 4px 0 0 var(--ok)}
+.msg.warn{box-shadow:inset 4px 0 0 var(--yellow)}
+
+/* panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;min-width:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card p{color:var(--muted);font-size:.95rem}
+.card .btn{margin-top:auto;align-self:flex-start}
+.card.hl{background:var(--navy);border-color:var(--navy);color:#fff}
+.card.hl p{color:#D6DCE8}
+.card.hl h3{color:#fff}
+
+/* banner carousel */
+.banner{position:relative;border-radius:22px;overflow:hidden;background:var(--navy)}
+.track{display:flex;transition:transform .55s cubic-bezier(.3,.7,.2,1)}
+.slide{flex:0 0 100%;min-width:0;position:relative;overflow:hidden;min-height:300px;padding:34px 30px 64px;display:flex;flex-direction:column;justify-content:center;gap:12px;color:#fff}
+.slide .k{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.slide h1{font-size:clamp(1.9rem,6.4vw,3.2rem);font-weight:800;max-width:15ch;position:relative;z-index:1}
+.slide p{max-width:44ch;position:relative;z-index:1;font-size:1.05rem}
+.slide .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;position:relative;z-index:1}
+.slide .btn{background:#fff;color:#12151C}
+.slide .btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
+.s1{background:var(--s1-bg)} .s2{background:var(--s2-bg)} .s3{background:var(--s3-bg);color:#12151C} .s4{background:var(--s4-bg)}
+.s3 .btn{background:#12151C;color:#fff}
+.rings{position:absolute;right:-70px;top:50%;width:300px;height:300px;transform:translateY(-50%);pointer-events:none}
+.rings i{position:absolute;border-radius:50%;border:16px solid;inset:0}
+.rings i:nth-child(2){inset:48px}
+.rings i:nth-child(3){inset:96px;background:currentColor;border:0;opacity:.9}
+.s1 .rings i:nth-child(1){border-color:var(--btn)} .s1 .rings i:nth-child(2){border-color:var(--yellow)} .s1 .rings{color:#fff}
+.s2 .rings i:nth-child(1){border-color:var(--yellow)} .s2 .rings i:nth-child(2){border-color:#fff} .s2 .rings{color:#12151C}
+.s3 .rings i:nth-child(1){border-color:#12151C} .s3 .rings i:nth-child(2){border-color:var(--btn)} .s3 .rings{color:#12151C}
+.s4 .rings i:nth-child(1){border-color:var(--yellow)} .s4 .rings i:nth-child(2){border-color:var(--btn)} .s4 .rings{color:#fff}
+@media (max-width:640px){.rings{opacity:.28;right:-110px}.slide{padding:26px 20px 64px}}
+.bnav{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:10px;padding:12px 18px;z-index:2}
+.dots{display:flex;gap:8px;margin-right:auto}
+.dot{appearance:none;border:0;width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.45);cursor:pointer;padding:0}
+.dot[aria-current="true"]{background:#fff;width:28px;border-radius:8px}
+.banner.light .dot{background:rgba(0,0,0,.3)}
+.ctl{appearance:none;border:0;cursor:pointer;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;display:grid;place-items:center;font:inherit;font-weight:700}
+.ctl:hover{background:rgba(255,255,255,.35)}
+.ctl svg{width:16px;height:16px}
+
+/* search */
+.search{position:relative}
+.search input{padding-left:46px;font-size:1.05rem;min-height:54px;border-radius:999px}
+.search svg{position:absolute;left:16px;top:17px;width:20px;height:20px;color:var(--muted)}
+.results{margin:10px 0 0;padding:6px;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:16px}
+.results a{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:11px 12px;border-radius:10px;text-decoration:none;color:var(--ink)}
+.results a:hover{background:var(--soft)}
+.results small{color:var(--muted);display:block}
+.results em{font-style:normal;font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+/* league table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:430px;font-variant-numeric:tabular-nums}
+th,td{padding:12px 12px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:.74rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--soft);font-weight:700}
+th:nth-child(2),td:nth-child(2){text-align:left;white-space:normal;min-width:150px}
+tr:last-child td{border-bottom:0}
+td.pos{font-weight:800;width:44px}
+td.team{font-weight:700}
+td.pts{font-weight:800;font-size:1.05rem}
+tr.lead td{background:color-mix(in srgb,var(--yellow) 22%,transparent)}
+.fixtures{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px;margin-top:14px}
+.fx{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.fx small{color:var(--muted);display:block;font-weight:600}
+.fx b{display:block}
+
+/* press */
+.pr{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.pr+.pr{margin-top:12px}
+.pr summary{cursor:pointer;list-style:none;display:grid;gap:6px}
+.pr summary::-webkit-details-marker{display:none}
+.pr h3{font-size:1.2rem}
+.pr .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:.88rem}
+.pr .body{margin-top:12px;display:grid;gap:10px;max-width:70ch}
+.pr .more{color:var(--accent);font-weight:700;font-size:.9rem}
+.pr[open] .more{display:none}
+
+/* tutorials */
+.lesson{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.lesson+.lesson{margin-top:10px}
+.lesson ul{margin:8px 0 0;padding-left:18px;color:var(--muted)}
+.lesson li+li{margin-top:3px}
+.tick{width:28px;height:28px;margin-top:2px;accent-color:var(--btn)}
+.lesson.done{opacity:.72}
+.prog{height:10px;border-radius:99px;background:var(--soft);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--btn);border-radius:99px}
+.lock{display:grid;gap:16px;max-width:640px;margin:0 auto}
+.dtabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.dtabs .chip{white-space:nowrap}
+.stat{font-family:var(--font-d);font-size:2.2rem;font-weight:800;line-height:1}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.two{grid-template-columns:minmax(0,1fr)}}
+.steps{counter-reset:s;display:grid;gap:10px;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start}
+.steps li::before{content:counter(s);width:34px;height:34px;border-radius:50%;background:var(--yellow);color:#12151C;font-weight:800;display:grid;place-items:center;font-family:var(--font-d)}
+footer{border-top:1px solid var(--line);background:var(--surface);padding-block:26px}
+footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+
+<a class="sr" href="#app" id="skip">Skip to content</a>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="#home" aria-label="Mini Circles home">
+      <span class="mark" aria-hidden="true"></span>
+      <span><b>Mini Circles</b><small>The Mlungisi Mashinini Foundation</small></span>
+    </a>
+    <nav class="tabs" id="nav" aria-label="Main">
+      <a href="#home" data-r="home">Home</a>
+      <a href="#cricket" data-r="cricket">Cricket</a>
+      <a href="#reading" data-r="reading">Reading</a>
+      <a href="#press" data-r="press">Press</a>
+      <a href="#join" data-r="join">Join</a>
+      <a href="#dashboard" data-r="dashboard">Dashboard
+        <svg id="lockico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-label="Sign-in required"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+<main id="app" tabindex="-1"></main>
+<footer>
+  <div class="wrap">
+    <div><b style="color:var(--ink)">Mini Circles</b> is the digital name of The Mlungisi Mashinini Foundation. We promote reading for enjoyment and youth cricket together.</div>
+    <div>Programmes sit alongside partners including Nal'ibali and KFC Mini Cricket.</div>
+    <div>Never enter learners' ID numbers or personal details on this site. We only need an adult contact for every sign-up.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var ROUTES=["home","cricket","reading","press","join","dashboard"];
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
+var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+var GROUPS={u11:"Under 11",u13:"Under 13",u15:"Under 15"};
+var SAMPLE_LEAGUE={
+ u11:[{n:"Mamelodi Mavericks",w:4,l:1,t:0},{n:"Soweto Strikers",w:3,l:1,t:1},{n:"Tembisa Titans",w:2,l:3,t:0},{n:"Alex All-Stars",w:1,l:3,t:1},{n:"Atteridgeville Aces",w:1,l:4,t:0}],
+ u13:[{n:"Pretoria Pace",w:5,l:1,t:0},{n:"Katlehong Kings",w:4,l:2,t:0},{n:"Diepsloot Daredevils",w:3,l:2,t:1},{n:"Orange Farm Owls",w:2,l:4,t:0},{n:"Mabopane Mambas",w:1,l:5,t:0}],
+ u15:[{n:"Thokoza Thunder",w:4,l:0,t:1},{n:"Soshanguve Spinners",w:3,l:2,t:0},{n:"Daveyton Dynamos",w:2,l:2,t:1},{n:"Sebokeng Stars",w:1,l:3,t:1},{n:"Tsakane Tigers",w:0,l:5,t:0}]
+};
+var SAMPLE_FIX=[{d:"Sat 31 Oct",a:"Pretoria Pace",b:"Katlehong Kings",g:"U13"},{d:"Sat 31 Oct",a:"Mamelodi Mavericks",b:"Soweto Strikers",g:"U11"},{d:"Sat 7 Nov",a:"Thokoza Thunder",b:"Soshanguve Spinners",g:"U15"},{d:"Sat 7 Nov",a:"Diepsloot Daredevils",b:"Orange Farm Owls",g:"U13"}];
+var SAMPLE_PRESS=[
+ {id:"s1",sample:true,title:"Mini Circles opens its new home online",tag:"Announcements",date:"2026-10-30",summary:"One place to follow the league, join a reading circle and read our news.",body:"This is a sample release. Replace it by publishing your own from the form on this page.\n\nUse the first paragraph for the news itself, then add quotes, partner details and contact information below it."},
+ {id:"s2",sample:true,title:"Team sign-ups open for the Splendid Sports league",tag:"Cricket",date:"2026-10-28",summary:"New teams can register in the Under 11, Under 13 and Under 15 groups.",body:"This is a sample release about league sign-ups. Edit or delete it once you publish real news."},
+ {id:"s3",sample:true,title:"Boomerang reading circles welcome schools and libraries",tag:"Reading",date:"2026-10-26",summary:"Reading for enjoyment, in any language members are comfortable with.",body:"This is a sample release about reading circles. Edit or delete it once you publish real news."}
+];
+var TAGS=["All","Announcements","Cricket","Reading","Partnerships"];
+var CRICKET=[
+ {id:"c1",t:"Grip, stance and watching the ball",m:15,lv:"Beginner",sum:"Set up a balanced stance and keep your eyes on the ball.",pts:["Hold the bat like a handshake with both hands close together.","Stand side-on, knees soft, head still and eyes level.","Drill: a partner rolls the ball underarm and you say 'seam' when you see it turn."]},
+ {id:"c2",t:"Bowling action basics",m:20,lv:"Beginner",sum:"A straight arm, a short run-up and a target to aim at.",pts:["Start with three walking steps, then build a rhythm.","Keep the arm straight and finish pointing at the target.","Drill: bowl at a cone from 10 metres and count hits out of six."]},
+ {id:"c3",t:"Forward defence",m:20,lv:"Beginner",sum:"Block safely with a straight bat and a calm head.",pts:["Step to the pitch of the ball with the front foot.","Let the bat meet the ball under your eyes.","Drill: ten soft feeds, then rotate batter."]},
+ {id:"c4",t:"Catching and ground fielding",m:20,lv:"Beginner",sum:"Soft hands, quick feet and a loud call.",pts:["Watch the ball all the way into your hands.","Give with the ball as it lands, like cushioning an egg.","Drill: circle catching with a call of 'mine' every time."]},
+ {id:"c5",t:"Running between the wickets",m:15,lv:"Intermediate",sum:"Clear calls and safe running with a partner.",pts:["The batter who can see the ball makes the call: Yes, No or Wait.","Run the full length and turn facing the next call.","Drill: relay running with bats down and eyes up."]},
+ {id:"c6",t:"Fair play and team spirit",m:10,lv:"All levels",sum:"The habits that make a team good to play against.",pts:["Shake hands before and after every match.","Accept the umpire's decision and move on.","Every player bats or bowls: nobody sits out all day."]}
+];
+var READING=[
+ {id:"r1",t:"Set up your circle",m:10,lv:"Facilitators",sum:"A space, a time and one rule everyone agrees on.",pts:["Aim for 6 to 10 members who meet at the same time each week.","Agree one rule: nobody is forced to read aloud.","Pick a space where members can sit in a circle and see each other."]},
+ {id:"r2",t:"Choose books people want to read",m:15,lv:"Facilitators",sum:"Let members vote and mix novels, comics and short stories.",pts:["Offer three choices and let the circle vote.","Include books in members' home languages.","Rotate who picks the next title."]},
+ {id:"r3",t:"Questions that start the talking",m:15,lv:"Facilitators",sum:"Open questions that have no wrong answer.",pts:["Try: 'What would you have done in that spot?'","Try: 'Which line made you stop and think?'","Wait ten seconds before filling a silence."]},
+ {id:"r4",t:"Read aloud and read together",m:20,lv:"Facilitators",sum:"Pair reading and echo reading build confidence.",pts:["Read the first page aloud yourself to set the tone.","Pair stronger and newer readers.","Stop at a cliffhanger so members want next week."]},
+ {id:"r5",t:"Keep it fun, not a test",m:10,lv:"Facilitators",sum:"Celebrate reading streaks and finished books.",pts:["No marks or scores in the circle.","Keep a wall chart of books finished by the whole group.","Ask members to recommend a book to a friend."]}
+];
+var PLANS={
+ cricket:"MINI CIRCLES - CRICKET SESSION PLAN (45 minutes)\n\n1. Welcome and warm-up (5 min): jog, stretch, call names.\n2. Skill station A (10 min): grip and stance or bowling action.\n3. Skill station B (10 min): catching and ground fielding.\n4. Small-sided game (15 min): every player bats and bowls.\n5. Huddle (5 min): one thing each player did well. Fair play handshake.\n\nSafety: check the ground, keep water close, use soft balls for beginners.\nRecord attendance with the adult contact only. Do not collect learners' ID numbers.",
+ reading:"MINI CIRCLES - READING CIRCLE SESSION PLAN (45 minutes)\n\n1. Settle in (5 min): sit in a circle, share one good thing from the week.\n2. Read together (15 min): pair reading or read aloud from the chosen book.\n3. Talk (15 min): use two open questions. Wait ten seconds before filling silences.\n4. Choose (5 min): vote on the next book or chapter.\n5. Close (5 min): each member names one thing they liked.\n\nRules: nobody is forced to read aloud. Members may read in their home language.\nKeep it fun, not a test. No marks."
+};
+
+var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,prog:{c:[],r:[]},ready:false};
+try{var pp=JSON.parse(localStorage.getItem("mc-progress")||"null");if(pp&&pp.c&&pp.r)S.prog=pp}catch(e){}
+function saveProg(){try{localStorage.setItem("mc-progress",JSON.stringify(S.prog))}catch(e){}}
+function fmtDate(d){try{return new Date(d+"T00:00:00").toLocaleDateString("en-ZA",{day:"numeric",month:"short",year:"numeric"})}catch(e){return d}}
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function pressList(){var l=(S.press&&S.press.length)?S.press:SAMPLE_PRESS;return l.slice().sort(function(a,b){return String(b.date).localeCompare(String(a.date))})}
+function groupsData(){return (S.league&&S.league.groups)?S.league.groups:SAMPLE_LEAGUE}
+function isSampleLeague(){return !(S.league&&S.league.groups)}
+function rows(g){var r=(groupsData()[g]||[]).map(function(x){return {n:x.n,w:x.w|0,l:x.l|0,t:x.t|0,p:(x.w|0)+(x.l|0)+(x.t|0),pts:2*(x.w|0)+(x.t|0)}});
+ return r.sort(function(a,b){return b.pts-a.pts||b.w-a.w||a.n.localeCompare(b.n)})}
+
+/* ---------- icons ---------- */
+var ICON={search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+ prev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>',
+ next:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>',
+ pause:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
+ play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'};
+
+/* ---------- league ---------- */
+function leagueHTML(g,compact){
+ var r=rows(g);
+ var tabs='<div class="chips" role="tablist" aria-label="Age group">'+Object.keys(GROUPS).map(function(k){return '<button class="chip" role="tab" data-group="'+k+'" aria-selected="'+(k===g)+'">'+GROUPS[k]+'</button>'}).join("")+'</div>';
+ var body=r.length?'<div class="tablewrap" tabindex="0" aria-label="League table, '+GROUPS[g]+'"><table><thead><tr><th>#</th><th>Team</th><th title="Played">P</th><th title="Won">W</th><th title="Lost">L</th><th title="Tied">T</th><th title="Points: 2 for a win, 1 for a tie">Pts</th></tr></thead><tbody>'+
+  r.map(function(x,i){return '<tr'+(i===0?' class="lead"':'')+'><td class="pos">'+(i+1)+'</td><td class="team">'+esc(x.n)+'</td><td>'+x.p+'</td><td>'+x.w+'</td><td>'+x.l+'</td><td>'+x.t+'</td><td class="pts">'+x.pts+'</td></tr>'}).join("")+'</tbody></table></div>':'<div class="msg">No teams in this group yet. New teams can sign up on the Join tab.</div>';
+ var fx=(isSampleLeague()&&!compact)?'<div class="fixtures">'+SAMPLE_FIX.map(function(f){return '<div class="fx"><small>'+f.d+' &middot; '+f.g+'</small><b>'+esc(f.a)+'</b><span class="note">v</span> <b style="display:inline">'+esc(f.b)+'</b></div>'}).join("")+'</div>':'';
+ return '<div style="display:grid;gap:12px">'+tabs+body+'<p class="note">2 points for a win, 1 for a tie. '+(isSampleLeague()?'<span class="badge">Sample data</span> The foundation replaces these teams and results from the Cricket tab after signing in.':'Updated by the foundation after each match day.')+'</p>'+fx+'</div>';
+}
+function mountLeague(){
+ $$("[data-league]").forEach(function(el){el.innerHTML=leagueHTML(S.group,el.getAttribute("data-league")==="compact")});
+ var ed=$("#leagueEditor");if(ed)ed.innerHTML=leagueEditorHTML();
+}
+function leagueEditorHTML(){
+ if(!S.canEdit)return"";
+ if(!S.db)return'<div class="msg warn">Results can only be saved while the page can reach its data store.</div>';
+ var g=S.group,teams=rows(g).map(function(x){return x.n});
+ var opts=teams.map(function(n){return '<option>'+esc(n)+'</option>'}).join("");
+ return '<div class="panel" style="display:grid;gap:14px"><div><span class="badge">Editors only</span><h3 style="margin-top:8px">Update the league table ('+GROUPS[g]+')</h3><p class="note">Switch the age group above, then record a result or add a team. Changes show for everyone straight away.</p></div>'+
+ '<form id="resForm" class="grid2"><div class="field"><label for="resA">Team A</label><select id="resA">'+opts+'</select></div><div class="field"><label for="resB">Team B</label><select id="resB">'+opts+'</select></div>'+
+ '<div class="field"><label for="resR">Result</label><select id="resR"><option value="a">Team A won</option><option value="b">Team B won</option><option value="t">Tie</option></select></div><div class="field" style="align-self:end"><button class="btn" type="submit">Record result</button></div></form>'+
+ '<form id="teamForm" class="grid2"><div class="field"><label for="newTeam">Add a team to '+GROUPS[g]+'</label><input id="newTeam" maxlength="60" placeholder="Team name" required></div><div class="field" style="align-self:end"><button class="btn alt" type="submit">Add team</button></div></form><div id="leagueMsg" aria-live="polite"></div></div>';
+}
+function saveLeague(groups){
+ return S.db.doc("league/current").set({groups:groups,updatedAt:Date.now()});
+}
+function cloneGroups(){return JSON.parse(JSON.stringify(groupsData()))}
+function bindLeagueEditor(){
+ var rf=$("#resForm"),tf=$("#teamForm"),m=$("#leagueMsg");
+ function say(t,ok){if($("#leagueMsg"))$("#leagueMsg").innerHTML='<div class="msg '+(ok?'ok':'warn')+'">'+esc(t)+'</div>'}
+ if(rf)rf.onsubmit=function(e){e.preventDefault();var a=$("#resA").value,b=$("#resB").value,r=$("#resR").value;
+  if(a===b){say("Pick two different teams.",false);return}
+  var g=cloneGroups(),L=g[S.group];var A=L.find(function(x){return x.n===a}),B=L.find(function(x){return x.n===b});
+  if(r==="a"){A.w++;B.l++}else if(r==="b"){B.w++;A.l++}else{A.t++;B.t++}
+  saveLeague(g).then(function(){say("Result saved.",true)}).catch(function(){say("Could not save. You may not have editor access.",false)})};
+ if(tf)tf.onsubmit=function(e){e.preventDefault();var n=$("#newTeam").value.trim();if(!n)return;
+  var g=cloneGroups();g[S.group]=g[S.group]||[];
+  if(g[S.group].some(function(x){return x.n.toLowerCase()===n.toLowerCase()})){say("That team is already in this group.",false);return}
+  g[S.group].push({n:n,w:0,l:0,t:0});
+  saveLeague(g).then(function(){say("Team added.",true);tf.reset()}).catch(function(){say("Could not save. You may not have editor access.",false)})};
+}
+
+/* ---------- press ---------- */
+function pressItemHTML(p){
+ var paras=String(p.body||"").split(/\n{2,}/).map(function(t){return '<p>'+esc(t).replace(/\n/g,"<br>")+'</p>'}).join("");
+ var del=(S.canEdit&&S.db&&!p.sample)?'<div><button class="btn line sm" data-delpress="'+esc(p.id)+'" type="button">Delete this release</button></div>':'';
+ return '<details class="pr"><summary><div class="meta"><span class="badge soft">'+esc(p.tag||"News")+'</span><span>'+esc(fmtDate(p.date))+'</span>'+(p.sample?'<span class="badge">Sample</span>':'')+'</div><h3>'+esc(p.title)+'</h3><p class="note">'+esc(p.summary||"")+'</p><span class="more">Read the release</span></summary><div class="body">'+paras+del+'</div></details>';
+}
+function filteredPress(){
+ var q=S.pressQ.trim().toLowerCase(),tag=S.pressTag;
+ return pressList().filter(function(p){
+  if(tag!=="All"&&p.tag!==tag)return false;
+  if(!q)return true;
+  return q.split(/\s+/).every(function(w){return (p.title+" "+p.summary+" "+p.body+" "+p.tag).toLowerCase().indexOf(w)>-1})});
+}
+function mountPress(){
+ var el=$("#pressList");if(el){var l=filteredPress();el.innerHTML=l.length?l.map(pressItemHTML).join(""):'<div class="msg">No press releases match. Try fewer words or choose All.</div>'}
+ var cnt=$("#pressCount");if(cnt)cnt.textContent=filteredPress().length+" release"+(filteredPress().length===1?"":"s");
+ var hp=$("#homePress");if(hp)hp.innerHTML=pressList().slice(0,2).map(function(p){return '<a class="card" href="#press" style="text-decoration:none;color:inherit"><div class="meta" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="badge soft">'+esc(p.tag||"News")+'</span><span class="note">'+esc(fmtDate(p.date))+'</span>'+(p.sample?'<span class="badge">Sample</span>':'')+'</div><h3>'+esc(p.title)+'</h3><p>'+esc(p.summary||"")+'</p></a>'}).join("");
+ $$("[data-delpress]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-delpress");b.disabled=true;S.db.doc("press/"+id).delete().catch(function(){b.disabled=false})}});
+ var ed=$("#pressEditor");if(ed&&!ed.getAttribute("data-built")){ed.innerHTML=pressEditorHTML();ed.setAttribute("data-built","1");bindPressEditor()}
+}
+function pressEditorHTML(){
+ if(!S.canEdit)return"";
+ if(!S.db)return'<div class="msg warn">Publishing needs the page to reach its data store.</div>';
+ return '<div class="panel" style="display:grid;gap:14px"><div><span class="badge">Editors only</span><h3 style="margin-top:8px">Publish a press release</h3><p class="note">It appears at the top of this page and on the home page as soon as you publish.</p></div>'+
+ '<form id="pressForm" style="display:grid;gap:14px"><div class="grid2"><div class="field"><label for="pTitle">Headline</label><input id="pTitle" required maxlength="140"></div><div class="field"><label for="pTag">Topic</label><select id="pTag"><option>Announcements</option><option>Cricket</option><option>Reading</option><option>Partnerships</option></select></div></div>'+
+ '<div class="grid2"><div class="field"><label for="pDate">Release date</label><input id="pDate" type="date" required value="'+today()+'"></div><div class="field"><label for="pSum">One-line summary</label><input id="pSum" required maxlength="200"></div></div>'+
+ '<div class="field"><label for="pBody">Full release</label><textarea id="pBody" required rows="7" placeholder="Leave a blank line between paragraphs."></textarea></div><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button class="btn" type="submit">Publish release</button><span id="pressMsg" aria-live="polite"></span></div></form></div>';
+}
+function bindPressEditor(){
+ var f=$("#pressForm");if(!f)return;
+ f.onsubmit=function(e){e.preventDefault();var m=$("#pressMsg");
+  S.db.collection("press").add({title:$("#pTitle").value.trim(),tag:$("#pTag").value,date:$("#pDate").value,summary:$("#pSum").value.trim(),body:$("#pBody").value.trim(),createdAt:Date.now()})
+  .then(function(){m.innerHTML='<span class="badge" style="background:var(--ok);color:#fff">Published</span>';f.reset();$("#pDate").value=today()})
+  .catch(function(){m.innerHTML='<span class="badge">Could not publish. Check your editor access.</span>'})};
+}
+
+/* ---------- global search ---------- */
+function searchIndex(){
+ var a=[
+  {t:"Cricket league and table",d:"Splendid Sports youth cricket, standings and fixtures",r:"cricket",k:"Page"},
+  {t:"Reading circles",d:"Boomerang reading for enjoyment for schools, libraries and communities",r:"reading",k:"Page"},
+  {t:"Press releases",d:"News, announcements and media",r:"press",k:"Page"},
+  {t:"Sign up a cricket team",d:"Register a new team for the league",r:"join",j:"cricket",k:"Sign up"},
+  {t:"Start a reading circle",d:"Register a school, library or community reading circle",r:"join",j:"reading",k:"Sign up"},
+  {t:"Stakeholder dashboard",d:"Cricket tutorials, reading club training and resources (sign-in)",r:"dashboard",k:"Dashboard"}];
+ pressList().forEach(function(p){a.push({t:p.title,d:p.summary||"",r:"press",k:"Press"})});
+ Object.keys(GROUPS).forEach(function(g){(groupsData()[g]||[]).forEach(function(x){a.push({t:x.n,d:GROUPS[g]+" cricket team",r:"cricket",g:g,k:"Team"})})});
+ CRICKET.forEach(function(l){a.push({t:l.t,d:l.sum,r:"dashboard",dt:"cricket",k:"Tutorial"})});
+ READING.forEach(function(l){a.push({t:l.t,d:l.sum,r:"dashboard",dt:"reading",k:"Training"})});
+ return a;
+}
+function runSearch(q){
+ var box=$("#searchRes");if(!box)return;q=q.trim().toLowerCase();
+ if(!q){box.innerHTML="";return}
+ var words=q.split(/\s+/);
+ var hits=searchIndex().filter(function(x){var s=(x.t+" "+x.d+" "+x.k).toLowerCase();return words.every(function(w){return s.indexOf(w)>-1})}).slice(0,8);
+ box.innerHTML=hits.length?'<ul class="results">'+hits.map(function(h){return '<li><a href="#'+h.r+'" data-go="'+h.r+'"'+(h.j?' data-join="'+h.j+'"':'')+(h.g?' data-group="'+h.g+'"':'')+(h.dt?' data-dash="'+h.dt+'"':'')+'><span><b>'+esc(h.t)+'</b><small>'+esc(h.d)+'</small></span><em>'+esc(h.k)+'</em></a></li>'}).join("")+'</ul>':'<div class="msg" style="margin-top:10px">Nothing found for "'+esc(q)+'". Try "cricket", "reading" or a team name.</div>';
+}
+
+/* ---------- pages ---------- */
+function slidesHTML(){
+ var d=[
+  {c:"s1",k:"Mini Circles",h:"Read for fun. Play for keeps.",p:"Reading circles and a youth cricket league from The Mlungisi Mashinini Foundation.",a:[["Get a team in","join","cricket"],["Start a circle","join","reading",1]]},
+  {c:"s2",k:"Splendid Sports",h:"The league table is live.",p:"See who leads your age group, check the fixtures and bring your team along.",a:[["See the league","cricket"],["Sign up a team","join","cricket",1]]},
+  {c:"s3",k:"Boomerang",h:"Your next favourite book is waiting.",p:"Join or start a reading circle at school, in the library or at home, in any language you like.",a:[["Explore reading","reading"],["Start a circle","join","reading",1]]},
+  {c:"s4",k:"Newsroom",h:"The latest from the foundation.",p:"Press releases, partner news and announcements, easy to search.",a:[["Read press releases","press"],["Open dashboard","dashboard",null,1]]}];
+ return d.map(function(s,i){return '<div class="slide '+s.c+'" role="group" aria-roledescription="slide" aria-label="'+(i+1)+' of '+d.length+'"><div class="rings" aria-hidden="true"><i></i><i></i><i></i></div><span class="k">'+s.k+'</span><h1>'+s.h+'</h1><p>'+s.p+'</p><div class="acts">'+s.a.map(function(a){return '<a class="btn'+(a[3]?' ghost':'')+'" href="#'+a[1]+'" data-go="'+a[1]+'"'+(a[2]?' data-join="'+a[2]+'"':'')+'>'+a[0]+'</a>'}).join("")+'</div></div>'}).join("");
+}
+function homePage(){
+ return '<div class="wrap">'+
+ '<div class="banner" id="banner" role="region" aria-roledescription="carousel" aria-label="Featured news"><div class="track" id="track">'+slidesHTML()+'</div>'+
+ '<div class="bnav"><div class="dots" id="dots">'+[0,1,2,3].map(function(i){return '<button class="dot" data-slide="'+i+'" aria-label="Go to slide '+(i+1)+'"></button>'}).join("")+'</div>'+
+ '<button class="ctl" id="bpause" aria-label="Pause slideshow">'+ICON.pause+'</button><button class="ctl" id="bprev" aria-label="Previous slide">'+ICON.prev+'</button><button class="ctl" id="bnext" aria-label="Next slide">'+ICON.next+'</button></div></div>'+
+ '<section style="margin-top:22px"><div class="search"><label class="sr" for="gsearch">Search the site</label>'+ICON.search+'<input id="gsearch" type="search" placeholder="Search teams, press releases, lessons&hellip;" autocomplete="off"></div><div id="searchRes" aria-live="polite"></div></section>'+
+ '<section><div class="sec-head"><div><span class="eyebrow">Splendid Sports</span><h2>League table</h2></div><a class="btn alt sm" href="#cricket" data-go="cricket">Fixtures and cricket</a></div><div data-league="compact"></div></section>'+
+ '<section><div class="cards">'+
+  '<div class="card hl"><span class="badge">Sport</span><h3>Youth cricket for every team</h3><p>A grassroots league in three age groups, with coaching tutorials and a clear route from first practice to match day.</p><a class="btn" href="#join" data-go="join" data-join="cricket">Sign up a team</a></div>'+
+  '<div class="card hl"><span class="badge">Literacy</span><h3>Reading for enjoyment</h3><p>Reading circles that put choice and talk first, with free facilitator training and home-language reading welcome.</p><a class="btn" href="#join" data-go="join" data-join="reading">Start a circle</a></div>'+
+  '</div></section>'+
+ '<section><div class="sec-head"><div><span class="eyebrow">Newsroom</span><h2>Latest press</h2></div><a class="btn alt sm" href="#press" data-go="press">All press releases</a></div><div class="cards" id="homePress"></div></section>'+
+ '<section><div class="two"><div class="panel"><span class="eyebrow">For schools and education departments</span><h3>Reading that learners choose</h3><p class="note" style="margin-top:8px">Boomerang circles build reading habits, vocabulary and confidence through choice and conversation, with no marks attached. Members can read in their home language, and facilitators get free training in the dashboard.</p></div>'+
+ '<div class="panel"><span class="eyebrow">For sport bodies and fans</span><h3>A pathway from the first catch</h3><p class="note" style="margin-top:8px">Splendid Sports gives new teams a league structure, coaching tutorials and fair-play habits, with a public table that fans can follow week by week.</p></div></div></section>'+
+ '</div>';
+}
+function cricketPage(){
+ return '<div class="wrap"><div class="sec-head" style="margin-top:6px"><div><span class="eyebrow">Splendid Sports</span><h2>Youth cricket</h2><p style="margin-top:8px">A grassroots league for Under 11, Under 13 and Under 15 teams. Every match day starts and ends with a handshake.</p></div><a class="btn" href="#join" data-go="join" data-join="cricket">Sign up a team</a></div>'+
+ '<section style="margin-top:20px"><h2 style="font-size:1.4rem;margin-bottom:12px">League table and fixtures</h2><div data-league="full"></div></section>'+
+ '<section><div id="leagueEditor"></div></section>'+
+ '<section><div class="cards"><div class="card"><h3>How the league works</h3><ul class="steps"><li><span>Register your team on the Join tab.</span></li><li><span>We place you in an age group and confirm fixtures with your coach.</span></li><li><span>Play, then check the table after each match day.</span></li></ul></div>'+
+ '<div class="card"><h3>Coaching tutorials</h3><p>Six short lessons with drills for coaches and captains: grip, bowling, defence, fielding, running and fair play.</p><a class="btn alt" href="#dashboard" data-go="dashboard" data-dash="cricket">Open in dashboard</a></div>'+
+ '<div class="card"><h3>For sport departments and clubs</h3><p>A simple way to see grassroots participation: teams registered by age group, results recorded after every match day, and a coaching pathway.</p><a class="btn alt" href="#press" data-go="press">Read our news</a></div></div></section></div>';
+}
+function readingPage(){
+ return '<div class="wrap"><div class="sec-head" style="margin-top:6px"><div><span class="eyebrow">Boomerang</span><h2>Reading circles</h2><p style="margin-top:8px">Small groups that meet to read and talk about books they chose. No tests, no marks, and any language members are comfortable with.</p></div><a class="btn" href="#join" data-go="join" data-join="reading">Start a circle</a></div>'+
+ '<section style="margin-top:20px"><div class="two"><div class="panel"><h3>How a circle runs</h3><ol class="steps" style="margin-top:12px"><li><span><b>Gather.</b> 6 to 10 members meet at the same time each week.</span></li><li><span><b>Read.</b> Read aloud, in pairs or quietly from a book the group chose.</span></li><li><span><b>Talk.</b> Open questions with no wrong answers.</span></li><li><span><b>Choose.</b> Vote on the next book together.</span></li></ol></div>'+
+ '<div class="panel"><h3>Find the right format</h3><div class="field" style="margin-top:12px"><label for="fmtAge">Who is the circle for?</label><select id="fmtAge"><option value="a">Primary school learners</option><option value="b">High school learners and teens</option><option value="c">Mixed ages or families</option></select></div><div class="msg" id="fmtOut" style="margin-top:14px" aria-live="polite"></div><a class="btn" style="margin-top:14px" href="#join" data-go="join" data-join="reading">Register this circle</a></div></div></section>'+
+ '<section><div class="two"><div class="panel"><span class="eyebrow">For schools and education departments</span><h3>Why reading for enjoyment</h3><ul style="margin:10px 0 0;padding-left:18px;color:var(--muted)"><li>Learners choose what they read, which builds the habit.</li><li>Home-language reading is welcome and encouraged.</li><li>Circles run after school, in a library period or in the community.</li><li>Facilitators receive free training and a session plan.</li></ul></div>'+
+ '<div class="panel"><span class="eyebrow">Facilitator training</span><h3>Five short modules</h3><p class="note" style="margin-top:8px">Setting up a circle, choosing books, asking good questions, reading aloud and keeping it fun. Sign in to the dashboard to work through them and track your progress.</p><a class="btn alt" style="margin-top:14px" href="#dashboard" data-go="dashboard" data-dash="reading">Open training</a></div></div></section></div>';
+}
+function pressPage(){
+ return '<div class="wrap"><div class="sec-head" style="margin-top:6px"><div><span class="eyebrow">Newsroom</span><h2>Press releases</h2><p style="margin-top:8px">Search every release, or filter by topic. Open a release to read it in full.</p></div></div>'+
+ '<div class="search"><label class="sr" for="psearch">Search press releases</label>'+ICON.search+'<input id="psearch" type="search" placeholder="Search press releases" autocomplete="off" value="'+esc(S.pressQ)+'"></div>'+
+ '<div class="chips" style="margin-top:12px" id="ptags">'+TAGS.map(function(t){return '<button class="chip" data-ptag="'+t+'" aria-pressed="'+(t===S.pressTag)+'">'+t+'</button>'}).join("")+'</div>'+
+ '<p class="note" id="pressCount" style="margin:14px 0 10px" aria-live="polite"></p><div id="pressList"></div><section><div id="pressEditor"></div></section></div>';
+}
+function joinPage(){
+ var t=S.joinType;
+ return '<div class="wrap" style="max-width:820px"><div class="sec-head" style="margin-top:6px"><div><span class="eyebrow">Sign up</span><h2>Join Mini Circles</h2><p style="margin-top:8px">Pick a programme, fill in the form and we will contact the adult named on it. Please do not enter learners\' names or ID numbers.</p></div></div>'+
+ '<div class="chips" role="tablist" aria-label="Programme" style="margin-bottom:16px"><button class="chip" role="tab" data-join-tab="cricket" aria-selected="'+(t==="cricket")+'">Cricket team</button><button class="chip" role="tab" data-join-tab="reading" aria-selected="'+(t==="reading")+'">Reading circle</button></div>'+
+ '<div class="panel">'+(t==="cricket"?cricketForm():readingForm())+'<div id="joinMsg" aria-live="polite" style="margin-top:14px"></div></div></div>';
+}
+function consent(){return '<label class="check"><input type="checkbox" id="fConsent" required><span>I am an adult and agree that Mini Circles may contact me about this sign-up.</span></label>'}
+function cricketForm(){
+ return '<form id="joinForm" data-type="cricket" style="display:grid;gap:14px"><h3>Register a cricket team</h3><div class="grid2"><div class="field"><label for="fName">Team name</label><input id="fName" required maxlength="60"></div><div class="field"><label for="fAge">Age group</label><select id="fAge"><option>Under 11</option><option selected>Under 13</option><option>Under 15</option></select></div>'+
+ '<div class="field"><label for="fContactName">Coach or manager name</label><input id="fContactName" required maxlength="80" autocomplete="name"></div><div class="field"><label for="fContact">Phone or email</label><input id="fContact" required maxlength="80" autocomplete="email"></div>'+
+ '<div class="field"><label for="fArea">Town or area</label><input id="fArea" required maxlength="80"></div><div class="field"><label for="fCount">Players in the squad</label><input id="fCount" type="number" min="5" max="30" value="11" required></div></div>'+
+ '<div class="field"><label for="fNotes">Anything we should know? (optional)</label><textarea id="fNotes" maxlength="500"></textarea></div>'+consent()+'<div><button class="btn" type="submit">Register team</button></div></form>';
+}
+function readingForm(){
+ return '<form id="joinForm" data-type="reading" style="display:grid;gap:14px"><h3>Register a reading circle</h3><div class="grid2"><div class="field"><label for="fName">Circle or organisation name</label><input id="fName" required maxlength="80"></div><div class="field"><label for="fSetting">Where will it meet?</label><select id="fSetting"><option>School</option><option>Library</option><option>Community group</option><option>Home or family</option></select></div>'+
+ '<div class="field"><label for="fContactName">Facilitator name</label><input id="fContactName" required maxlength="80" autocomplete="name"></div><div class="field"><label for="fContact">Phone or email</label><input id="fContact" required maxlength="80" autocomplete="email"></div>'+
+ '<div class="field"><label for="fAge">Age group</label><select id="fAge"><option>Primary school</option><option selected>High school</option><option>Mixed ages</option></select></div><div class="field"><label for="fCount">Expected members</label><input id="fCount" type="number" min="3" max="60" value="8" required></div>'+
+ '<div class="field"><label for="fArea">Town or area</label><input id="fArea" required maxlength="80"></div><div class="field"><label for="fDay">Preferred meeting day</label><select id="fDay"><option>Weekdays after school</option><option>During school day</option><option>Saturday</option><option>Not sure yet</option></select></div></div>'+
+ '<div class="field"><label for="fNotes">Languages or book ideas (optional)</label><textarea id="fNotes" maxlength="500"></textarea></div>'+consent()+'<div><button class="btn" type="submit">Register circle</button></div></form>';
+}
+function readJoin(type){
+ var g=function(id){var e=$("#"+id);return e?e.value.trim():""};
+ var o={name:g("fName"),contactName:g("fContactName"),contact:g("fContact"),area:g("fArea"),age:g("fAge"),count:g("fCount"),notes:g("fNotes")};
+ if(type==="cricket")o.summary=o.age+" · "+o.area+" · "+o.count+" players"+(o.notes?" · "+o.notes:"");
+ else if(type==="access")o.summary=o.notes||"Stakeholder access request";
+ else{o.setting=g("fSetting");o.day=g("fDay");o.summary=o.setting+" · "+o.age+" · "+o.area+" · "+o.count+" members · "+o.day+(o.notes?" · "+o.notes:"")}
+ return o;
+}
+function submitSignup(type,data){
+ var rec=Object.assign({type:type,createdAt:Date.now(),by:(S.me&&S.me.id)||null},data);
+ var id=S.me&&S.me.id;
+ if(S.db&&id){var ref=S.db.doc("signups/"+id);
+  return ref.get().then(function(s){var cur=(s.exists&&s.data().entries)||[];return ref.set({entries:cur.concat([rec])})}).then(function(){return "sent"}).catch(function(){return localSave(rec)})}
+ return Promise.resolve(localSave(rec));
+}
+function localSave(rec){try{var a=JSON.parse(localStorage.getItem("mc-pending")||"[]");a.push(rec);localStorage.setItem("mc-pending",JSON.stringify(a))}catch(e){}return "local"}
+function showJoinResult(res,data,type,box){
+ var txt=(type==="cricket"?"Cricket team sign-up":type==="reading"?"Reading circle sign-up":"Dashboard access request")+"\nName: "+data.name+"\nContact: "+data.contactName+" ("+data.contact+")\n"+data.summary;
+ if(res==="sent"){box.innerHTML='<div class="msg ok"><b>Thank you, '+esc(data.name)+'.</b> Your details are with the foundation and we will contact '+esc(data.contactName)+'.</div>';return}
+ box.innerHTML='<div class="msg warn"><b>Saved on this device only.</b> This page could not send it online from here. Copy the details and send them to the foundation by email or WhatsApp.<div style="margin-top:10px"><button class="btn sm" type="button" id="copySign">Copy details</button> <span id="copyOk" class="note"></span></div></div>';
+ $("#copySign").onclick=function(){try{navigator.clipboard.writeText(txt).then(function(){$("#copyOk").textContent="Copied."},function(){$("#copyOk").textContent="Select and copy: "+txt})}catch(e){$("#copyOk").textContent="Copy not available here."}};
+}
+function bindJoin(){
+ var f=$("#joinForm");if(!f)return;
+ f.onsubmit=function(e){e.preventDefault();if(!f.reportValidity())return;var type=f.getAttribute("data-type"),d=readJoin(type),box=$("#joinMsg"),btn=f.querySelector("button[type=submit]");btn.disabled=true;
+  submitSignup(type,d).then(function(r){showJoinResult(r,d,type,box);if(r==="sent")f.reset();btn.disabled=false;box.scrollIntoView({block:"nearest"})})};
+}
+
+/* ---------- dashboard ---------- */
+function progBar(done,total){var pct=Math.round(done/total*100);return '<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="'+total+'" aria-valuenow="'+done+'"><i style="width:'+pct+'%"></i></div>'}
+function lessonsHTML(list,key){
+ var d=S.prog[key];
+ return '<div style="display:grid;gap:8px;margin-bottom:16px"><b>'+d.length+' of '+list.length+' complete</b>'+progBar(d.length,list.length)+'</div>'+
+ list.map(function(l){var on=d.indexOf(l.id)>-1;return '<div class="lesson'+(on?' done':'')+'"><input class="tick" type="checkbox" id="t_'+l.id+'" data-tick="'+key+'" data-id="'+l.id+'"'+(on?' checked':'')+' aria-label="Mark '+esc(l.t)+' as done"><div><label for="t_'+l.id+'" style="margin:0;font-family:var(--font-d);font-size:1.1rem;font-weight:700">'+esc(l.t)+'</label><div class="note">'+l.m+' min &middot; '+l.lv+'</div><p style="margin-top:6px">'+esc(l.sum)+'</p><ul>'+l.pts.map(function(p){return '<li>'+esc(p)+'</li>'}).join("")+'</ul></div></div>'}).join("");
+}
+function signupsHTML(){
+ if(!S.canEdit)return '<div class="msg">Sign-up records are visible to foundation editors only.</div>';
+ if(!S.signups)return '<div class="msg">Loading sign-ups&hellip;</div>';
+ var l=S.signups.slice().sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)});
+ var c=l.filter(function(x){return x.type==="cricket"}).length,r=l.filter(function(x){return x.type==="reading"}).length,a=l.filter(function(x){return x.type==="access"}).length;
+ var tbl=l.length?'<div class="tablewrap" tabindex="0" aria-label="Sign-ups"><table style="min-width:620px"><thead><tr><th>Type</th><th>Name</th><th>Contact</th><th>Details</th><th>Date</th></tr></thead><tbody>'+l.map(function(x){return '<tr><td style="text-align:left">'+esc(x.type)+'</td><td style="text-align:left;white-space:normal">'+esc(x.name)+'</td><td style="text-align:left;white-space:normal">'+esc(x.contactName)+'<br><span class="note">'+esc(x.contact)+'</span></td><td style="text-align:left;white-space:normal;min-width:220px">'+esc(x.summary)+'</td><td>'+esc(new Date(x.createdAt||0).toLocaleDateString("en-ZA"))+'</td></tr>'}).join("")+'</tbody></table></div>':'<div class="msg">No sign-ups yet. They appear here as soon as teams and circles register.</div>';
+ return '<div class="cards" style="margin-bottom:14px"><div class="card"><div class="stat">'+c+'</div><p>Cricket teams</p></div><div class="card"><div class="stat">'+r+'</div><p>Reading circles</p></div><div class="card"><div class="stat">'+a+'</div><p>Access requests</p></div></div>'+tbl+'<div style="margin-top:14px"><button class="btn alt sm" id="csvBtn" type="button"'+(l.length?'':' disabled')+'>Download as CSV</button> <span class="note" id="csvMsg"></span></div>';
+}
+function dashPage(){
+ if(!S.signedIn){
+  return '<div class="wrap"><div class="lock"><div class="panel" style="display:grid;gap:12px"><span class="eyebrow">Stakeholder dashboard</span><h2>Sign in to open the dashboard</h2><p class="note">The dashboard holds the cricket tutorials, reading club training and downloadable session plans for partners, schools, coaches and departments. Sign in with your account to continue.</p><div class="msg warn" id="gateNote">Not signed in yet. If you have an account, sign in on this page and it opens automatically.</div></div>'+
+  '<div class="panel"><h3>No account yet?</h3><p class="note" style="margin:6px 0 14px">Ask for stakeholder access and the foundation will get back to you.</p><form id="joinForm" data-type="access" style="display:grid;gap:14px"><div class="grid2"><div class="field"><label for="fName">Organisation</label><input id="fName" required maxlength="80" placeholder="School, department, club or partner"></div><div class="field"><label for="fContactName">Your name</label><input id="fContactName" required maxlength="80" autocomplete="name"></div></div><div class="field"><label for="fContact">Email or phone</label><input id="fContact" required maxlength="80" autocomplete="email"></div><div class="field"><label for="fNotes">What would you like to use? (optional)</label><textarea id="fNotes" maxlength="400"></textarea></div>'+consent()+'<div><button class="btn" type="submit">Request access</button></div></form><div id="joinMsg" aria-live="polite" style="margin-top:14px"></div></div></div></div>';
+ }
+ var tabs=[["overview","Overview"],["cricket","Cricket tutorials"],["reading","Reading training"],["resources","Resources"]];
+ if(S.canEdit)tabs.push(["signups","Sign-ups"]);
+ var name=(S.me&&S.me.name)||"";
+ var c;
+ if(S.dashTab==="cricket")c='<h2 style="margin-bottom:14px">Cricket tutorials</h2>'+lessonsHTML(CRICKET,"c");
+ else if(S.dashTab==="reading")c='<h2 style="margin-bottom:14px">Reading club training</h2>'+lessonsHTML(READING,"r");
+ else if(S.dashTab==="resources")c='<h2 style="margin-bottom:14px">Resources</h2><div class="cards"><div class="card"><h3>Cricket session plan</h3><p>A 45-minute plan for a practice: warm-up, two skill stations, a small-sided game and a huddle.</p><button class="btn" data-dl="cricket">Download plan</button></div><div class="card"><h3>Reading circle session plan</h3><p>A 45-minute plan for a circle: settle in, read, talk, choose the next book and close.</p><button class="btn" data-dl="reading">Download plan</button></div></div><p class="note" id="dlMsg" style="margin-top:12px" aria-live="polite"></p>';
+ else if(S.dashTab==="signups")c='<h2 style="margin-bottom:14px">Sign-ups</h2><div id="signupBox">'+signupsHTML()+'</div>';
+ else c='<h2>Welcome'+(name?', '+esc(name):'')+'</h2><p class="note" style="margin-top:6px;max-width:60ch">Everything for coaches, facilitators and partners in one place. Your lesson progress is saved on this device.</p>'+
+  '<div class="cards" style="margin-top:18px"><div class="card"><h3>Cricket tutorials</h3>'+progBar(S.prog.c.length,CRICKET.length)+'<p>'+S.prog.c.length+' of '+CRICKET.length+' lessons complete</p><button class="btn alt" data-dash="cricket">Continue</button></div>'+
+  '<div class="card"><h3>Reading club training</h3>'+progBar(S.prog.r.length,READING.length)+'<p>'+S.prog.r.length+' of '+READING.length+' modules complete</p><button class="btn alt" data-dash="reading">Continue</button></div>'+
+  '<div class="card"><h3>Session plans</h3><p>Printable-style plans for practice days and reading circles.</p><button class="btn alt" data-dash="resources">Open resources</button></div>'+
+  (S.canEdit?'<div class="card hl"><span class="badge">Editors</span><h3>Run the newsroom and league</h3><p>Publish press releases and record match results.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="#press" data-go="press">Press</a><a class="btn" href="#cricket" data-go="cricket">League</a></div></div>':'')+'</div>';
+ return '<div class="wrap"><div class="dtabs" role="tablist" aria-label="Dashboard sections" style="margin-bottom:18px">'+tabs.map(function(t){return '<button class="chip" role="tab" data-dash="'+t[0]+'" aria-selected="'+(S.dashTab===t[0])+'">'+t[1]+'</button>'}).join("")+'</div><div id="dashBody">'+c+'</div></div>';
+}
+function bindDash(){
+ $$("[data-tick]").forEach(function(cb){cb.onchange=function(){var k=cb.getAttribute("data-tick"),id=cb.getAttribute("data-id"),a=S.prog[k],i=a.indexOf(id);if(cb.checked&&i<0)a.push(id);if(!cb.checked&&i>-1)a.splice(i,1);saveProg();render(true)}});
+ $$("[data-dl]").forEach(function(b){b.onclick=function(){var k=b.getAttribute("data-dl"),m=$("#dlMsg");
+  window.claude&&window.claude.use?window.claude.use("downloads").then(function(d){
+   if(!d){m.textContent="Downloads are not available in this view. Open the page in Claude to save the plan.";return}
+   d.save({filename:"mini-circles-"+k+"-session-plan.txt",data:PLANS[k]}).then(function(){m.textContent="Saved."},function(e){m.textContent=(e&&e.code==="declined")?"Download cancelled.":"The download could not start here."})
+  }):(m.textContent="Downloads are not available in this view.")}});
+ var csv=$("#csvBtn");if(csv)csv.onclick=function(){
+  var q=function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'};
+  var l=(S.signups||[]).map(function(x){return [x.type,x.name,x.contactName,x.contact,x.summary,new Date(x.createdAt||0).toISOString()].map(q).join(",")});
+  var data="type,name,contact name,contact,details,date\n"+l.join("\n"),m=$("#csvMsg");
+  window.claude.use("downloads").then(function(d){if(!d){m.textContent="Downloads are not available in this view.";return}d.save({filename:"mini-circles-signups.csv",data:data}).then(function(){m.textContent="Saved."},function(){m.textContent="The download did not go through."})})};
+}
+
+/* ---------- router + render ---------- */
+var pages={home:homePage,cricket:cricketPage,reading:readingPage,press:pressPage,join:joinPage,dashboard:dashPage};
+function stopTimer(){if(S.timer){clearInterval(S.timer);S.timer=null}}
+function setSlide(i){
+ var n=4;S.slide=(i+n)%n;var t=$("#track");if(!t)return;
+ t.style.transform="translateX(-"+S.slide*100+"%)";
+ $$(".slide").forEach(function(s,k){var on=k===S.slide;s.setAttribute("aria-hidden",on?"false":"true");$$("a",s).forEach(function(a){a.tabIndex=on?0:-1})});
+ $$(".dot").forEach(function(d,k){d.setAttribute("aria-current",k===S.slide?"true":"false")});
+ var b=$("#banner");if(b)b.classList.toggle("light",S.slide===2);
+ var ctl=$$(".ctl");ctl.forEach(function(c){c.style.background=S.slide===2?"rgba(0,0,0,.15)":"";c.style.color=S.slide===2?"#12151C":""});
+}
+function startTimer(){stopTimer();if(reduce||S.paused)return;S.timer=setInterval(function(){setSlide(S.slide+1)},6500)}
+function bindHome(){
+ setSlide(S.slide);
+ $$(".dot").forEach(function(d){d.onclick=function(){setSlide(+d.getAttribute("data-slide"));startTimer()}});
+ $("#bprev").onclick=function(){setSlide(S.slide-1);startTimer()};
+ $("#bnext").onclick=function(){setSlide(S.slide+1);startTimer()};
+ var bp=$("#bpause");
+ function paintPause(){bp.innerHTML=S.paused?ICON.play:ICON.pause;bp.setAttribute("aria-label",S.paused?"Play slideshow":"Pause slideshow")}
+ if(reduce)S.paused=true;paintPause();
+ bp.onclick=function(){S.paused=!S.paused;paintPause();startTimer()};
+ var ban=$("#banner");ban.onmouseenter=stopTimer;ban.onmouseleave=startTimer;ban.onfocusin=stopTimer;ban.onfocusout=startTimer;
+ startTimer();
+ var gs=$("#gsearch");gs.oninput=function(){runSearch(gs.value)};
+}
+function bindRoute(r){
+ if(r==="home")bindHome();
+ if(r==="reading"){var sel=$("#fmtAge"),out=$("#fmtOut");var T={a:"Shorter sessions of 30 minutes, picture books and short stories, lots of reading aloud and pair reading.",b:"45-minute sessions, novels and graphic novels, member-led choices and talk about the characters' decisions.",c:"Sessions of 40 minutes, a mix of short and longer reads, and one shared book that every age can join."};var p=function(){out.textContent=T[sel.value]};sel.onchange=p;p()}
+ if(r==="press"){
+  var ps=$("#psearch");ps.oninput=function(){S.pressQ=ps.value;mountPress()};
+  $$("[data-ptag]").forEach(function(b){b.onclick=function(){S.pressTag=b.getAttribute("data-ptag");$$("[data-ptag]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});mountPress()}});
+ }
+ if(r==="join")bindJoin();
+ if(r==="dashboard"){if(S.signedIn)bindDash();else bindJoin()}
+}
+function render(keepScroll){
+ var y=window.scrollY;
+ stopTimer();
+ var r=S.route;
+ $$("#nav a").forEach(function(a){if(a.getAttribute("data-r")===r)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+ $("#lockico").style.display=S.signedIn?"none":"";
+ $("#app").innerHTML=pages[r]();
+ mountLeague();mountPress();bindLeagueBind();
+ bindRoute(r);
+ if(keepScroll)window.scrollTo(0,y);else window.scrollTo(0,0);
+}
+function bindLeagueBind(){bindLeagueEditor();bindLeagueTabs()}
+function bindLeagueTabs(){}
+function live(){
+ /* data changed: refresh only the live parts so forms keep what people typed */
+ mountLeague();bindLeagueEditor();
+ var pl=$("#pressList");if(pl){mountPress()}else{var hp=$("#homePress");if(hp)mountPress()}
+ var sb=$("#signupBox");if(sb){sb.innerHTML=signupsHTML();bindDash()}
+ var gs=$("#gsearch");if(gs&&gs.value)runSearch(gs.value);
+}
+function route(){
+ var h=(location.hash||"").slice(1);
+ S.route=ROUTES.indexOf(h)>-1?h:"home";
+ render(false);
+}
+function go(r,o){
+ o=o||{};
+ if(o.join)S.joinType=o.join;
+ if(o.dash)S.dashTab=o.dash;
+ if(o.group)S.group=o.group;
+ if(location.hash.slice(1)===r)route();else location.hash=r;
+}
+document.addEventListener("click",function(e){
+ var g=e.target.closest("[data-go]");
+ if(g){e.preventDefault();go(g.getAttribute("data-go"),{join:g.getAttribute("data-join"),dash:g.getAttribute("data-dash"),group:g.getAttribute("data-group")});return}
+ var d=e.target.closest("button[data-dash]");
+ if(d){S.dashTab=d.getAttribute("data-dash");render(false);return}
+ var gr=e.target.closest("[data-group]");
+ if(gr&&gr.tagName==="BUTTON"){S.group=gr.getAttribute("data-group");mountLeague();bindLeagueEditor();return}
+ var jt=e.target.closest("[data-join-tab]");
+ if(jt){S.joinType=jt.getAttribute("data-join-tab");render(true)}
+});
+window.addEventListener("hashchange",route);
+document.getElementById("skip").addEventListener("click",function(e){e.preventDefault();$("#app").focus()});
+
+/* ---------- data + identity (used when the page can reach them) ---------- */
+function initData(){
+ var c=window.claude;if(!c||!c.use)return;
+ Promise.all([c.use("db").catch(function(){return null}),c.use("user").catch(function(){return null})]).then(function(a){
+  S.db=a[0];var user=a[1];
+  var p=user?Promise.all([user.me(),user.canEdit()]).then(function(v){S.me=v[0];S.canEdit=!!v[1];S.signedIn=!!(v[0]&&v[0].id)}):Promise.resolve();
+  return p;
+ }).then(function(){
+  if(S.db){
+   S.db.collection("press").orderBy("date","desc").limit(200).onSnapshot(function(s){S.press=s.docs.map(function(d){var o=d.data();o.id=d.id;return o});live()},function(){});
+   S.db.doc("league/current").onSnapshot(function(s){S.league=s.exists?s.data():null;live()},function(){});
+   if(S.canEdit)S.db.collection("signups").limit(500).onSnapshot(function(s){var all=[];s.docs.forEach(function(d){((d.data()||{}).entries||[]).forEach(function(x){all.push(x)})});S.signups=all;live()},function(){S.signups=[]});
+  }
+  render(true);
+ }).catch(function(){});
+}
+route();
+initData();
+})();
+</script>
+
+</body></html>
