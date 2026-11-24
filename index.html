@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Mini Circles connects young people, families and community organisations through reading, youth sport and local Circles for learning, belonging and opportunity.">
-<meta name="theme-color" content="#A8101B">
+<meta name="theme-color" content="#192642">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mini Circles">
 <meta property="og:description" content="Discover our vision and mission, join a youth programme or partner with us to create a Circle for positive local impact.">
@@ -22,15 +22,12 @@ window.MINICIRCLES_CONFIG={
 <style>
 /* Layout concept: sticky tab bar over a rotating banner, league table straight under it, then audience strips and press. Brand circles (ball + reading circle) are the one recurring motif. */
 :root{
-  --bg:#F4F5F8; --surface:#FFFFFF; --soft:#ECEEF3; --ink:#12151C; --muted:#566073; --line:#DDE1E9;
-  --accent:#C8102E; --pick:#C8102E; --btn:#D71920; --btn-ink:#FFFFFF; --yellow:#FFD400; --red:#C8102E; --ok:#1E7B4B; --warn:#8A5A00;
-  --s1-bg:#C8102E; --s2-bg:#A8101B; --s3-bg:#FFD400; --s4-bg:#7D0B16;
+  --bg:#FFF8EE; --surface:#FFFFFF; --soft:#F1F4F7; --ink:#192642; --muted:#536078; --line:#DEE5EC;
+  --accent:#E94F45; --pick:#5947C8; --btn:#E94F45; --btn-ink:#FFFFFF; --yellow:#FFD75E; --red:#EF554B; --ok:#197A59; --warn:#8A5A00;
+  --s1-bg:#F26055; --s2-bg:#604DCE; --s3-bg:#FFD75E; --s4-bg:#10A995;
   --font-d:"Ubuntu",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --font-b:"Ubuntu",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0E1117; --surface:#171B24; --soft:#202634; --ink:#F0F2F7; --muted:#A5AEBD; --line:#2B3342;
-  --accent:#FF6975; --pick:#F10D28; --ok:#5BD39A; --warn:#F2BF5E; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0E1117; --surface:#171B24; --soft:#202634; --ink:#F0F2F7; --muted:#A5AEBD; --line:#2B3342;
   --accent:#FF6975; --pick:#F10D28; --ok:#5BD39A; --warn:#F2BF5E; color-scheme:dark}
@@ -73,7 +70,7 @@ a{color:var(--accent)}
 .join-side{display:grid;gap:12px}
 .join-check{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--line);padding-top:12px;color:var(--muted)}
 .join-check i{width:24px;height:24px;border-radius:50%;background:var(--yellow);color:#12151C;display:grid;place-items:center;font-size:.75rem;font-weight:800;font-style:normal;flex:none}
-.community-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--red),#7D0B16);color:#fff;border-radius:24px;padding:30px}
+.community-hero{position:relative;overflow:hidden;background:linear-gradient(125deg,#EF594F,#604DCE);color:#fff;border-radius:24px;padding:30px}
 .community-hero p{max-width:48ch;margin:8px 0 16px;opacity:.86}
 .community-hero .btn{background:#fff;color:#12151C}
 .circle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}
@@ -182,7 +179,7 @@ a{color:var(--accent)}
 @media (max-width:760px){.impact-strip,.programme-grid{grid-template-columns:minmax(0,1fr)}.impact-strip{gap:8px}.programme-card{min-height:200px}}
 
 /* header + tabs */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#A8101B;border-bottom:4px solid var(--yellow)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#192642;border-bottom:4px solid var(--yellow)}
 .bar{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
 .brand{display:grid;justify-items:center;gap:0;text-decoration:none;color:#fff;min-width:132px;line-height:1}
 .brand-mark{display:block;width:120px;height:auto;flex:none}
@@ -273,8 +270,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--red);outline:none;box
 .slide .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;position:relative;z-index:1}
 .slide .btn{background:#fff;color:#12151C}
 .slide .btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
-.s1{background:var(--s1-bg)} .s2{background:var(--s2-bg)} .s3{background:var(--s3-bg);color:#12151C} .s4{background:var(--s4-bg)}
-.s3 .btn{background:#12151C;color:#fff}
+.s1{background:var(--s1-bg)} .s2{background:var(--s2-bg)} .s3{background:var(--s3-bg);color:#192642} .s4{background:var(--s4-bg)}
+.s3 .btn{background:#192642;color:#fff}
 .rings{position:absolute;right:-70px;top:50%;width:300px;height:300px;transform:translateY(-50%);pointer-events:none}
 .rings i{position:absolute;border-radius:50%;border:16px solid;inset:0}
 .rings i:nth-child(2){inset:48px}
@@ -351,6 +348,44 @@ tr.lead td{background:color-mix(in srgb,var(--yellow) 22%,transparent)}
 footer{border-top:1px solid var(--line);background:var(--surface);padding-block:26px}
 footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* Friendly, scan-first wayfinding */
+body{background:linear-gradient(180deg,color-mix(in srgb,var(--yellow) 10%,var(--bg)) 0,var(--bg) 420px,var(--bg) 100%)}
+main{padding-top:24px}
+.content-group{border-color:transparent;box-shadow:0 10px 32px rgba(25,38,66,.055)}
+.pathway-card{border-color:transparent;box-shadow:0 5px 18px rgba(25,38,66,.07)}
+.pathway-card:nth-child(1){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#10A995 10%,var(--surface)))}
+.pathway-card:nth-child(2){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#604DCE 9%,var(--surface)))}
+.pathway-card:nth-child(3){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#EF794F 10%,var(--surface)))}
+.pathway-card:nth-child(4){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#FFD75E 16%,var(--surface)))}
+.pathway-icon,.journey-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:15px;background:color-mix(in srgb,#10A995 18%,var(--surface));color:#087E74}
+.pathway-icon svg,.journey-icon svg{width:24px;height:24px}
+.pathway-card:nth-child(2) .pathway-icon{background:color-mix(in srgb,#604DCE 16%,var(--surface));color:#5947C8}
+.pathway-card:nth-child(3) .pathway-icon{background:color-mix(in srgb,#EF794F 16%,var(--surface));color:#C55028}
+.pathway-card:nth-child(4) .pathway-icon{background:color-mix(in srgb,#FFD75E 30%,var(--surface));color:#725400}
+.pathway-number{display:none}
+.journey-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.journey-card{display:grid;align-content:start;gap:9px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.journey-card:nth-child(2){background:color-mix(in srgb,#604DCE 7%,var(--surface))}
+.journey-card:nth-child(3){background:color-mix(in srgb,#10A995 8%,var(--surface))}
+.journey-step{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.journey-card p{color:var(--muted);font-size:.92rem}
+.auth-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:16px;max-width:920px;margin:10px auto}
+.auth-panel,.auth-aside{padding:clamp(20px,4vw,32px);border:1px solid var(--line);border-radius:24px;background:var(--surface);box-shadow:0 12px 32px rgba(25,38,66,.07)}
+.auth-panel{border-top:6px solid var(--accent)}
+.auth-panel h1{font-size:clamp(1.8rem,5vw,2.4rem)}
+.auth-intro{display:grid;gap:8px;margin-bottom:20px}
+.auth-aside{display:grid;align-content:start;gap:12px;background:linear-gradient(145deg,color-mix(in srgb,#604DCE 10%,var(--surface)),var(--surface))}
+.auth-aside h2{font-size:1.55rem}
+.auth-aside p{color:var(--muted)}
+.auth-aside .btn{justify-self:start}
+.partner-details{padding-top:14px;border-top:1px solid var(--line)}
+.partner-details summary{cursor:pointer;color:var(--pick);font-weight:700}
+.partner-details[open] summary{margin-bottom:12px}
+button,.btn,.chip{transition:filter .16s ease,transform .16s ease}
+button:hover,.btn:hover,.chip:hover{filter:brightness(.97)}
+@media(max-width:700px){.journey-grid,.auth-layout{grid-template-columns:minmax(0,1fr)}.auth-layout{margin-top:0}}
+
 </style>
 
 </head>
@@ -657,6 +692,7 @@ var ICON={search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
  people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1zM17 11a3 3 0 1 0-1-5.8M18 14a5 5 0 0 1 3 5v1"/></svg>',
  settings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.7 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.7-1.4-2.4 1.4-1.1a7 7 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.7-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.7 1l1.7-.7 1.4 2.4-1.4 1.1a7 7 0 0 1 0 2z"/></svg>',
  circle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>',
+ book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M4 5.5v14A2.5 2.5 0 0 1 6.5 17H20M8 7h8M8 11h6"/></svg>',
  message:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8 8 0 0 1-3.5-.8L4 20l1.4-3.4A7.2 7.2 0 0 1 4 12c0-4.1 3.6-7.5 8-7.5s8 3.1 8 7z"/></svg>',
  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6z"/><path d="m9 12 2 2 4-4"/></svg>'};
 function toolTile(icon,title,summary,action,badge){
@@ -864,11 +900,12 @@ function feedPage(){
 }
 function homePage(){
  var quickCards=[];
- if(S.siteSettings.feed_enabled)quickCards.push('<a class="pathway-card" href="#feed" data-go="feed"><span class="pathway-number">01</span><b>Explore the feed</b><span>Discover posts, updates and ideas.</span></a>');
- if(S.siteSettings.circles_enabled)quickCards.push('<a class="pathway-card" href="#communities" data-go="communities"><span class="pathway-number">02</span><b>Find a Circle</b><span>Explore groups or share a community page.</span></a>');
- quickCards.push('<a class="pathway-card" href="#join" data-go="join" data-join="cricket"><span class="pathway-number">03</span><b>Join a programme</b><span>Register a cricket team or reading circle.</span></a>');
- quickCards.push('<a class="pathway-card" href="#dashboard" data-go="dashboard"><span class="pathway-number">04</span><b>For organisations</b><span>Sign in, request access or partner to start a Circle.</span></a>');
+ if(S.siteSettings.feed_enabled)quickCards.push('<a class="pathway-card" href="#feed" data-go="feed"><span class="pathway-icon" aria-hidden="true">'+ICON.news+'</span><b>See what’s happening</b><span>Discover community stories, posts and ideas.</span></a>');
+ if(S.siteSettings.circles_enabled)quickCards.push('<a class="pathway-card" href="#communities" data-go="communities"><span class="pathway-icon" aria-hidden="true">'+ICON.circle+'</span><b>Find your Circle</b><span>Explore groups, interests and local people.</span></a>');
+ quickCards.push('<a class="pathway-card" href="#join" data-go="join" data-join="cricket"><span class="pathway-icon" aria-hidden="true">'+ICON.book+'</span><b>Join a programme</b><span>Sign up a team or start a reading circle.</span></a>');
+ quickCards.push('<a class="pathway-card" href="#dashboard" data-go="dashboard"><span class="pathway-icon" aria-hidden="true">'+ICON.people+'</span><b>Tools for adults & partners</b><span>Sign in, find training or ask to lead a Circle.</span></a>');
  var quickPaths='<section class="content-group" aria-labelledby="pathwaysTitle"><div class="sec-head"><div><span class="eyebrow">Start here</span><h2 id="pathwaysTitle">What would you like to do?</h2><p>Find your next step in three clicks or less.</p></div></div><div class="pathway-grid">'+quickCards.join("")+'</div></section>';
+ var howItWorks='<section class="content-group" aria-labelledby="howTitle"><div class="sec-head"><div><span class="eyebrow">A simple way to get involved</span><h2 id="howTitle">How Mini Circles works</h2><p>Explore first. You only need an account when you’re ready to take part.</p></div></div><div class="journey-grid"><article class="journey-card"><span class="journey-icon" aria-hidden="true">'+ICON.search+'</span><span class="journey-step">01 · Explore</span><h3>Find what feels right</h3><p>Browse programmes, community Circles and updates. No sign-in needed.</p></article><article class="journey-card"><span class="journey-icon" aria-hidden="true">'+ICON.people+'</span><span class="journey-step">02 · Join in</span><h3>Take part together</h3><p>Follow a Circle or register a team or reading group with a trusted adult.</p></article><article class="journey-card"><span class="journey-icon" aria-hidden="true">'+ICON.shield+'</span><span class="journey-step">03 · Lead locally</span><h3>Build a safe space</h3><p>Adults at schools, clubs and community groups can request access to lead a Circle.</p></article></div></section>';
  var aboutTeaser='<section class="content-group about-teaser"><div><span class="eyebrow">Why Mini Circles</span><h2>Small circles. Brighter futures.</h2><p>We bring young people and the adults around them together through reading, sport and welcoming community spaces. Discover our vision, mission and ways to get involved.</p></div><a class="btn alt" href="#about" data-go="about">Our vision & mission</a></section>';
  var newsGroup='<section class="content-group" aria-labelledby="newsTitle"><div class="sec-head"><div><span class="eyebrow">News & dates</span><h2 id="newsTitle">What is happening</h2><p>Foundation announcements, upcoming events and the latest stories.</p></div></div>'+(S.siteSettings.events_enabled?'<div id="homeUpdates">'+updatesHTML()+'</div>':'')+'<div class="sec-head" style="margin-top:22px"><div><span class="eyebrow">From the newsroom</span><h3>Latest press</h3></div><a class="btn alt sm" href="#press" data-go="press">All press releases</a></div><div class="cards" id="homePress"></div></section>';
  var programmeGroup='<section class="content-group" id="programmes" aria-labelledby="programmesTitle"><div class="sec-head"><div><span class="eyebrow">Explore programmes</span><h2 id="programmesTitle">Read, play and grow together</h2><p>Our current programmes give young people practical ways to learn, belong and thrive.</p></div></div><div class="impact-strip" aria-label="Mini Circles programmes"><div class="impact"><i>3</i><div><b>Age groups</b><span>Under 11, 13 and 15 cricket</span></div></div><div class="impact"><i>2</i><div><b>Active programmes</b><span>Youth cricket and reading circles</span></div></div><div class="impact"><i>1</i><div><b>Shared purpose</b><span>Every team and circle matters</span></div></div></div><div class="programme-grid"><article class="programme-card navy"><span class="badge">Sport</span><h3 style="font-size:1.55rem;margin-top:10px">Take the field</h3><p>Join a youth cricket team, find coaching guidance and follow every result in a fair, friendly league.</p><a class="btn" href="#join" data-go="join" data-join="cricket">Sign up a team</a></article><article class="programme-card red"><span class="badge">Literacy</span><h3 style="font-size:1.55rem;margin-top:10px">Open a new story</h3><p>Start a reading circle for your school or community, in a language and format members choose.</p><a class="btn" href="#join" data-go="join" data-join="reading">Register a reading circle</a></article></div></section>';
@@ -878,8 +915,9 @@ function homePage(){
  '<div class="banner" id="banner" role="region" aria-roledescription="carousel" aria-label="Mini Circles highlights"><div class="track" id="track">'+slidesHTML()+'</div>'+
  '<div class="bnav"><div class="dots" id="dots">'+[0,1,2,3].map(function(i){return '<button class="dot" data-slide="'+i+'" aria-label="Go to slide '+(i+1)+'"></button>'}).join("")+'</div>'+
  '<button class="ctl" id="bpause" aria-label="Pause slideshow">'+ICON.pause+'</button><button class="ctl" id="bprev" aria-label="Previous slide">'+ICON.prev+'</button><button class="ctl" id="bnext" aria-label="Next slide">'+ICON.next+'</button></div></div>'+
+ quickPaths+howItWorks+
  '<section style="margin-top:22px"><div class="search"><label class="sr" for="gsearch">Search the site</label>'+ICON.search+'<input id="gsearch" type="search" placeholder="Search Circles, events, teams or lessons&hellip;" autocomplete="off"></div><div id="searchRes" aria-live="polite"></div></section>'+
- aboutTeaser+quickPaths+newsGroup+programmeGroup+leagueGroup+partnerGroup+
+ programmeGroup+aboutTeaser+newsGroup+leagueGroup+partnerGroup+
  '<section><div class="trust-strip"><b>Built for real participation</b><span>Adult-led sign-up</span><span>Clear safeguarding</span><span>Free learning resources</span><span>Community-first programmes</span></div></section>'+
  '</div>';
 }
@@ -1291,8 +1329,8 @@ function circleManagerRequestHTML(){
 }
 function dashPage(){
  if(!S.signedIn){
-  return '<div class="wrap"><div class="lock"><div class="panel" style="display:grid;gap:12px"><span class="eyebrow">Mini Circles account</span><h2>Sign in to your community</h2><p class="note">Use your email to join Circles, follow community updates and access your member tools. Coaches, facilitators, schools and partners can also find tutorials, training and session plans here.</p><form id="authForm" style="display:grid;gap:12px"><div class="field"><label for="authEmail">Email address</label><input id="authEmail" type="email" required autocomplete="email"></div><button class="btn" type="submit">Email me a sign-in link</button><div id="authMsg" class="note" aria-live="polite"></div></form><div class="msg warn" id="gateNote">We will email a secure link. New members can use this form to create an account, or explore Circles as a visitor.</div><a class="btn alt sm" style="justify-self:start" href="#communities" data-go="communities">Explore Circles</a></div>'+
-  '<div class="panel"><h3>New to Mini Circles?</h3><p class="note" style="margin:6px 0 14px">Request partner access, ask to manage a Circle or tell us how your organisation would like to support young people.</p><form id="joinForm" data-type="access" style="display:grid;gap:14px"><div class="grid2"><div class="field"><label for="fName">Organisation or community group</label><input id="fName" required maxlength="80" placeholder="School, department, club, NPO or community group"></div><div class="field"><label for="fContactName">Your name</label><input id="fContactName" required maxlength="80" autocomplete="name"></div></div><div class="field"><label for="fContact">Email or phone</label><input id="fContact" required maxlength="80" autocomplete="email"></div><div class="field"><label for="fNotes">How would you like to take part?</label><textarea id="fNotes" maxlength="400" placeholder="For example: create an education, sport or skills Circle; access partner resources; or support an existing programme."></textarea></div>'+consent()+'<div><button class="btn" type="submit">Request partner access</button></div></form><div id="joinMsg" aria-live="polite" style="margin-top:14px"></div></div></div></div>';
+  return '<div class="wrap"><div class="auth-layout"><section class="auth-panel"><div class="auth-intro"><span class="eyebrow">Mini Circles account</span><h1>Good to see you.</h1><p class="note">Enter your email and we’ll send you a secure sign-in link. No password to remember.</p></div><form id="authForm" style="display:grid;gap:12px"><div class="field"><label for="authEmail">Your email address</label><input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></div><button class="btn" type="submit">Send me a sign-in link</button><div id="authMsg" class="note" aria-live="polite"></div></form><p class="note" style="margin-top:14px">New here? This same secure link creates your account. You can explore the site without signing in.</p></section>'+
+  '<aside class="auth-aside"><span class="journey-icon" aria-hidden="true">'+ICON.circle+'</span><span class="eyebrow">Visitors welcome</span><h2>Explore before you sign in.</h2><p>See local Circles, youth programmes and community updates. You only need an account when you’re ready to join in.</p><a class="btn alt" href="#communities" data-go="communities">Browse Circles</a><details class="partner-details"><summary>I’m a school, club or community partner</summary><p class="note">Tell us a little about your organisation and how you’d like to support young people.</p><form id="joinForm" data-type="access" style="display:grid;gap:14px;margin-top:12px"><div class="field"><label for="fName">Organisation or community group</label><input id="fName" required maxlength="80" placeholder="School, club, NPO or community group"></div><div class="field"><label for="fContactName">Your name</label><input id="fContactName" required maxlength="80" autocomplete="name"></div><div class="field"><label for="fContact">Email or phone</label><input id="fContact" required maxlength="80" autocomplete="email"></div><div class="field"><label for="fNotes">How would you like to take part?</label><textarea id="fNotes" maxlength="400" placeholder="For example: lead a Circle, access partner resources or support a programme."></textarea></div>'+consent()+'<button class="btn" type="submit">Request partner access</button></form><div id="joinMsg" aria-live="polite" style="margin-top:14px"></div></details></aside></div></div>';
  }
  var tabs=[["overview","Overview"],["communities","My circles"]];
  if(S.siteSettings.messages_enabled)tabs.push(["messages","Messages"]);
@@ -1606,7 +1644,7 @@ function initTheme(){
  }}
 }
 function applyTheme(){
- var saved=localStorage.getItem("mc-theme"),base=S.siteSettings.theme,theme=saved||(base&&base!=="system"?base:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
+ var saved=localStorage.getItem("mc-theme"),base=S.siteSettings.theme,theme=saved||(base&&base!=="system"?base:"light");
  document.documentElement.setAttribute("data-theme",theme);
  var btn=$("#themeBtn");
  if(btn)btn.setAttribute("aria-label",theme==="dark"?"Switch to light theme":"Switch to dark theme");
