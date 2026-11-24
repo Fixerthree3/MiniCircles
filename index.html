@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Mini Circles connects young people, families and community organisations through reading, youth sport and local Circles for learning, belonging and opportunity.">
-<meta name="theme-color" content="#192642">
+<meta name="theme-color" content="#C8102E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mini Circles">
 <meta property="og:description" content="Discover our vision and mission, join a youth programme or partner with us to create a Circle for positive local impact.">
@@ -20,21 +20,18 @@ window.MINICIRCLES_CONFIG={
 };
 </script>
 <style>
-/* Layout concept: sticky tab bar over a rotating banner, league table straight under it, then audience strips and press. Brand circles (ball + reading circle) are the one recurring motif. */
+/* Brand circles (ball + reading circle) are the one recurring motif. */
 :root{
-  --bg:#FFF8EE; --surface:#FFFFFF; --soft:#F1F4F7; --ink:#192642; --muted:#536078; --line:#DEE5EC;
-  --accent:#E94F45; --pick:#5947C8; --btn:#E94F45; --btn-ink:#FFFFFF; --yellow:#FFD75E; --red:#EF554B; --ok:#197A59; --warn:#8A5A00;
-  --s1-bg:#F26055; --s2-bg:#604DCE; --s3-bg:#FFD75E; --s4-bg:#10A995;
+  color-scheme:light;
+  --bg:#FFF8EE; --surface:#FFFFFF; --soft:#FFF0CC; --ink:#30251F; --muted:#6A5D55; --line:#F0D8B8;
+  --accent:#C8102E; --pick:#C8102E; --btn:#C8102E; --btn-ink:#FFFFFF; --yellow:#FFC20E; --red:#C8102E; --ok:#197A59; --warn:#8A5A00;
+  --s1-bg:#E53935; --s2-bg:#C8102E; --s3-bg:#FFC20E; --s4-bg:#F28C28;
   --font-d:"Ubuntu",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --font-b:"Ubuntu",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
-:root[data-theme="dark"]{
-  --bg:#0E1117; --surface:#171B24; --soft:#202634; --ink:#F0F2F7; --muted:#A5AEBD; --line:#2B3342;
-  --accent:#FF6975; --pick:#F10D28; --ok:#5BD39A; --warn:#F2BF5E; color-scheme:dark}
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-b);padding-block:0;-webkit-text-size-adjust:100%}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
 h1,h2,h3{font-family:var(--font-d);line-height:1.12;margin:0;text-wrap:balance;letter-spacing:-.01em}
 h2{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800}
 h3{font-size:1.15rem;font-weight:700}
@@ -62,15 +59,13 @@ a{color:var(--accent)}
 .trust-strip{display:flex;justify-content:center;align-items:center;gap:12px 28px;flex-wrap:wrap;text-align:center;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
 .trust-strip b{font-family:var(--font-d)}
 .trust-strip span{color:var(--muted);font-size:.9rem}
-.theme-btn{width:40px;height:40px;border:1px solid rgba(255,255,255,.4);border-radius:50%;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;display:grid;place-items:center;flex:none}
-.theme-btn svg{width:18px;height:18px}
 .language-control{display:flex;align-items:center;gap:8px;min-width:0}
 .language-select{width:auto;min-width:142px;min-height:40px;padding:6px 28px 6px 10px;font-size:.86rem}
 .language-status{max-width:24ch;color:var(--muted);font-size:.72rem;line-height:1.2}
 .join-side{display:grid;gap:12px}
 .join-check{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--line);padding-top:12px;color:var(--muted)}
 .join-check i{width:24px;height:24px;border-radius:50%;background:var(--yellow);color:#12151C;display:grid;place-items:center;font-size:.75rem;font-weight:800;font-style:normal;flex:none}
-.community-hero{position:relative;overflow:hidden;background:linear-gradient(125deg,#EF594F,#604DCE);color:#fff;border-radius:24px;padding:30px}
+.community-hero{position:relative;overflow:hidden;background:linear-gradient(125deg,#C8102E,#EF594F);color:#fff;border-radius:24px;padding:30px}
 .community-hero p{max-width:48ch;margin:8px 0 16px;opacity:.86}
 .community-hero .btn{background:#fff;color:#12151C}
 .circle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}
@@ -179,34 +174,32 @@ a{color:var(--accent)}
 @media (max-width:760px){.impact-strip,.programme-grid{grid-template-columns:minmax(0,1fr)}.impact-strip{gap:8px}.programme-card{min-height:200px}}
 
 /* header + tabs */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#192642;border-bottom:4px solid var(--yellow)}
+.top{background:#C8102E;border-bottom:4px solid var(--yellow)}
 .bar{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
 .brand{display:grid;justify-items:center;gap:0;text-decoration:none;color:#fff;min-width:132px;line-height:1}
 .brand-mark{display:block;width:120px;height:auto;flex:none}
 .brand small{display:block;color:#fff;font-size:.64rem;line-height:1.2;margin-top:4px;text-align:center}
 .tabs{display:flex;align-items:center;gap:6px;overflow:visible;margin-left:auto;scrollbar-width:none;max-width:100%;flex-wrap:wrap}
 .tabs::-webkit-scrollbar{display:none}
-.tabs a{white-space:nowrap;text-decoration:none;color:#fff;font-weight:600;font-size:.88rem;padding:8px 10px;border:1px solid rgba(255,255,255,.32);border-radius:999px;display:inline-flex;align-items:center;gap:6px}
-.tabs a:hover{background:rgba(255,255,255,.12)}
+.tabs a{white-space:nowrap;text-decoration:none;color:#fff;font-weight:600;font-size:.88rem;padding:8px 10px;border:1px solid rgba(255,255,255,.4);border-radius:999px;display:inline-flex;align-items:center;gap:6px;transition:background .16s ease,color .16s ease}
+.tabs a:hover{background:rgba(255,255,255,.16)}
 .tabs a[aria-current="page"]{background:var(--yellow);border-color:var(--yellow);color:#12151C}
 .tabs svg{width:14px;height:14px}
 
 .mobile-nav{display:none}
 @media(max-width:760px){
-  html{scroll-padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
-  body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   .bar{justify-content:space-between}
   .tabs{display:none}
   .language-control{margin-left:auto}
   .language-status{max-width:16ch}
-  .mobile-nav{position:fixed;inset:auto 0 0;z-index:40;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:7px max(8px,env(safe-area-inset-left,0px)) calc(7px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-right,0px));border-top:1px solid var(--line);background:var(--surface);box-shadow:0 -6px 24px rgba(18,21,28,.08)}
-  .mobile-nav-link,.mobile-more>summary{min-width:0;min-height:52px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;padding:5px 2px;border:0;border-radius:12px;background:transparent;color:var(--muted);font:600 .68rem/1.1 var(--font-b);text-decoration:none;cursor:pointer}
+  .mobile-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:7px max(8px,env(safe-area-inset-left,0px));border-bottom:1px solid rgba(255,255,255,.2);background:#C8102E}
+  .mobile-nav-link,.mobile-more>summary{min-width:0;min-height:52px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;padding:5px 2px;border:0;border-radius:12px;background:transparent;color:#fff;font:600 .68rem/1.1 var(--font-b);text-decoration:none;cursor:pointer}
   .mobile-nav-link svg,.mobile-more>summary svg{width:21px;height:21px;flex:none}
-  .mobile-nav-link[aria-current="page"],.mobile-more.is-current>summary{background:color-mix(in srgb,var(--pick) 10%,var(--surface));color:var(--pick)}
+  .mobile-nav-link[aria-current="page"],.mobile-more.is-current>summary{background:var(--yellow);color:#30251F}
   .mobile-more{position:relative}
   .mobile-more>summary{list-style:none}
   .mobile-more>summary::-webkit-details-marker{display:none}
-  .mobile-more-menu{position:absolute;right:0;bottom:calc(100% + 10px);width:min(230px,calc(100vw - 24px));display:grid;gap:4px;padding:8px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:0 12px 30px rgba(18,21,28,.18)}
+  .mobile-more-menu{position:absolute;right:0;top:calc(100% + 8px);z-index:10;width:min(230px,calc(100vw - 24px));display:grid;gap:4px;padding:8px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:0 12px 30px rgba(18,21,28,.18)}
   .mobile-more-menu a{padding:11px 12px;border-radius:10px;color:var(--ink);font-weight:600;text-decoration:none}
   .mobile-more-menu a:hover,.mobile-more-menu a:focus-visible{background:var(--soft)}
 }
@@ -270,8 +263,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--red);outline:none;box
 .slide .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;position:relative;z-index:1}
 .slide .btn{background:#fff;color:#12151C}
 .slide .btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
-.s1{background:var(--s1-bg)} .s2{background:var(--s2-bg)} .s3{background:var(--s3-bg);color:#192642} .s4{background:var(--s4-bg)}
-.s3 .btn{background:#192642;color:#fff}
+.s1{background:var(--s1-bg)} .s2{background:var(--s2-bg)} .s3{background:var(--s3-bg);color:#30251F} .s4{background:var(--s4-bg)}
+.s3 .btn{background:#C8102E;color:#fff}
 .rings{position:absolute;right:-70px;top:50%;width:300px;height:300px;transform:translateY(-50%);pointer-events:none}
 .rings i{position:absolute;border-radius:50%;border:16px solid;inset:0}
 .rings i:nth-child(2){inset:48px}
@@ -355,18 +348,18 @@ main{padding-top:24px}
 .content-group{border-color:transparent;box-shadow:0 10px 32px rgba(25,38,66,.055)}
 .pathway-card{border-color:transparent;box-shadow:0 5px 18px rgba(25,38,66,.07)}
 .pathway-card:nth-child(1){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#10A995 10%,var(--surface)))}
-.pathway-card:nth-child(2){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#604DCE 9%,var(--surface)))}
+.pathway-card:nth-child(2){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#FFC20E 20%,var(--surface)))}
 .pathway-card:nth-child(3){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#EF794F 10%,var(--surface)))}
 .pathway-card:nth-child(4){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#FFD75E 16%,var(--surface)))}
 .pathway-icon,.journey-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:15px;background:color-mix(in srgb,#10A995 18%,var(--surface));color:#087E74}
 .pathway-icon svg,.journey-icon svg{width:24px;height:24px}
-.pathway-card:nth-child(2) .pathway-icon{background:color-mix(in srgb,#604DCE 16%,var(--surface));color:#5947C8}
+.pathway-card:nth-child(2) .pathway-icon{background:color-mix(in srgb,#FFC20E 30%,var(--surface));color:#8A5A00}
 .pathway-card:nth-child(3) .pathway-icon{background:color-mix(in srgb,#EF794F 16%,var(--surface));color:#C55028}
 .pathway-card:nth-child(4) .pathway-icon{background:color-mix(in srgb,#FFD75E 30%,var(--surface));color:#725400}
 .pathway-number{display:none}
 .journey-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .journey-card{display:grid;align-content:start;gap:9px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
-.journey-card:nth-child(2){background:color-mix(in srgb,#604DCE 7%,var(--surface))}
+.journey-card:nth-child(2){background:color-mix(in srgb,#FFC20E 12%,var(--surface))}
 .journey-card:nth-child(3){background:color-mix(in srgb,#10A995 8%,var(--surface))}
 .journey-step{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
 .journey-card p{color:var(--muted);font-size:.92rem}
@@ -375,7 +368,7 @@ main{padding-top:24px}
 .auth-panel{border-top:6px solid var(--accent)}
 .auth-panel h1{font-size:clamp(1.8rem,5vw,2.4rem)}
 .auth-intro{display:grid;gap:8px;margin-bottom:20px}
-.auth-aside{display:grid;align-content:start;gap:12px;background:linear-gradient(145deg,color-mix(in srgb,#604DCE 10%,var(--surface)),var(--surface))}
+.auth-aside{display:grid;align-content:start;gap:12px;background:linear-gradient(145deg,color-mix(in srgb,#C8102E 8%,var(--surface)),var(--surface))}
 .auth-aside h2{font-size:1.55rem}
 .auth-aside p{color:var(--muted)}
 .auth-aside .btn{justify-self:start}
@@ -428,21 +421,8 @@ button:hover,.btn:hover,.chip:hover{filter:brightness(.97)}
       <span class="language-status" id="translationStatus" role="status" aria-live="polite" data-translation-control></span>
     </div>
     <p class="sr" id="translationPrivacyNote">When you select a language, public site text and public Circle content are sent to Google Cloud Translation. Private messages, sign-up contact details and account information are excluded. South African Sign Language requires video interpretation and is not included in this text translator.</p>
-    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark theme">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8 8 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"/></svg>
-    </button>
   </div>
 </header>
-<main id="app" tabindex="-1"></main>
-<footer>
-  <div class="wrap">
-    <div><b style="color:var(--ink)">Mini Circles</b> is the community platform of The Mlungisi Mashinini Foundation. Our active programmes are reading circles and youth cricket; our Circle network can grow with local partners.</div>
-    <div>Programmes sit alongside partners including Nal'ibali and KFC Mini Cricket.</div>
-    <div>Never enter learners' ID numbers or personal details on this site. We only need an adult contact for every sign-up.</div>
-    <div><a href="#about" data-go="about">Read about our vision, mission and impact areas</a></div>
-  </div>
-</footer>
-
 <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
   <a class="mobile-nav-link" href="#home" data-go="home" data-r="home" aria-label="Home">
     <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span>
@@ -469,6 +449,15 @@ button:hover,.btn:hover,.chip:hover{filter:brightness(.97)}
     </div>
   </details>
 </nav>
+<main id="app" tabindex="-1"></main>
+<footer>
+  <div class="wrap">
+    <div><b style="color:var(--ink)">Mini Circles</b> is the community platform of The Mlungisi Mashinini Foundation. Our active programmes are reading circles and youth cricket; our Circle network can grow with local partners.</div>
+    <div>Programmes sit alongside partners including Nal'ibali and KFC Mini Cricket.</div>
+    <div>Never enter learners' ID numbers or personal details on this site. We only need an adult contact for every sign-up.</div>
+    <div><a href="#about" data-go="about">Read about our vision, mission and impact areas</a></div>
+  </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -534,7 +523,7 @@ var SAMPLE_FEED=[
  {id:"sample-post-3",circle_id:"sample-3",author:"Tembisa Book Crew",body:"Graphic novels are on the table this week. Everyone can recommend one for our next read.",created_at:"2026-11-20T09:00:00Z"}
 ];
 
-var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,profileComplete:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,translationTimer:null,translationRun:0,translationRunning:false,translationPending:false,language:"en",prog:{c:[],r:[]},ready:false,client:null,circles:[],circlesLoaded:false,memberships:[],circleMembers:[],circleMembersFor:null,followingUsers:[],engagements:[],savedPosts:[],savedPostRecords:[],savedPostsError:null,posts:[],postsLoaded:false,sharedPostId:null,sharedPostLoading:false,sharedPostError:null,comments:[],directMessages:[],directory:[],directoryLoaded:false,directoryError:null,adminUsers:[],adminUsersLoaded:false,adminUsersLoading:false,adminUsersError:null,updates:null,siteSettings:{theme:"system",circles_enabled:true,feed_enabled:true,messages_enabled:true,events_enabled:true},selectedCircle:null,openCircleAfterRoute:null,pendingCircleSlug:null,circleQuery:"",circleType:"All",feedTab:"recommended",pendingCircleId:null};
+var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,profileComplete:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,translationTimer:null,translationRun:0,translationRunning:false,translationPending:false,language:"en",prog:{c:[],r:[]},ready:false,client:null,circles:[],circlesLoaded:false,memberships:[],circleMembers:[],circleMembersFor:null,followingUsers:[],engagements:[],savedPosts:[],savedPostRecords:[],savedPostsError:null,posts:[],postsLoaded:false,sharedPostId:null,sharedPostLoading:false,sharedPostError:null,comments:[],directMessages:[],directory:[],directoryLoaded:false,directoryError:null,adminUsers:[],adminUsersLoaded:false,adminUsersLoading:false,adminUsersError:null,updates:null,siteSettings:{circles_enabled:true,feed_enabled:true,messages_enabled:true,events_enabled:true},selectedCircle:null,openCircleAfterRoute:null,pendingCircleSlug:null,circleQuery:"",circleType:"All",feedTab:"recommended",pendingCircleId:null};
 var translatedSources=new WeakMap(),translatedAttributes=new WeakMap(),translationWrites=new WeakSet();
 var translationCache=Object.create(null);
 try{S.pendingCircleId=sessionStorage.getItem("mc-circle-entry-id")}catch(e){}
@@ -1279,7 +1268,7 @@ function rolePortalHTML(){
  if(S.canEdit){
   adminTiles.push(toolTile("events","Announcements & events","Publish now or schedule key dates and campaigns for the whole community.",'<a class="btn alt" href="#home" data-go="home">Manage updates</a>',"Site Admin"));
   adminTiles.push(toolTile("people","Members & accounts","Review signed-in members and securely remove an account when needed.",'<button class="btn alt" type="button" data-dash="users">Manage users</button>',"Site Admin"));
-  adminTiles.push(toolTile("settings","Platform settings","Set the site-wide theme and enable or pause platform features.",'<button class="btn alt" type="button" data-dash="settings">Manage settings</button>',"Site Admin"));
+  adminTiles.push(toolTile("settings","Platform settings","Enable or pause platform features.",'<button class="btn alt" type="button" data-dash="settings">Manage settings</button>',"Site Admin"));
   adminTiles.push(toolTile("circle","All Circles","Open Circle pages, manage roles, moderate content and share public links.",'<a class="btn alt" href="#communities" data-go="communities">Manage Circles</a>',"Site Admin"));
   adminTiles.push(toolTile("news","Newsroom & league","Publish foundation news and maintain league results.",'<div class="post-actions"><a class="btn alt sm" href="#press" data-go="press">Newsroom</a><a class="btn alt sm" href="#cricket" data-go="cricket">League</a></div>',"Site Admin"));
  }
@@ -1301,7 +1290,7 @@ function usersAdminHTML(){
 function siteSettingsHTML(){
  if(!S.canEdit)return '<div class="msg warn">Site Admin access is required.</div>';
  var f=S.siteSettings;
- return '<form id="siteSettingsForm" class="panel" style="display:grid;gap:14px"><div><span class="eyebrow">Site Admin</span><h3>Global appearance and features</h3><p class="note">Feature switches control what visitors see and whether private messaging is available.</p></div><div class="field"><label for="siteTheme">Default site theme</label><select id="siteTheme"><option value="system"'+(f.theme==="system"?" selected":"")+'>Use device preference</option><option value="light"'+(f.theme==="light"?" selected":"")+'>Light</option><option value="dark"'+(f.theme==="dark"?" selected":"")+'>Dark</option></select></div><div class="interest-list"><label class="check"><input type="checkbox" name="siteFeature" value="circles_enabled"'+(f.circles_enabled?" checked":"")+'>Enable Circle discovery</label><label class="check"><input type="checkbox" name="siteFeature" value="feed_enabled"'+(f.feed_enabled?" checked":"")+'>Enable personalised feed</label><label class="check"><input type="checkbox" name="siteFeature" value="messages_enabled"'+(f.messages_enabled?" checked":"")+'>Enable direct messages</label><label class="check"><input type="checkbox" name="siteFeature" value="events_enabled"'+(f.events_enabled?" checked":"")+'>Enable announcements and events</label></div><button class="btn" type="submit">Save site settings</button><span id="siteSettingsMsg" class="note" role="status" aria-live="polite"></span></form>';
+ return '<form id="siteSettingsForm" class="panel" style="display:grid;gap:14px"><div><span class="eyebrow">Site Admin</span><h3>Platform features</h3><p class="note">Feature switches control what visitors see and whether private messaging is available.</p></div><div class="interest-list"><label class="check"><input type="checkbox" name="siteFeature" value="circles_enabled"'+(f.circles_enabled?" checked":"")+'>Enable Circle discovery</label><label class="check"><input type="checkbox" name="siteFeature" value="feed_enabled"'+(f.feed_enabled?" checked":"")+'>Enable personalised feed</label><label class="check"><input type="checkbox" name="siteFeature" value="messages_enabled"'+(f.messages_enabled?" checked":"")+'>Enable direct messages</label><label class="check"><input type="checkbox" name="siteFeature" value="events_enabled"'+(f.events_enabled?" checked":"")+'>Enable announcements and events</label></div><button class="btn" type="submit">Save site settings</button><span id="siteSettingsMsg" class="note" role="status" aria-live="polite"></span></form>';
 }
 function messagesContentHTML(){
  var options=messageRecipientOptions();
@@ -1412,10 +1401,10 @@ function bindDash(){
  if(settingsForm)settingsForm.onsubmit=function(e){
   e.preventDefault();var status=$("#siteSettingsMsg");
   if(!S.client||!S.canEdit){status.textContent="Saving site settings requires the configured data service and Site Admin access.";return}
-  var next={id:true,theme:$("#siteTheme").value,circles_enabled:false,feed_enabled:false,messages_enabled:false,events_enabled:false,updated_at:new Date().toISOString()};
+  var next={id:true,circles_enabled:false,feed_enabled:false,messages_enabled:false,events_enabled:false,updated_at:new Date().toISOString()};
   $$('input[name="siteFeature"]:checked',settingsForm).forEach(function(input){next[input.value]=true});
   var submit=settingsForm.querySelector('button[type="submit"]');submit.disabled=true;
-  S.client.from("site_settings").upsert(next,{onConflict:"id"}).then(function(r){if(r.error)throw r.error;S.siteSettings=next;applyTheme();render(true);var newStatus=$("#siteSettingsMsg");if(newStatus)newStatus.textContent="Site settings saved."})
+  S.client.from("site_settings").upsert(next,{onConflict:"id"}).then(function(r){if(r.error)throw r.error;S.siteSettings=next;render(true);var newStatus=$("#siteSettingsMsg");if(newStatus)newStatus.textContent="Site settings saved."})
    .catch(function(){status.textContent="Could not save settings. Check the site administrator schema and access."})
    .finally(function(){submit.disabled=false});
  };
@@ -1634,22 +1623,6 @@ document.addEventListener("click",function(e){
 });
 window.addEventListener("hashchange",route);
 document.getElementById("skip").addEventListener("click",function(e){e.preventDefault();$("#app").focus()});
-function initTheme(){
- applyTheme();
- var btn=$("#themeBtn");
- if(btn){btn.onclick=function(){
-  var next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
-  document.documentElement.setAttribute("data-theme",next);localStorage.setItem("mc-theme",next);
-  btn.setAttribute("aria-label",next==="dark"?"Switch to light theme":"Switch to dark theme");
- }}
-}
-function applyTheme(){
- var saved=localStorage.getItem("mc-theme"),base=S.siteSettings.theme,theme=saved||(base&&base!=="system"?base:"light");
- document.documentElement.setAttribute("data-theme",theme);
- var btn=$("#themeBtn");
- if(btn)btn.setAttribute("aria-label",theme==="dark"?"Switch to light theme":"Switch to dark theme");
-}
-
 /* ---------- Supabase data + identity ---------- */
 function loadMemberDirectoryPage(offset,loaded,accountId){
  if(!S.signedIn||!S.me||S.me.id!==accountId)return;
@@ -1691,7 +1664,7 @@ function loadAdminUsersPage(page,loaded,accountId){
 function loadSupabaseContent(){
  if(!S.client)return;
  S.client.from("site_settings").select("*").eq("id",true).maybeSingle().then(function(r){
-  if(!r.error&&r.data){S.siteSettings=r.data;applyTheme();render(true)}
+  if(!r.error&&r.data){S.siteSettings=r.data;render(true)}
  });
  S.client.from("press").select("*").order("date",{ascending:false}).limit(200).then(function(r){if(!r.error){S.press=(r.data||[]).map(function(p){p.id=p.id;return p});live()}});
  S.client.from("league").select("groups").eq("id","current").maybeSingle().then(function(r){if(!r.error&&r.data){S.league={groups:r.data.groups};live()}});
@@ -1755,7 +1728,6 @@ function initData(){
  });
 }
 initLanguage();
-initTheme();
 route();
 initData();
 })();
