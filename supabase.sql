@@ -319,7 +319,7 @@ create table if not exists public.circles (
   slug text not null constraint circles_slug_format_check
     check (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
   name text not null,
-  type text not null check (type in ('Cricket','Reading')),
+  type text not null,
   area text,
   meeting text,
   description text,
@@ -329,6 +329,12 @@ create table if not exists public.circles (
   manager_id uuid references auth.users(id) on delete set null,
   created_at timestamptz not null default now()
 );
+
+alter table public.circles drop constraint if exists circles_type_check;
+alter table public.circles drop constraint if exists circles_type_allowed_check;
+alter table public.circles
+  add constraint circles_type_allowed_check
+  check (type in ('Cricket','Reading','Education','Sport & wellbeing','Skills & employment','Other'));
 
 alter table public.circles add column if not exists slug text;
 update public.circles

@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Join Mini Circles from The Mlungisi Mashinini Foundation: discover youth cricket, reading circles and community programmes.">
+<meta name="description" content="Mini Circles connects young people, families and community organisations through reading, youth sport and local Circles for learning, belonging and opportunity.">
 <meta name="theme-color" content="#0649B2">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mini Circles">
-<meta property="og:description" content="Read for fun. Play for keeps. Find a Circle, explore youth cricket and join a reading programme.">
+<meta property="og:description" content="Discover our vision and mission, join a youth programme or partner with us to create a Circle for positive local impact.">
 <title>Mini Circles | Read for fun. Play for keeps.</title>
 <style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,6 +67,9 @@ a{color:var(--accent)}
 .trust-strip span{color:var(--muted);font-size:.9rem}
 .theme-btn{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;background:var(--soft);color:var(--ink);cursor:pointer;display:grid;place-items:center;flex:none}
 .theme-btn svg{width:18px;height:18px}
+.language-control{display:flex;align-items:center;gap:8px;min-width:0}
+.language-select{width:auto;min-width:142px;min-height:40px;padding:6px 28px 6px 10px;font-size:.86rem}
+.language-status{max-width:24ch;color:var(--muted);font-size:.72rem;line-height:1.2}
 .join-side{display:grid;gap:12px}
 .join-check{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--line);padding-top:12px;color:var(--muted)}
 .join-check i{width:24px;height:24px;border-radius:50%;background:var(--yellow);color:#12151C;display:grid;place-items:center;font-size:.75rem;font-weight:800;font-style:normal;flex:none}
@@ -78,6 +81,10 @@ a{color:var(--accent)}
 .circle-card.featured{border-top:5px solid var(--yellow)}
 .circle-card.reading{border-top-color:#F3A6AE}
 .circle-card.cricket{border-top-color:#35507A}
+.circle-card.education{border-top-color:#14724D}
+.circle-card.skills-employment{border-top-color:#B47700}
+.circle-card.sport-wellbeing{border-top-color:#465EAD}
+.circle-card.other{border-top-color:#566073}
 .circle-card h3{font-size:1.25rem}
 .circle-meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.86rem}
 .circle-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
@@ -121,6 +128,23 @@ a{color:var(--accent)}
 .pathway-card b{font:700 1.08rem/1.2 var(--font-d)}
 .pathway-card span:last-child{color:var(--muted);font-size:.88rem}
 .content-group .programme-card{min-height:205px}
+.about-teaser{display:flex;align-items:center;justify-content:space-between;gap:18px;background:linear-gradient(120deg,color-mix(in srgb,#0649B2 8%,var(--surface)),var(--surface))}
+.about-teaser p{max-width:62ch;margin-top:8px;color:var(--muted)}
+.purpose-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.purpose-card,.outcome-card{display:grid;align-content:start;gap:10px;padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.purpose-card:first-child{background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#FFC20E 20%,var(--surface)))}
+.purpose-card h3{font-size:1.35rem}
+.purpose-card p,.outcome-card p{color:var(--muted)}
+.outcome-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.outcome-card{background:var(--soft)}
+.outcome-mark{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:var(--pick);color:#fff;font:800 .78rem var(--font-d)}
+.outcome-card:nth-child(2) .outcome-mark{background:#14724D}
+.outcome-card:nth-child(3) .outcome-mark{background:#B47700}
+.outcome-card:nth-child(4) .outcome-mark{background:#465EAD}
+.outcome-card .badge{justify-self:start}
+.about-hero{margin-bottom:30px}
+.about-hero .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.community-hero .btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
 .audience-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .audience-card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}
 .audience-card p{margin-top:7px;color:var(--muted);font-size:.92rem}
@@ -128,8 +152,9 @@ a{color:var(--accent)}
 .tool-group-heading{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .tool-group-heading h4{font:700 1rem var(--font-d)}
 .tool-group-heading .badge{flex:none}
-@media(max-width:850px){.pathway-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.audience-grid{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:500px){.pathway-card{min-height:136px;padding:14px}.content-group{padding:14px;border-radius:16px}}
+@media(max-width:850px){.pathway-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.audience-grid{grid-template-columns:minmax(0,1fr)}.outcome-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.about-teaser{align-items:flex-start;flex-direction:column}.purpose-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:500px){.pathway-card{min-height:136px;padding:14px}.content-group{padding:14px;border-radius:16px}.outcome-grid{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.pathway-card{transition:none}}
 .post-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}
 .post-author{display:flex;align-items:center;gap:9px}
@@ -176,6 +201,8 @@ a{color:var(--accent)}
   body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   .bar{justify-content:space-between}
   .tabs{display:none}
+  .language-control{margin-left:auto}
+  .language-status{max-width:16ch}
   .mobile-nav{position:fixed;inset:auto 0 0;z-index:40;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:7px max(8px,env(safe-area-inset-left,0px)) calc(7px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-right,0px));border-top:1px solid var(--line);background:var(--surface);box-shadow:0 -6px 24px rgba(18,21,28,.08)}
   .mobile-nav-link,.mobile-more>summary{min-width:0;min-height:52px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;padding:5px 2px;border:0;border-radius:12px;background:transparent;color:var(--muted);font:600 .68rem/1.1 var(--font-b);text-decoration:none;cursor:pointer}
   .mobile-nav-link svg,.mobile-more>summary svg{width:21px;height:21px;flex:none}
@@ -342,16 +369,35 @@ footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
     </a>
     <nav class="tabs" id="nav" aria-label="Main">
       <a href="#home" data-r="home">Home</a>
+      <a href="#about" data-r="about">About</a>
       <a href="#feed" data-r="feed">Feed</a>
       <a href="#communities" data-r="communities">Circles</a>
       <a href="#cricket" data-r="cricket">Cricket</a>
       <a href="#reading" data-r="reading">Reading</a>
       <a href="#press" data-r="press">Newsroom</a>
       <a href="#join" data-r="join">Join</a>
-      <a href="#dashboard" data-r="dashboard">Dashboard
+      <a href="#dashboard" data-r="dashboard"><span id="accountLabel">Sign in</span>
         <svg id="lockico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-label="Sign-in required"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
       </a>
     </nav>
+    <div class="language-control">
+      <label class="sr" for="siteLanguage">Site language</label>
+      <select class="language-select" id="siteLanguage" data-translation-control aria-describedby="translationPrivacyNote">
+        <option value="en">English</option>
+        <option value="af">Afrikaans</option>
+        <option value="nr">isiNdebele</option>
+        <option value="xh">isiXhosa</option>
+        <option value="zu">isiZulu</option>
+        <option value="nso">Sepedi</option>
+        <option value="st">Sesotho</option>
+        <option value="tn">Setswana</option>
+        <option value="ss">siSwati</option>
+        <option value="ve">Tshivenda</option>
+        <option value="ts">itsonga</option>
+      </select>
+      <span class="language-status" id="translationStatus" role="status" aria-live="polite" data-translation-control></span>
+    </div>
+    <p class="sr" id="translationPrivacyNote">When you select a language, public site text and public Circle content are sent to Google Cloud Translation. Private messages, sign-up contact details and account information are excluded. South African Sign Language requires video interpretation and is not included in this text translator.</p>
     <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark theme">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8 8 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"/></svg>
     </button>
@@ -360,9 +406,10 @@ footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
 <main id="app" tabindex="-1"></main>
 <footer>
   <div class="wrap">
-    <div><b style="color:var(--ink)">Mini Circles</b> is the digital name of The Mlungisi Mashinini Foundation. We promote reading for enjoyment and youth cricket together.</div>
+    <div><b style="color:var(--ink)">Mini Circles</b> is the community platform of The Mlungisi Mashinini Foundation. Our active programmes are reading circles and youth cricket; our Circle network can grow with local partners.</div>
     <div>Programmes sit alongside partners including Nal'ibali and KFC Mini Cricket.</div>
     <div>Never enter learners' ID numbers or personal details on this site. We only need an adult contact for every sign-up.</div>
+    <div><a href="#about" data-go="about">Read about our vision, mission and impact areas</a></div>
   </div>
 </footer>
 
@@ -386,8 +433,9 @@ footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
     <div class="mobile-more-menu">
       <a href="#cricket" data-go="cricket" data-r="cricket">Youth cricket</a>
       <a href="#reading" data-go="reading" data-r="reading">Reading circles</a>
+      <a href="#about" data-go="about" data-r="about">About Mini Circles</a>
       <a href="#press" data-go="press" data-r="press">Newsroom</a>
-      <a href="#dashboard" data-go="dashboard" data-r="dashboard">Dashboard</a>
+      <a href="#dashboard" data-go="dashboard" data-r="dashboard"><span id="mobileAccountLabel">Sign in</span></a>
     </div>
   </details>
 </nav>
@@ -396,13 +444,20 @@ footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
 <script>
 (function(){
 "use strict";
-var ROUTES=["home","feed","cricket","reading","communities","press","join","dashboard"];
+var ROUTES=["home","about","feed","cricket","reading","communities","press","join","dashboard"];
 var $=function(s,r){return (r||document).querySelector(s)};
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
 var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 var GROUPS={u11:"Under 11",u13:"Under 13",u15:"Under 15"};
+var CIRCLE_TYPES=["Cricket","Reading","Education","Sport & wellbeing","Skills & employment","Other"];
+var LANGUAGES=[
+ {code:"en",name:"English"},{code:"af",name:"Afrikaans"},{code:"nr",name:"isiNdebele"},
+ {code:"xh",name:"isiXhosa"},{code:"zu",name:"isiZulu"},{code:"nso",name:"Sepedi"},
+ {code:"st",name:"Sesotho"},{code:"tn",name:"Setswana"},{code:"ss",name:"siSwati"},
+ {code:"ve",name:"Tshivenda"},{code:"ts",name:"itsonga"}
+];
 var SAMPLE_LEAGUE={
  u11:[{n:"Mamelodi Mavericks",w:4,l:1,t:0},{n:"Soweto Strikers",w:3,l:1,t:1},{n:"Tembisa Titans",w:2,l:3,t:0},{n:"Alex All-Stars",w:1,l:3,t:1},{n:"Atteridgeville Aces",w:1,l:4,t:0}],
  u13:[{n:"Pretoria Pace",w:5,l:1,t:0},{n:"Katlehong Kings",w:4,l:2,t:0},{n:"Diepsloot Daredevils",w:3,l:2,t:1},{n:"Orange Farm Owls",w:2,l:4,t:0},{n:"Mabopane Mambas",w:1,l:5,t:0}],
@@ -449,9 +504,137 @@ var SAMPLE_FEED=[
  {id:"sample-post-3",circle_id:"sample-3",author:"Tembisa Book Crew",body:"Graphic novels are on the table this week. Everyone can recommend one for our next read.",created_at:"2026-11-20T09:00:00Z"}
 ];
 
-var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,profileComplete:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,prog:{c:[],r:[]},ready:false,client:null,circles:[],circlesLoaded:false,memberships:[],circleMembers:[],circleMembersFor:null,followingUsers:[],engagements:[],savedPosts:[],savedPostRecords:[],savedPostsError:null,posts:[],postsLoaded:false,sharedPostId:null,sharedPostLoading:false,sharedPostError:null,comments:[],directMessages:[],directory:[],directoryLoaded:false,directoryError:null,adminUsers:[],adminUsersLoaded:false,adminUsersLoading:false,adminUsersError:null,updates:null,siteSettings:{theme:"system",circles_enabled:true,feed_enabled:true,messages_enabled:true,events_enabled:true},selectedCircle:null,openCircleAfterRoute:null,pendingCircleSlug:null,circleQuery:"",circleType:"All",feedTab:"recommended",pendingCircleId:null};
+var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,profileComplete:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,translationTimer:null,translationRun:0,translationRunning:false,translationPending:false,language:"en",prog:{c:[],r:[]},ready:false,client:null,circles:[],circlesLoaded:false,memberships:[],circleMembers:[],circleMembersFor:null,followingUsers:[],engagements:[],savedPosts:[],savedPostRecords:[],savedPostsError:null,posts:[],postsLoaded:false,sharedPostId:null,sharedPostLoading:false,sharedPostError:null,comments:[],directMessages:[],directory:[],directoryLoaded:false,directoryError:null,adminUsers:[],adminUsersLoaded:false,adminUsersLoading:false,adminUsersError:null,updates:null,siteSettings:{theme:"system",circles_enabled:true,feed_enabled:true,messages_enabled:true,events_enabled:true},selectedCircle:null,openCircleAfterRoute:null,pendingCircleSlug:null,circleQuery:"",circleType:"All",feedTab:"recommended",pendingCircleId:null};
+var translatedSources=new WeakMap(),translatedAttributes=new WeakMap(),translationWrites=new WeakSet();
+var translationCache=Object.create(null);
 try{S.pendingCircleId=sessionStorage.getItem("mc-circle-entry-id")}catch(e){}
 try{var pp=JSON.parse(localStorage.getItem("mc-progress")||"null");if(pp&&pp.c&&pp.r)S.prog=pp}catch(e){}
+try{var savedLanguage=localStorage.getItem("mc-language");if(LANGUAGES.some(function(x){return x.code===savedLanguage}))S.language=savedLanguage}catch(e){}
+function translationStatus(text){var status=$("#translationStatus");if(status)status.textContent=text}
+function translationExcluded(element){
+ return !element||!element.closest||!!element.closest("[data-no-translate],[data-translation-control],script,style,textarea,input");
+}
+function translationAttributeExcluded(element){
+ return !element||!element.closest||!!element.closest("[data-no-translate],[data-translation-control],script,style");
+}
+function restoreOriginalTranslations(){
+ var walker=document.createTreeWalker(document.documentElement,NodeFilter.SHOW_TEXT),node;
+ while((node=walker.nextNode())){
+  if(translatedSources.has(node)){var source=translatedSources.get(node);if(node.data!==source){translationWrites.add(node);node.data=source}}
+ }
+ translationAttributeElements().forEach(function(element){
+  if(translationAttributeExcluded(element))return;
+  var originals=translatedAttributes.get(element);if(!originals)return;
+  Object.keys(originals).forEach(function(name){if(element.getAttribute(name)!==originals[name])element.setAttribute(name,originals[name])});
+ });
+}
+function translationAttributeElements(){
+ return $$("[placeholder],[aria-label],[title],meta[name='description'],meta[property='og:description'],meta[property='og:title']");
+}
+function translationCandidates(){
+ var candidates=[],byKey=Object.create(null),language=S.language;
+ function add(source,apply){
+  var value=String(source||""),trimmed=value.trim();
+  if(trimmed.length<2||!/[A-Za-z]/.test(trimmed))return;
+  var key=language+"\u0000"+trimmed,item=byKey[key];
+  if(!item){item=byKey[key]={key:key,source:trimmed,applies:[]};candidates.push(item)}
+  item.applies.push(function(translated){
+   if(typeof apply==="function")apply(value.replace(trimmed,translated));
+  });
+ }
+ var walker=document.createTreeWalker(document.documentElement,NodeFilter.SHOW_TEXT),node;
+ while((node=walker.nextNode())){
+  if(translationExcluded(node.parentElement))continue;
+  var source=translatedSources.has(node)?translatedSources.get(node):node.data;
+  if(!translatedSources.has(node))translatedSources.set(node,source);
+  if(node.parentElement&&node.parentElement.tagName==="OPTION"&&!node.parentElement.hasAttribute("value"))node.parentElement.setAttribute("value",node.parentElement.value);
+  (function(textNode,originalSource){
+   add(originalSource,function(value){if(document.contains(textNode)&&translatedSources.get(textNode)===originalSource&&textNode.data!==value){translationWrites.add(textNode);textNode.data=value}});
+  })(node,source);
+ }
+ translationAttributeElements().forEach(function(element){
+  if(translationAttributeExcluded(element))return;
+  var originals=translatedAttributes.get(element);
+  if(!originals){originals={};translatedAttributes.set(element,originals)}
+  ["placeholder","aria-label","title","content"].forEach(function(name){
+   if(!element.hasAttribute(name))return;
+   if(!Object.prototype.hasOwnProperty.call(originals,name))originals[name]=element.getAttribute(name);
+   add(originals[name],function(value){if(document.contains(element)&&element.getAttribute(name)===originals[name])element.setAttribute(name,value)});
+  });
+ });
+ return candidates;
+}
+function decodeTranslation(value){
+ var element=document.createElement("textarea");
+ element.innerHTML=String(value).replace(/</g,"&lt;").replace(/>/g,"&gt;");
+ return element.value;
+}
+function scheduleTranslation(){
+ if(S.translationTimer)clearTimeout(S.translationTimer);
+ S.translationTimer=setTimeout(translateVisibleContent,120);
+}
+function translateVisibleContent(){
+ S.translationTimer=null;
+ if(S.language==="en"){restoreOriginalTranslations();translationStatus("");return}
+ if(!S.client){translationStatus("Translation needs the site data service.");return}
+ if(S.translationRunning){S.translationPending=true;return}
+ S.translationRunning=true;
+ var run=++S.translationRun,language=S.language;
+ translationStatus("Translating public text with Google Cloud Translation…");
+ var candidates=translationCandidates(),oversized=candidates.filter(function(item){return item.source.length>16000}).length,pending=candidates.filter(function(item){return item.source.length<=16000&&!Object.prototype.hasOwnProperty.call(translationCache,item.key)});
+ (async function(){
+  for(var start=0;start<pending.length;){
+   if(run!==S.translationRun)return;
+   var batch=[],size=0;
+   while(start<pending.length&&batch.length<100){
+    var next=pending[start];
+    if(batch.length&&size+next.source.length>16000)break;
+    batch.push(next);size+=next.source.length;start++;
+   }
+   if(!batch.length)continue;
+   var response=await S.client.functions.invoke("translate-site",{body:{target:language,texts:batch.map(function(item){return item.source})}});
+   if(response.error)throw response.error;
+   var translated=response.data&&response.data.translations;
+   if(!Array.isArray(translated)||translated.length!==batch.length||translated.some(function(item){return typeof item!=="string"}))throw new Error("The translation service returned an invalid response.");
+   batch.forEach(function(item,index){translationCache[item.key]=decodeTranslation(translated[index])});
+  }
+  if(run!==S.translationRun)return;
+  candidates.forEach(function(item){item.applies.forEach(function(apply){apply(translationCache[item.key])})});
+  translationStatus(oversized?"Public text translated; some unusually long content was left in English. Private messages and account/contact details were not sent.":"Public text translated. Private messages and account/contact details were not sent.");
+ })().catch(function(error){
+  if(run===S.translationRun){console.error("Site translation failed.",error);translationStatus("Translation is unavailable. The original text remains.")};
+ }).finally(function(){
+  S.translationRunning=false;
+  if(S.translationPending){S.translationPending=false;scheduleTranslation()}
+ });
+}
+function initLanguage(){
+ var control=$("#siteLanguage");if(!control)return;
+ control.value=S.language;
+ document.documentElement.lang=S.language+"-ZA";
+ control.onchange=function(){
+  var next=LANGUAGES.some(function(language){return language.code===control.value})?control.value:"en";
+  S.language=next;S.translationRun++;S.translationPending=false;
+  try{localStorage.setItem("mc-language",next)}catch(e){}
+  document.documentElement.lang=next+"-ZA";
+  restoreOriginalTranslations();
+  if(next==="en")translationStatus("");
+  else translationStatus("Public site and Circle text will be sent to Google Cloud Translation. Private content is excluded.");
+  scheduleTranslation();
+ };
+ if(window.MutationObserver){
+  new MutationObserver(function(records){
+   var changed=false;
+   records.forEach(function(record){
+    if(record.type==="characterData"){
+     if(translationWrites.has(record.target)){translationWrites.delete(record.target);return}
+     if(!translationExcluded(record.target.parentElement)){translatedSources.set(record.target,record.target.data);changed=true}
+    }else if(!translationExcluded(record.target.nodeType===1?record.target:record.target.parentElement))changed=true;
+   });
+   if(changed&&S.language!=="en")scheduleTranslation();
+  }).observe(document.body,{childList:true,characterData:true,subtree:true});
+ }
+}
 function saveProg(){try{localStorage.setItem("mc-progress",JSON.stringify(S.prog))}catch(e){}}
 function fmtDate(d){try{return new Date(d+"T00:00:00").toLocaleDateString("en-ZA",{day:"numeric",month:"short",year:"numeric"})}catch(e){return d}}
 function localDateTime(d){d=d||new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16)}
@@ -574,14 +757,17 @@ function searchIndex(){
  var a=[
   {t:"Cricket league and table",d:"Splendid Sports youth cricket, standings and fixtures",r:"cricket",k:"Page"},
   {t:"Reading circles",d:"Boomerang reading for enjoyment for schools, libraries and communities",r:"reading",k:"Page"},
+  {t:"Our vision and mission",d:"About Mini Circles, positive youth pathways, education, employment and sport",r:"about",k:"About"},
+  {t:"Create a Circle",d:"For organisations and adult community leaders who want to start a local Circle",r:"communities",k:"Partner"},
   {t:"Press releases",d:"News, announcements and media",r:"press",k:"Page"},
   {t:"Sign up a cricket team",d:"Register a new team for the league",r:"join",j:"cricket",k:"Sign up"},
-  {t:"Start a reading circle",d:"Register a school, library or community reading circle",r:"join",j:"reading",k:"Sign up"},
+  {t:"Register a reading circle",d:"Register interest for a school, library or community reading circle",r:"join",j:"reading",k:"Sign up"},
   {t:"Stakeholder dashboard",d:"Cricket tutorials, reading club training and resources (sign-in)",r:"dashboard",k:"Dashboard"}];
  pressList().forEach(function(p){a.push({t:p.title,d:p.summary||"",r:"press",k:"Press"})});
  Object.keys(GROUPS).forEach(function(g){(groupsData()[g]||[]).forEach(function(x){a.push({t:x.n,d:GROUPS[g]+" cricket team",r:"cricket",g:g,k:"Team"})})});
  CRICKET.forEach(function(l){a.push({t:l.t,d:l.sum,r:"dashboard",dt:"cricket",k:"Tutorial"})});
  READING.forEach(function(l){a.push({t:l.t,d:l.sum,r:"dashboard",dt:"reading",k:"Training"})});
+ circlesList().forEach(function(c){a.push({t:c.name,d:(c.type||"Circle")+" · "+(c.area||"Community"),r:"communities",circle:c.id,k:"Circle"})});
  return a;
 }
 function runSearch(q){
@@ -589,21 +775,21 @@ function runSearch(q){
  if(!q){box.innerHTML="";return}
  var words=q.split(/\s+/);
  var hits=searchIndex().filter(function(x){var s=(x.t+" "+x.d+" "+x.k).toLowerCase();return words.every(function(w){return s.indexOf(w)>-1})}).slice(0,8);
- box.innerHTML=hits.length?'<ul class="results">'+hits.map(function(h){return '<li><a href="#'+h.r+'" data-go="'+h.r+'"'+(h.j?' data-join="'+h.j+'"':'')+(h.g?' data-group="'+h.g+'"':'')+(h.dt?' data-dash="'+h.dt+'"':'')+'><span><b>'+esc(h.t)+'</b><small>'+esc(h.d)+'</small></span><em>'+esc(h.k)+'</em></a></li>'}).join("")+'</ul>':'<div class="msg" style="margin-top:10px">Nothing found for "'+esc(q)+'". Try "cricket", "reading" or a team name.</div>';
+ box.innerHTML=hits.length?'<ul class="results">'+hits.map(function(h){return '<li><a href="#'+h.r+'" data-go="'+h.r+'"'+(h.j?' data-join="'+h.j+'"':'')+(h.g?' data-group="'+h.g+'"':'')+(h.dt?' data-dash="'+h.dt+'"':'')+(h.circle?' data-circle-open="'+esc(h.circle)+'"':'')+'><span><b>'+esc(h.t)+'</b><small>'+esc(h.d)+'</small></span><em>'+esc(h.k)+'</em></a></li>'}).join("")+'</ul>':'<div class="msg" style="margin-top:10px">Nothing found for "'+esc(q)+'". Try "cricket", "reading", "education", "skills" or a Circle name.</div>';
 }
 
 /* ---------- pages ---------- */
 function slidesHTML(){
  var d=[
-  {c:"s1",k:"Mini Circles",h:"Read for fun. Play for keeps.",p:"Reading circles and a youth cricket league from The Mlungisi Mashinini Foundation.",a:[["Get a team in","join","cricket"],["Start a circle","join","reading",1]]},
+  {c:"s1",k:"Mini Circles · The Mlungisi Mashinini Foundation",h:"Read, play and grow together.",p:"We bring young people and the adults around them together through reading, sport and welcoming community spaces.",a:[["Our vision & mission","about"],["Find a Circle","communities",null,1]]},
   {c:"s2",k:"Splendid Sports",h:"The league table is live.",p:"See who leads your age group, check the fixtures and bring your team along.",a:[["See the league","cricket"],["Sign up a team","join","cricket",1]]},
-  {c:"s3",k:"Boomerang",h:"Your next favourite book is waiting.",p:"Join or start a reading circle at school, in the library or at home, in any language you like.",a:[["Explore reading","reading"],["Start a circle","join","reading",1]]},
+  {c:"s3",k:"Boomerang",h:"Your next favourite book is waiting.",p:"Read, share and talk about books with your school, library or community, in any language you like.",a:[["Explore reading","reading"],["Register a reading circle","join","reading",1]]},
   {c:"s4",k:"Newsroom",h:"The latest from the foundation.",p:"Press releases, partner news and announcements, easy to search.",a:[["Read press releases","press"],["Open dashboard","dashboard",null,1]]}];
  return d.map(function(s,i){return '<div class="slide '+s.c+'" role="group" aria-roledescription="slide" aria-label="'+(i+1)+' of '+d.length+'"><div class="rings" aria-hidden="true"><i></i><i></i><i></i></div><span class="k">'+s.k+'</span><h1>'+s.h+'</h1><p>'+s.p+'</p><div class="acts">'+s.a.map(function(a){return '<a class="btn'+(a[3]?' ghost':'')+'" href="#'+a[1]+'" data-go="'+a[1]+'"'+(a[2]?' data-join="'+a[2]+'"':'')+'>'+a[0]+'</a>'}).join("")+'</div></div>'}).join("");
 }
 function profileSetupHTML(){
  if(!S.signedIn||S.profileComplete)return"";
- return '<section class="panel profile-setup"><div><span class="eyebrow">Quick profile</span><h2 style="font-size:1.35rem">Make your feed yours</h2><p class="note">Add a name and choose what interests you. You can update this later.</p></div><form id="profileForm" style="display:grid;gap:12px"><div class="field"><label for="profileName">Display name</label><input id="profileName" maxlength="60" required value="'+esc(S.me&&S.me.name||"")+'"></div><fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:600;margin-bottom:6px">Interests</legend><div class="interest-list"><label class="check"><input type="checkbox" name="interest" value="Cricket"'+(S.me&&S.me.interests&&S.me.interests.indexOf("Cricket")>-1?" checked":"")+'>Cricket</label><label class="check"><input type="checkbox" name="interest" value="Reading"'+(S.me&&S.me.interests&&S.me.interests.indexOf("Reading")>-1?" checked":"")+'>Reading</label></div></fieldset><div><button class="btn sm" type="submit">Save profile</button> <button class="btn line sm" type="button" id="skipProfile">Do this later</button></div><span id="profileMsg" class="note" aria-live="polite"></span></form></section>';
+ return '<section class="panel profile-setup"><div><span class="eyebrow">Quick profile</span><h2 style="font-size:1.35rem">Make your feed yours</h2><p class="note">Add a name and choose what interests you. You can update this later.</p></div><form id="profileForm" style="display:grid;gap:12px"><div class="field"><label for="profileName">Display name</label><input id="profileName" maxlength="60" required value="'+esc(S.me&&S.me.name||"")+'"></div><fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:600;margin-bottom:6px">Interests</legend><div class="interest-list">'+CIRCLE_TYPES.map(function(type){return '<label class="check"><input type="checkbox" name="interest" value="'+esc(type)+'"'+(S.me&&S.me.interests&&S.me.interests.indexOf(type)>-1?" checked":"")+'>'+esc(type)+'</label>'}).join("")+'</div></fieldset><div><button class="btn sm" type="submit">Save profile</button> <button class="btn line sm" type="button" id="skipProfile">Do this later</button></div><span id="profileMsg" class="note" aria-live="polite"></span></form></section>';
 }
 function updatesHTML(){
  var updates=siteUpdates();
@@ -678,27 +864,38 @@ function renderFeed(){
 }
 function feedPage(){
  if(!S.siteSettings.feed_enabled)return '<div class="wrap"><div class="msg warn">The personalised feed is temporarily disabled by the Site Admin.</div></div>';
- return '<div class="wrap feed-page">'+profileSetupHTML()+'<div class="feed-page-head"><div><span class="eyebrow">Circles and community updates</span><h1>Personalised feed</h1><p class="note">Posts from Circles you follow and recommendations based on your interests.</p></div><a class="btn alt sm" href="#communities" data-go="communities">Explore Circles</a></div><div class="feed-tabs" role="tablist" aria-label="Feed"><button class="chip" role="tab" data-feed="following" aria-selected="'+(S.feedTab==="following")+'">Following</button><button class="chip" role="tab" data-feed="recommended" aria-selected="'+(S.feedTab==="recommended")+'">For you</button><button class="chip" role="tab" data-feed="saved" aria-selected="'+(S.feedTab==="saved")+'">Saved</button></div><div class="feed" id="feedList"></div></div>';
+ var signInPrompt=S.signedIn?"":'<div class="msg">Browsing as a visitor? <a href="#dashboard" data-go="dashboard">Sign in or create an account</a> to follow Circles, comment and save updates.</div>';
+ return '<div class="wrap feed-page">'+profileSetupHTML()+signInPrompt+'<div class="feed-page-head"><div><span class="eyebrow">Circles and community updates</span><h1>Community feed</h1><p class="note">Posts from Circles you follow and recommendations based on your interests.</p></div><a class="btn alt sm" href="#communities" data-go="communities">Explore Circles</a></div><div class="feed-tabs" role="tablist" aria-label="Feed"><button class="chip" role="tab" data-feed="following" aria-selected="'+(S.feedTab==="following")+'">Following</button><button class="chip" role="tab" data-feed="recommended" aria-selected="'+(S.feedTab==="recommended")+'">For you</button><button class="chip" role="tab" data-feed="saved" aria-selected="'+(S.feedTab==="saved")+'">Saved</button></div><div class="feed" id="feedList"></div></div>';
 }
 function homePage(){
  var quickCards=[];
  if(S.siteSettings.feed_enabled)quickCards.push('<a class="pathway-card" href="#feed" data-go="feed"><span class="pathway-number">01</span><b>Explore the feed</b><span>Discover posts, updates and ideas.</span></a>');
  if(S.siteSettings.circles_enabled)quickCards.push('<a class="pathway-card" href="#communities" data-go="communities"><span class="pathway-number">02</span><b>Find a Circle</b><span>Explore groups or share a community page.</span></a>');
  quickCards.push('<a class="pathway-card" href="#join" data-go="join" data-join="cricket"><span class="pathway-number">03</span><b>Join a programme</b><span>Register a cricket team or reading circle.</span></a>');
- quickCards.push('<a class="pathway-card" href="#dashboard" data-go="dashboard"><span class="pathway-number">04</span><b>For schools & partners</b><span>Training, session plans and stakeholder access.</span></a>');
+ quickCards.push('<a class="pathway-card" href="#dashboard" data-go="dashboard"><span class="pathway-number">04</span><b>For organisations</b><span>Sign in, request access or partner to start a Circle.</span></a>');
  var quickPaths='<section class="content-group" aria-labelledby="pathwaysTitle"><div class="sec-head"><div><span class="eyebrow">Start here</span><h2 id="pathwaysTitle">What would you like to do?</h2><p>Find your next step in three clicks or less.</p></div></div><div class="pathway-grid">'+quickCards.join("")+'</div></section>';
+ var aboutTeaser='<section class="content-group about-teaser"><div><span class="eyebrow">Why Mini Circles</span><h2>Small circles. Brighter futures.</h2><p>We bring young people and the adults around them together through reading, sport and welcoming community spaces. Discover our vision, mission and ways to get involved.</p></div><a class="btn alt" href="#about" data-go="about">Our vision & mission</a></section>';
  var newsGroup='<section class="content-group" aria-labelledby="newsTitle"><div class="sec-head"><div><span class="eyebrow">News & dates</span><h2 id="newsTitle">What is happening</h2><p>Foundation announcements, upcoming events and the latest stories.</p></div></div>'+(S.siteSettings.events_enabled?'<div id="homeUpdates">'+updatesHTML()+'</div>':'')+'<div class="sec-head" style="margin-top:22px"><div><span class="eyebrow">From the newsroom</span><h3>Latest press</h3></div><a class="btn alt sm" href="#press" data-go="press">All press releases</a></div><div class="cards" id="homePress"></div></section>';
- var programmeGroup='<section class="content-group" id="programmes" aria-labelledby="programmesTitle"><div class="sec-head"><div><span class="eyebrow">Explore programmes</span><h2 id="programmesTitle">Read, play and grow together</h2><p>Two practical pathways for young people, families and community organisations.</p></div></div><div class="impact-strip" aria-label="Mini Circles programmes"><div class="impact"><i>3</i><div><b>Age groups</b><span>Under 11, 13 and 15 cricket</span></div></div><div class="impact"><i>2</i><div><b>Ways to take part</b><span>Sport and reading, together</span></div></div><div class="impact"><i>1</i><div><b>Shared purpose</b><span>Every team and circle matters</span></div></div></div><div class="programme-grid"><article class="programme-card navy"><span class="badge">Sport</span><h3 style="font-size:1.55rem;margin-top:10px">Take the field</h3><p>Join a youth cricket team, find coaching guidance and follow every result in a fair, friendly league.</p><a class="btn" href="#join" data-go="join" data-join="cricket">Sign up a team</a></article><article class="programme-card red"><span class="badge">Literacy</span><h3 style="font-size:1.55rem;margin-top:10px">Open a new story</h3><p>Start a reading circle for your school or community, in a language and format members choose.</p><a class="btn" href="#join" data-go="join" data-join="reading">Start a circle</a></article></div></section>';
+ var programmeGroup='<section class="content-group" id="programmes" aria-labelledby="programmesTitle"><div class="sec-head"><div><span class="eyebrow">Explore programmes</span><h2 id="programmesTitle">Read, play and grow together</h2><p>Our current programmes give young people practical ways to learn, belong and thrive.</p></div></div><div class="impact-strip" aria-label="Mini Circles programmes"><div class="impact"><i>3</i><div><b>Age groups</b><span>Under 11, 13 and 15 cricket</span></div></div><div class="impact"><i>2</i><div><b>Active programmes</b><span>Youth cricket and reading circles</span></div></div><div class="impact"><i>1</i><div><b>Shared purpose</b><span>Every team and circle matters</span></div></div></div><div class="programme-grid"><article class="programme-card navy"><span class="badge">Sport</span><h3 style="font-size:1.55rem;margin-top:10px">Take the field</h3><p>Join a youth cricket team, find coaching guidance and follow every result in a fair, friendly league.</p><a class="btn" href="#join" data-go="join" data-join="cricket">Sign up a team</a></article><article class="programme-card red"><span class="badge">Literacy</span><h3 style="font-size:1.55rem;margin-top:10px">Open a new story</h3><p>Start a reading circle for your school or community, in a language and format members choose.</p><a class="btn" href="#join" data-go="join" data-join="reading">Register a reading circle</a></article></div></section>';
  var leagueGroup='<section class="content-group"><div class="sec-head"><div><span class="eyebrow">Splendid Sports</span><h2>Youth cricket league</h2><p>Check the age-group standings and see how teams are progressing.</p></div><a class="btn alt sm" href="#cricket" data-go="cricket">Fixtures and details</a></div><div data-league="compact"></div></section>';
- var partnerGroup='<section class="content-group"><div class="sec-head"><div><span class="eyebrow">For organisations</span><h2>Built for schools, libraries and community partners</h2><p>Useful resources and straightforward ways to take part—without a complicated setup.</p></div></div><div class="audience-grid"><article class="audience-card"><span class="badge soft">Schools & libraries</span><h3 style="margin-top:10px">Make reading social</h3><p>Set up a book circle, welcome home-language reading and access facilitator training.</p><a class="btn alt sm" style="margin-top:12px" href="#join" data-go="join" data-join="reading">Start a reading circle</a></article><article class="audience-card"><span class="badge soft">Clubs & NPOs</span><h3 style="margin-top:10px">Grow a local community</h3><p>Share a Circle page, post updates and coordinate with members and supporters.</p><a class="btn alt sm" style="margin-top:12px" href="#communities" data-go="communities">Explore Circles</a></article><article class="audience-card"><span class="badge soft">Sport bodies & partners</span><h3 style="margin-top:10px">Support youth participation</h3><p>Find league information, practical session plans and a clear route to partner access.</p><a class="btn alt sm" style="margin-top:12px" href="#dashboard" data-go="dashboard">Partner dashboard</a></article></div></section>';
+ var partnerGroup='<section class="content-group"><div class="sec-head"><div><span class="eyebrow">For organisations</span><h2>Built for schools, libraries and community partners</h2><p>Useful resources and straightforward ways to take part—without a complicated setup.</p></div></div><div class="audience-grid"><article class="audience-card"><span class="badge soft">Schools & libraries</span><h3 style="margin-top:10px">Make reading social</h3><p>Set up a book circle, welcome home-language reading and access facilitator training.</p><a class="btn alt sm" style="margin-top:12px" href="#join" data-go="join" data-join="reading">Register a reading circle</a></article><article class="audience-card"><span class="badge soft">Clubs & NPOs</span><h3 style="margin-top:10px">Grow a local community</h3><p>Share a Circle page, post updates and coordinate with members and supporters.</p><a class="btn alt sm" style="margin-top:12px" href="#communities" data-go="communities">Explore Circles</a></article><article class="audience-card"><span class="badge soft">Sport bodies & partners</span><h3 style="margin-top:10px">Support youth participation</h3><p>Find league information, practical session plans and a clear route to partner access.</p><a class="btn alt sm" style="margin-top:12px" href="#dashboard" data-go="dashboard">Partner dashboard</a></article></div></section>';
  return '<div class="wrap">'+profileSetupHTML()+
- '<div class="banner" id="banner" role="region" aria-roledescription="carousel" aria-label="Featured news"><div class="track" id="track">'+slidesHTML()+'</div>'+
+ '<div class="banner" id="banner" role="region" aria-roledescription="carousel" aria-label="Mini Circles highlights"><div class="track" id="track">'+slidesHTML()+'</div>'+
  '<div class="bnav"><div class="dots" id="dots">'+[0,1,2,3].map(function(i){return '<button class="dot" data-slide="'+i+'" aria-label="Go to slide '+(i+1)+'"></button>'}).join("")+'</div>'+
  '<button class="ctl" id="bpause" aria-label="Pause slideshow">'+ICON.pause+'</button><button class="ctl" id="bprev" aria-label="Previous slide">'+ICON.prev+'</button><button class="ctl" id="bnext" aria-label="Next slide">'+ICON.next+'</button></div></div>'+
  '<section style="margin-top:22px"><div class="search"><label class="sr" for="gsearch">Search the site</label>'+ICON.search+'<input id="gsearch" type="search" placeholder="Search Circles, events, teams or lessons&hellip;" autocomplete="off"></div><div id="searchRes" aria-live="polite"></div></section>'+
- quickPaths+newsGroup+programmeGroup+leagueGroup+partnerGroup+
+ aboutTeaser+quickPaths+newsGroup+programmeGroup+leagueGroup+partnerGroup+
  '<section><div class="trust-strip"><b>Built for real participation</b><span>Adult-led sign-up</span><span>Clear safeguarding</span><span>Free learning resources</span><span>Community-first programmes</span></div></section>'+
  '</div>';
+}
+function aboutPage(){
+ return '<div class="wrap"><div class="community-hero about-hero"><span class="eyebrow" style="color:#FFC20E">About Mini Circles</span><h1>Small circles can open big possibilities.</h1><p>Mini Circles is the community platform of The Mlungisi Mashinini Foundation. It connects young people with caring adults, local organisations and practical opportunities to learn, play and grow.</p><div class="acts"><a class="btn" href="#communities" data-go="communities">Find or start a Circle</a><a class="btn ghost" href="#dashboard" data-go="dashboard">Sign in or partner with us</a></div></div>'+
+ '<section class="content-group" aria-labelledby="purposeTitle"><div class="sec-head"><div><span class="eyebrow">Our purpose</span><h2 id="purposeTitle">A shared vision, brought to life locally</h2><p>People and organisations can make a lasting difference when they have welcoming spaces to take action together.</p></div></div><div class="purpose-grid"><article class="purpose-card"><span class="badge">Our vision</span><h3>A future full of possibility</h3><p>Every child and young person can learn, belong, build confidence and shape a hopeful future, wherever they live.</p></article><article class="purpose-card"><span class="badge soft">Our mission</span><h3>Bring people together to make it happen</h3><p>We connect young people, families, schools, clubs, libraries and community organisations through safe, adult-led Circles, useful resources and shared action.</p></article></div></section>'+
+ '<section class="content-group" aria-labelledby="outcomesTitle"><div class="sec-head"><div><span class="eyebrow">What we want to make possible</span><h2 id="outcomesTitle">Positive pathways for young people</h2><p>Reading and youth cricket are our active programmes today. With partners, local Circles can also help young people explore other positive interests and future opportunities.</p></div></div><div class="outcome-grid"><article class="outcome-card"><span class="outcome-mark">01</span><h3>Education &amp; learning</h3><p>Build curiosity, confidence and a love of learning through shared reading and new skills.</p><span class="badge soft">Reading circles active</span></article><article class="outcome-card"><span class="outcome-mark">02</span><h3>Sport &amp; wellbeing</h3><p>Move, play fairly, work as a team and make healthy connections in a supportive space.</p><span class="badge soft">Youth cricket active</span></article><article class="outcome-card"><span class="outcome-mark">03</span><h3>Skills &amp; employment</h3><p>Make room for mentoring, practical skills and conversations about future study and work, with the right partners.</p><span class="badge soft">Partner-led opportunity</span></article><article class="outcome-card"><span class="outcome-mark">04</span><h3>Belonging &amp; community</h3><p>Give young people a place to share ideas, support one another and contribute locally.</p><span class="badge soft">Circles make it local</span></article></div></section>'+
+ '<section class="content-group" aria-labelledby="peopleTitle"><div class="sec-head"><div><span class="eyebrow">A place for everyone</span><h2 id="peopleTitle">How you can take part</h2></div></div><div class="audience-grid"><article class="audience-card"><span class="badge soft">Young people &amp; families</span><h3 style="margin-top:10px">Find a welcoming space</h3><p>Explore a Circle, follow updates and join in through a trusted adult-led community.</p><a class="btn alt sm" style="margin-top:12px" href="#communities" data-go="communities">Explore Circles</a></article><article class="audience-card"><span class="badge soft">Schools, clubs &amp; organisations</span><h3 style="margin-top:10px">Start a Circle together</h3><p>Bring your local knowledge and people. Request Circle Manager access, then create and lead a community around a positive interest.</p><a class="btn alt sm" style="margin-top:12px" href="#dashboard" data-go="dashboard">Partner or request access</a></article><article class="audience-card"><span class="badge soft">Independent community leaders</span><h3 style="margin-top:10px">Turn an idea into action</h3><p>Sign in, share your interest and ask the Foundation about setting up an adult-led Circle in your area.</p><a class="btn alt sm" style="margin-top:12px" href="#dashboard" data-go="dashboard">Sign in or get started</a></article></div></section>'+
+ '<section class="content-group"><div class="sec-head"><div><span class="eyebrow">Tools that support the work</span><h2>Clear roles, useful controls</h2></div></div><div class="audience-grid"><article class="audience-card"><span class="badge soft">Members</span><h3 style="margin-top:10px">Take part</h3><p>Follow Circles, share updates, reply to posts and shape a feed around your interests.</p></article><article class="audience-card"><span class="badge soft">Circle Admins &amp; Moderators</span><h3 style="margin-top:10px">Care for a community</h3><p>Circle Admins manage details, members and roles. Moderators review posts and replies so conversations stay respectful.</p></article><article class="audience-card"><span class="badge soft">Site Admins</span><h3 style="margin-top:10px">Support the platform</h3><p>Manage announcements, member accounts, platform settings and the public programme information.</p></article></div></section>'+
+ '<section class="content-group"><div class="sec-head"><div><span class="eyebrow">A simple journey</span><h2>From first visit to shared impact</h2></div></div><ol class="steps"><li><span><b>Explore.</b> Learn about the programmes, browse local Circles and see community updates.</span></li><li><span><b>Join in.</b> Sign in to follow a Circle, take part in the feed or register a team or reading circle.</span></li><li><span><b>Lead locally.</b> Organisations and adult community leaders can request access to create and manage a Circle.</span></li><li><span><b>Grow together.</b> Share useful updates, invite members and build a safe, positive space for young people.</span></li></ol></section>'+
+ '<section><div class="trust-strip"><b>Our commitment</b><span>Adult-led participation</span><span>Inclusive and welcoming</span><span>Youth-first opportunities</span><span>Never collect learner ID numbers</span></div></section></div>';
 }
 function cricketPage(){
  return '<div class="wrap"><div class="sec-head" style="margin-top:6px"><div><span class="eyebrow">Splendid Sports</span><h2>Youth cricket</h2><p style="margin-top:8px">A grassroots league for Under 11, Under 13 and Under 15 teams. Every match day starts and ends with a handshake.</p></div><a class="btn" href="#join" data-go="join" data-join="cricket">Sign up a team</a></div>'+
@@ -709,7 +906,7 @@ function cricketPage(){
  '<div class="card"><h3>For sport departments and clubs</h3><p>A simple way to see grassroots participation: teams registered by age group, results recorded after every match day, and a coaching pathway.</p><a class="btn alt" href="#press" data-go="press">Read our news</a></div></div></section></div>';
 }
 function readingPage(){
- return '<div class="wrap"><div class="sec-head" style="margin-top:6px"><div><span class="eyebrow">Boomerang</span><h2>Reading circles</h2><p style="margin-top:8px">Small groups that meet to read and talk about books they chose. No tests, no marks, and any language members are comfortable with.</p></div><a class="btn" href="#join" data-go="join" data-join="reading">Start a circle</a></div>'+
+ return '<div class="wrap"><div class="sec-head" style="margin-top:6px"><div><span class="eyebrow">Boomerang</span><h2>Reading circles</h2><p style="margin-top:8px">Small groups that meet to read and talk about books they chose. No tests, no marks, and any language members are comfortable with.</p></div><a class="btn" href="#join" data-go="join" data-join="reading">Register a reading circle</a></div>'+
  '<section style="margin-top:20px"><div class="two"><div class="panel"><h3>How a circle runs</h3><ol class="steps" style="margin-top:12px"><li><span><b>Gather.</b> 6 to 10 members meet at the same time each week.</span></li><li><span><b>Read.</b> Read aloud, in pairs or quietly from a book the group chose.</span></li><li><span><b>Talk.</b> Open questions with no wrong answers.</span></li><li><span><b>Choose.</b> Vote on the next book together.</span></li></ol></div>'+
  '<div class="panel"><h3>Find the right format</h3><div class="field" style="margin-top:12px"><label for="fmtAge">Who is the circle for?</label><select id="fmtAge"><option value="a">Primary school learners</option><option value="b">High school learners and teens</option><option value="c">Mixed ages or families</option></select></div><div class="msg" id="fmtOut" style="margin-top:14px" aria-live="polite"></div><a class="btn" style="margin-top:14px" href="#join" data-go="join" data-join="reading">Register this circle</a></div></div></section>'+
  '<section><div class="two"><div class="panel"><span class="eyebrow">For schools and education departments</span><h3>Why reading for enjoyment</h3><ul style="margin:10px 0 0;padding-left:18px;color:var(--muted)"><li>Learners choose what they read, which builds the habit.</li><li>Home-language reading is welcome and encouraged.</li><li>Circles run after school, in a library period or in the community.</li><li>Facilitators receive free training and a session plan.</li></ul></div>'+
@@ -825,17 +1022,17 @@ function filteredCircles(){
 }
 function circleCard(c){
  var member=S.memberships.some(function(m){return m.circle_id===c.id});
- var cls=c.type==="Reading"?"reading":"cricket";
+ var cls=slugify(c.type);
  return '<article class="circle-card '+cls+' '+(c.featured?"featured":"")+'"><span class="badge soft">'+esc(c.type)+'</span><div class="circle-card-heading">'+circleAvatarHTML(c)+'<h3>'+esc(c.name)+'</h3></div><p class="note">'+esc(c.description||"")+'</p><div class="circle-meta"><span>'+esc(c.area||"Community")+'</span><span>&bull;</span><span>'+esc(c.members||0)+' members</span><span>&bull;</span><span>'+esc(c.status||"open")+'</span></div><div class="circle-actions"><button class="btn sm" type="button" data-circle-open="'+esc(c.id)+'">Enter circle</button><button class="btn alt sm" type="button" data-circle-follow="'+esc(c.id)+'">'+(member?"Following":"Join circle")+'</button><a class="btn line sm" href="#c/'+encodeURIComponent(c.slug||slugify(c.name))+'">Share page</a></div></article>';
 }
 function communitiesPage(){
  if(!S.siteSettings.circles_enabled)return '<div class="wrap"><div class="msg warn">Circle discovery is temporarily disabled by the Site Admin.</div></div>';
  var circles=filteredCircles();
  var canStartCircle=!S.client||(S.signedIn&&(S.canEdit||S.me&&S.me.circle_manager));
- var startButton=canStartCircle?'<button class="btn" type="button" data-open-create>Start a circle</button>':'<a class="btn" href="#dashboard" data-go="dashboard">Request Circle Admin access</a>';
- var createPanel=canStartCircle?'<section id="circleCreate" hidden><div class="grid2" style="align-items:start"><div class="panel"><h3>Create your own circle</h3><form id="createCircleForm" style="display:grid;gap:14px;margin-top:12px"><div class="grid2"><div class="field"><label for="circleName">Circle name</label><input id="circleName" required maxlength="80"></div><div class="field"><label for="circleKind">Circle type</label><select id="circleKind"><option>Cricket</option><option>Reading</option></select></div><div class="field"><label for="circleSlug">Share tag (optional)</label><input id="circleSlug" maxlength="60" placeholder="Generated from the Circle name"></div></div><div class="grid2"><div class="field"><label for="circleArea">Town or area</label><input id="circleArea" required maxlength="80"></div><div class="field"><label for="circleMeet">Usual meeting time</label><input id="circleMeet" maxlength="80" placeholder="Saturday 09:00"></div></div><div class="field"><label for="circleDescription">What will members do?</label><textarea id="circleDescription" required maxlength="400"></textarea></div>'+consent()+'<button class="btn" type="submit">Create circle</button><div id="createCircleMsg" aria-live="polite"></div></form></div><aside class="panel join-side"><span class="eyebrow">Circle manager essentials</span><h3>Lead with confidence</h3><div class="join-check"><i>1</i><span>Add an adult leader and adult contact.</span></div><div class="join-check"><i>2</i><span>Share plans, dates and useful resources.</span></div><div class="join-check"><i>3</i><span>Invite members and moderate discussion.</span></div></aside></div></section>':'';
- return '<div class="wrap"><div class="community-hero"><span class="eyebrow" style="color:#FFC20E">Mini Circles community</span><h1>Find your people. Start something meaningful.</h1><p>Follow cricket and reading circles near you, meet adult-led groups and create a circle that grows into a community.</p>'+startButton+'</div>'+
- '<section><div class="sec-head"><div><span class="eyebrow">Explore circles</span><h2>There is room to belong</h2></div></div><div class="directory-tools"><div class="field"><label for="circleSearch">Search</label><input id="circleSearch" type="search" placeholder="Name, area or activity" value="'+esc(S.circleQuery)+'"></div><div class="field" style="flex:0 1 180px"><label for="circleType">Type</label><select id="circleType"><option'+(S.circleType==="All"?" selected":"")+'>All</option><option'+(S.circleType==="Cricket"?" selected":"")+'>Cricket</option><option'+(S.circleType==="Reading"?" selected":"")+'>Reading</option></select></div></div><div class="circle-grid" id="circleGrid" style="margin-top:14px">'+(circles.length?circles.map(circleCard).join(""):'<div class="msg">No Circles match this search yet.</div>')+'</div></section>'+
+ var startButton=canStartCircle?'<button class="btn" type="button" data-open-create>Start a circle</button>':'<a class="btn" href="#dashboard" data-go="dashboard">Partner with us to start a Circle</a>';
+ var createPanel=canStartCircle?'<section id="circleCreate" hidden><div class="grid2" style="align-items:start"><div class="panel"><h3>Create a Circle for your community</h3><p class="note" style="margin-top:6px">Choose a focus, add an adult lead and describe the positive activities members will share.</p><form id="createCircleForm" style="display:grid;gap:14px;margin-top:12px"><div class="grid2"><div class="field"><label for="circleName">Circle name</label><input id="circleName" required maxlength="80"></div><div class="field"><label for="circleKind">Circle focus</label><select id="circleKind">'+CIRCLE_TYPES.map(function(type){return '<option>'+esc(type)+'</option>'}).join("")+'</select></div><div class="field"><label for="circleSlug">Share tag (optional)</label><input id="circleSlug" maxlength="60" placeholder="Generated from the Circle name"></div></div><div class="grid2"><div class="field"><label for="circleArea">Town or area</label><input id="circleArea" required maxlength="80"></div><div class="field"><label for="circleMeet">Usual meeting time</label><input id="circleMeet" maxlength="80" placeholder="Saturday 09:00"></div></div><div class="field"><label for="circleDescription">What will members do?</label><textarea id="circleDescription" required maxlength="400"></textarea></div>'+consent()+'<button class="btn" type="submit">Create Circle</button><div id="createCircleMsg" aria-live="polite"></div></form></div><aside class="panel join-side"><span class="eyebrow">Circle manager essentials</span><h3>Lead with confidence</h3><div class="join-check"><i>1</i><span>Choose an adult leader responsible for the Circle.</span></div><div class="join-check"><i>2</i><span>Set a welcoming purpose and share useful updates.</span></div><div class="join-check"><i>3</i><span>Invite members and keep discussion safe and positive.</span></div></aside></div></section>':'';
+ return '<div class="wrap"><div class="community-hero"><span class="eyebrow" style="color:#FFC20E">Mini Circles community</span><h1>Find your people. Start something meaningful.</h1><p>Explore local groups or bring your organisation and community together around reading, education, sport, skills and other positive interests. Circle creation is for signed-in, approved adult leaders.</p>'+startButton+'</div>'+
+ '<section><div class="sec-head"><div><span class="eyebrow">Explore Circles</span><h2>There is room to belong</h2><p>Search by focus or area. Join a Circle to follow its member updates and take part.</p></div></div><div class="directory-tools"><div class="field"><label for="circleSearch">Search</label><input id="circleSearch" type="search" placeholder="Name, area or activity" value="'+esc(S.circleQuery)+'"></div><div class="field" style="flex:0 1 220px"><label for="circleType">Focus</label><select id="circleType"><option'+(S.circleType==="All"?" selected":"")+'>All</option>'+CIRCLE_TYPES.map(function(type){return '<option'+(S.circleType===type?" selected":"")+'>'+esc(type)+'</option>'}).join("")+'</select></div></div><div class="circle-grid" id="circleGrid" style="margin-top:14px">'+(circles.length?circles.map(circleCard).join(""):'<div class="msg">No Circles match this search yet.</div>')+'</div></section>'+
  '<section><div class="ad-slot" data-enabled="false"><div><b>Community partner</b><br><span>A sponsored youth programme can appear here.</span></div></div></section>'+
  createPanel+
  '<section id="circleDetail"><div id="circleDetailBody"></div></section></div>';
@@ -853,7 +1050,7 @@ function circleMembersHTML(circle){
  var members=S.circleMembersFor===String(circle.id)?S.circleMembers:[];
  var rows=members.map(function(m){var profile=S.directory.find(function(d){return d.id===m.user_id});return '<div class="member"><span><b>'+esc(profile&&profile.name||"Member")+'</b><br><small class="note">'+esc(m.role)+'</small></span></div>'}).join("");
  var options=S.directory.filter(function(d){return d.id!==S.me.id}).map(function(d){var existing=members.find(function(m){return m.user_id===d.id});return '<option value="'+esc(d.id)+'">'+esc(d.name)+(existing?" · "+esc(existing.role):"")+'</option>'}).join("");
- return '<div class="panel" style="display:grid;gap:12px;margin-top:14px"><div><span class="badge">Circle Admin tools</span><h3 style="margin-top:8px">Manage Circle details and roles</h3></div><form id="circleProfileImageForm" class="media-upload"><div>'+circleAvatarHTML(circle)+' <b>Organisation profile picture</b></div><div class="field"><label for="circleProfileImage">Upload a profile picture</label><input id="circleProfileImage" type="file" accept="image/jpeg,image/png,image/webp"><span class="note">JPEG, PNG or WebP; up to 20 MB.</span></div><button class="btn alt sm" type="submit">Save profile picture</button><span id="circleProfileImageMsg" class="note" aria-live="polite"></span></form><form id="circleEditForm" style="display:grid;gap:10px"><div class="grid2"><div class="field"><label for="editCircleName">Circle name</label><input id="editCircleName" maxlength="80" required value="'+esc(circle.name)+'"></div><div class="field"><label for="editCircleSlug">Unique share tag</label><input id="editCircleSlug" maxlength="60" required value="'+esc(circle.slug||slugify(circle.name))+'"></div><div class="field"><label for="editCircleArea">Area</label><input id="editCircleArea" maxlength="80" value="'+esc(circle.area||"")+'"></div><div class="field"><label for="editCircleMeeting">Meeting time</label><input id="editCircleMeeting" maxlength="80" value="'+esc(circle.meeting||"")+'"></div></div><div class="field"><label for="editCircleDescription">Description</label><textarea id="editCircleDescription" maxlength="400">'+esc(circle.description||"")+'</textarea></div><button class="btn sm" type="submit">Save Circle</button><span id="circleEditMsg" class="note" aria-live="polite"></span></form><div><h3>Member roles</h3><div class="member-list">'+(rows||'<p class="note">No members listed yet.</p>')+'</div><span id="circleMembersMsg" class="note" aria-live="polite"></span><form id="circleRoleForm" style="display:grid;gap:10px;margin-top:12px"><div class="field"><label for="circleRoleUser">Signed-in member</label><select id="circleRoleUser" required>'+options+'</select></div><div class="field"><label for="circleRoleValue">Role</label><select id="circleRoleValue"><option value="member">Member</option><option value="moderator">Moderator</option><option value="admin">Circle Admin</option><option value="remove">Remove from Circle</option></select></div><button class="btn alt sm" type="submit"'+(options?"":" disabled")+'>Save role</button><span id="circleRoleMsg" class="note" aria-live="polite"></span></form><button class="btn line sm danger" type="button" data-delete-circle="'+esc(circle.id)+'">Delete this Circle</button></div></div>';
+ return '<div class="panel" style="display:grid;gap:12px;margin-top:14px"><div><span class="badge">Circle Admin tools</span><h3 style="margin-top:8px">Manage Circle details and roles</h3></div><form id="circleProfileImageForm" class="media-upload"><div>'+circleAvatarHTML(circle)+' <b>Organisation profile picture</b></div><div class="field"><label for="circleProfileImage">Upload a profile picture</label><input id="circleProfileImage" type="file" accept="image/jpeg,image/png,image/webp"><span class="note">JPEG, PNG or WebP; up to 20 MB.</span></div><button class="btn alt sm" type="submit">Save profile picture</button><span id="circleProfileImageMsg" class="note" aria-live="polite"></span></form><form id="circleEditForm" style="display:grid;gap:10px"><div class="grid2"><div class="field"><label for="editCircleName">Circle name</label><input id="editCircleName" maxlength="80" required value="'+esc(circle.name)+'"></div><div class="field"><label for="editCircleSlug">Unique share tag</label><input id="editCircleSlug" maxlength="60" required value="'+esc(circle.slug||slugify(circle.name))+'"></div><div class="field"><label for="editCircleArea">Area</label><input id="editCircleArea" maxlength="80" value="'+esc(circle.area||"")+'"></div><div class="field"><label for="editCircleMeeting">Meeting time</label><input id="editCircleMeeting" maxlength="80" value="'+esc(circle.meeting||"")+'"></div></div><div class="field"><label for="editCircleDescription">Description</label><textarea id="editCircleDescription" maxlength="400">'+esc(circle.description||"")+'</textarea></div><button class="btn sm" type="submit">Save Circle</button><span id="circleEditMsg" class="note" aria-live="polite"></span></form><div><h3>Member roles</h3><div class="member-list" data-no-translate>'+(rows||'<p class="note">No members listed yet.</p>')+'</div><span id="circleMembersMsg" class="note" aria-live="polite"></span><form id="circleRoleForm" style="display:grid;gap:10px;margin-top:12px"><div class="field"><label for="circleRoleUser">Signed-in member</label><select id="circleRoleUser" data-no-translate required>'+options+'</select></div><div class="field"><label for="circleRoleValue">Role</label><select id="circleRoleValue"><option value="member">Member</option><option value="moderator">Moderator</option><option value="admin">Circle Admin</option><option value="remove">Remove from Circle</option></select></div><button class="btn alt sm" type="submit"'+(options?"":" disabled")+'>Save role</button><span id="circleRoleMsg" class="note" aria-live="polite"></span></form><button class="btn line sm danger" type="button" data-delete-circle="'+esc(circle.id)+'">Delete this Circle</button></div></div>';
 }
 function loadCircleMembers(circle){
  var id=String(circle.id);
@@ -1064,8 +1261,9 @@ function rolePortalHTML(){
 function usersAdminHTML(){
  if(!S.canEdit)return '<div class="msg warn">Site Admin access is required.</div>';
  var options=S.adminUsers.filter(function(d){return d.id!==S.me.id}).map(function(d){var label=(d.name?d.name+" · ":"")+(d.email||d.id.slice(0,8));return '<option value="'+esc(d.id)+'">'+esc(label)+'</option>'}).join("");
+ var managerOptions=S.adminUsers.filter(function(d){return d.id!==S.me.id&&!d.canEdit}).map(function(d){var label=(d.name?d.name+" · ":"")+(d.email||d.id.slice(0,8))+(d.circleManager?" · Circle Manager":"");return '<option value="'+esc(d.id)+'">'+esc(label)+'</option>'}).join("");
  var status=S.adminUsersError?'Admin user list failed to load: '+esc(S.adminUsersError):!S.adminUsersLoaded?"Loading all accounts…":options?"Select an account to remove.":"No other accounts are available.";
- return '<div class="panel" style="display:grid;gap:12px"><div><span class="eyebrow">Site Admin</span><h3>Member directory & account actions</h3><p class="note">This list is restricted to Site Admins. Account deletion is permanent: Circle memberships, authored replies and private messages are removed, and public Circle posts are anonymised.</p></div><div class="msg" id="userCount">'+(S.adminUsersLoaded?S.adminUsers.length+" accounts loaded.":"Loading accounts…")+'</div><form id="deleteUserForm" style="display:grid;gap:10px"><div class="field"><label for="deleteUserId">Account</label><select id="deleteUserId" required>'+options+'</select></div><button class="btn danger" type="submit"'+(options?"":" disabled")+'>Permanently delete account</button><span id="deleteUserMsg" class="note" role="status" aria-live="polite">'+status+'</span></form></div>';
+ return '<div class="panel" style="display:grid;gap:12px"><div><span class="eyebrow">Site Admin</span><h3>Member directory & account actions</h3><p class="note">Review partner requests in Sign-ups and grant Circle Manager access to approved adults here. Account deletion is permanent: Circle memberships, authored replies and private messages are removed, and public Circle posts are anonymised.</p></div><div class="msg" id="userCount">'+(S.adminUsersLoaded?S.adminUsers.length+" accounts loaded.":"Loading accounts…")+'</div><form id="circleManagerForm" style="display:grid;gap:10px"><div class="field"><label for="circleManagerUser">Approved member</label><select id="circleManagerUser" data-no-translate required>'+managerOptions+'</select></div><div class="field"><label for="circleManagerAction">Circle Manager access</label><select id="circleManagerAction"><option value="true">Grant access</option><option value="false">Revoke access</option></select></div><button class="btn alt" type="submit"'+(managerOptions?"":" disabled")+'>Save Circle Manager access</button><span id="circleManagerMsg" class="note" role="status" aria-live="polite">'+(S.adminUsersError?'Could not load accounts: '+esc(S.adminUsersError):!S.adminUsersLoaded?"Loading accounts…":managerOptions?"":"No eligible member accounts are available.")+'</span></form><form id="deleteUserForm" style="display:grid;gap:10px"><div class="field"><label for="deleteUserId">Account to delete</label><select id="deleteUserId" data-no-translate required>'+options+'</select></div><button class="btn danger" type="submit"'+(options?"":" disabled")+'>Permanently delete account</button><span id="deleteUserMsg" class="note" role="status" aria-live="polite">'+status+'</span></form></div>';
 }
 function siteSettingsHTML(){
  if(!S.canEdit)return '<div class="msg warn">Site Admin access is required.</div>';
@@ -1074,7 +1272,7 @@ function siteSettingsHTML(){
 }
 function messagesContentHTML(){
  var options=messageRecipientOptions();
- return '<div class="grid2" style="align-items:start"><form id="messageForm" class="panel" style="display:grid;gap:12px"><h3>New direct message</h3><div class="field"><label for="messageRecipient">Signed-in member</label><select id="messageRecipient" required>'+options+'</select></div><div class="field"><label for="messageBody">Message</label><textarea id="messageBody" maxlength="2000" required></textarea></div><button class="btn" type="submit"'+(options?"":" disabled")+'>Send message</button><span id="messageStatus" class="note" aria-live="polite">'+(options?"":"No other members are listed yet.")+'</span></form><section><h3 style="margin-bottom:10px">Inbox and sent</h3><div id="messagesList" class="feed">'+messagesListHTML()+'</div></section></div>';
+ return '<div class="grid2" style="align-items:start"><form id="messageForm" class="panel" style="display:grid;gap:12px"><h3>New direct message</h3><div class="field"><label for="messageRecipient">Signed-in member</label><select id="messageRecipient" data-no-translate required>'+options+'</select></div><div class="field"><label for="messageBody">Message</label><textarea id="messageBody" maxlength="2000" required></textarea></div><button class="btn" type="submit"'+(options?"":" disabled")+'>Send message</button><span id="messageStatus" class="note" aria-live="polite">'+(options?"":"No other members are listed yet.")+'</span></form><section><h3 style="margin-bottom:10px">Inbox and sent</h3><div id="messagesList" class="feed" data-no-translate>'+messagesListHTML()+'</div></section></div>';
 }
 function messageRecipientOptions(){return S.directory.filter(function(d){return !S.me||d.id!==S.me.id}).map(function(d){return '<option value="'+esc(d.id)+'">'+esc(d.name)+'</option>'}).join("")}
 function messagesListHTML(){
@@ -1089,13 +1287,17 @@ function signupsHTML(){
  if(!S.signups)return '<div class="msg">Loading sign-ups&hellip;</div>';
  var l=S.signups.slice().sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)});
  var c=l.filter(function(x){return x.type==="cricket"}).length,r=l.filter(function(x){return x.type==="reading"}).length,a=l.filter(function(x){return x.type==="access"}).length;
- var tbl=l.length?'<div class="tablewrap" tabindex="0" aria-label="Sign-ups"><table style="min-width:620px"><thead><tr><th>Type</th><th>Name</th><th>Contact</th><th>Details</th><th>Date</th></tr></thead><tbody>'+l.map(function(x){return '<tr><td style="text-align:left">'+esc(x.type)+'</td><td style="text-align:left;white-space:normal">'+esc(x.name)+'</td><td style="text-align:left;white-space:normal">'+esc(x.contactName)+'<br><span class="note">'+esc(x.contact)+'</span></td><td style="text-align:left;white-space:normal;min-width:220px">'+esc(x.summary)+'</td><td>'+esc(new Date(x.createdAt||0).toLocaleDateString("en-ZA"))+'</td></tr>'}).join("")+'</tbody></table></div>':'<div class="msg">No sign-ups yet. They appear here as soon as teams and circles register.</div>';
+ var tbl=l.length?'<div class="tablewrap" data-no-translate tabindex="0" aria-label="Sign-ups"><table style="min-width:620px"><thead><tr><th>Type</th><th>Name</th><th>Contact</th><th>Details</th><th>Date</th></tr></thead><tbody>'+l.map(function(x){return '<tr><td style="text-align:left">'+esc(x.type)+'</td><td style="text-align:left;white-space:normal">'+esc(x.name)+'</td><td style="text-align:left;white-space:normal">'+esc(x.contactName)+'<br><span class="note">'+esc(x.contact)+'</span></td><td style="text-align:left;white-space:normal;min-width:220px">'+esc(x.summary)+'</td><td>'+esc(new Date(x.createdAt||0).toLocaleDateString("en-ZA"))+'</td></tr>'}).join("")+'</tbody></table></div>':'<div class="msg">No sign-ups yet. They appear here as soon as teams and circles register.</div>';
  return '<div class="cards" style="margin-bottom:14px"><div class="card"><div class="stat">'+c+'</div><p>Cricket teams</p></div><div class="card"><div class="stat">'+r+'</div><p>Reading circles</p></div><div class="card"><div class="stat">'+a+'</div><p>Access requests</p></div></div>'+tbl+'<div style="margin-top:14px"><button class="btn alt sm" id="csvBtn" type="button"'+(l.length?'':' disabled')+'>Download as CSV</button> <span class="note" id="csvMsg"></span></div>';
+}
+function circleManagerRequestHTML(){
+ if(S.canEdit||S.me&&S.me.circle_manager)return "";
+ return '<section class="content-group"><div class="sec-head"><div><span class="eyebrow">Lead a community</span><h2>Want to start a Circle?</h2><p>Tell the Foundation about your organisation or local idea. We will review your request for Circle Manager access.</p></div></div><form id="joinForm" data-type="access" class="panel" style="display:grid;gap:14px"><div class="grid2"><div class="field"><label for="fName">Organisation or community group</label><input id="fName" required maxlength="80" placeholder="School, club, NPO or community group"></div><div class="field"><label for="fContactName">Your name</label><input id="fContactName" required maxlength="80" autocomplete="name" value="'+esc(S.me&&S.me.name||"")+'"></div></div><div class="field"><label for="fContact">Email or phone</label><input id="fContact" required maxlength="80" autocomplete="email" value="'+esc(S.me&&S.me.email||"")+'"></div><div class="field"><label for="fNotes">What kind of Circle would you like to lead?</label><textarea id="fNotes" maxlength="400" placeholder="For example: a reading, education, sport or skills Circle in your community."></textarea></div>'+consent()+'<button class="btn" type="submit">Request Circle Manager access</button><div id="joinMsg" aria-live="polite"></div></form></section>';
 }
 function dashPage(){
  if(!S.signedIn){
-  return '<div class="wrap"><div class="lock"><div class="panel" style="display:grid;gap:12px"><span class="eyebrow">Stakeholder dashboard</span><h2>Sign in to open the dashboard</h2><p class="note">The dashboard holds the cricket tutorials, reading club training and downloadable session plans for partners, schools, coaches and departments. Sign in with your account to continue.</p><form id="authForm" style="display:grid;gap:12px"><div class="field"><label for="authEmail">Email address</label><input id="authEmail" type="email" required autocomplete="email"></div><button class="btn" type="submit">Email me a sign-in link</button><div id="authMsg" class="note" aria-live="polite"></div></form><div class="msg warn" id="gateNote">Not signed in yet. If you have an account, use the link above.</div></div>'+
-  '<div class="panel"><h3>No account yet?</h3><p class="note" style="margin:6px 0 14px">Ask for stakeholder access and the foundation will get back to you.</p><form id="joinForm" data-type="access" style="display:grid;gap:14px"><div class="grid2"><div class="field"><label for="fName">Organisation</label><input id="fName" required maxlength="80" placeholder="School, department, club or partner"></div><div class="field"><label for="fContactName">Your name</label><input id="fContactName" required maxlength="80" autocomplete="name"></div></div><div class="field"><label for="fContact">Email or phone</label><input id="fContact" required maxlength="80" autocomplete="email"></div><div class="field"><label for="fNotes">What would you like to use? (optional)</label><textarea id="fNotes" maxlength="400"></textarea></div>'+consent()+'<div><button class="btn" type="submit">Request access</button></div></form><div id="joinMsg" aria-live="polite" style="margin-top:14px"></div></div></div></div>';
+  return '<div class="wrap"><div class="lock"><div class="panel" style="display:grid;gap:12px"><span class="eyebrow">Mini Circles account</span><h2>Sign in to your community</h2><p class="note">Use your email to join Circles, follow community updates and access your member tools. Coaches, facilitators, schools and partners can also find tutorials, training and session plans here.</p><form id="authForm" style="display:grid;gap:12px"><div class="field"><label for="authEmail">Email address</label><input id="authEmail" type="email" required autocomplete="email"></div><button class="btn" type="submit">Email me a sign-in link</button><div id="authMsg" class="note" aria-live="polite"></div></form><div class="msg warn" id="gateNote">We will email a secure link. New members can use this form to create an account, or explore Circles as a visitor.</div><a class="btn alt sm" style="justify-self:start" href="#communities" data-go="communities">Explore Circles</a></div>'+
+  '<div class="panel"><h3>New to Mini Circles?</h3><p class="note" style="margin:6px 0 14px">Request partner access, ask to manage a Circle or tell us how your organisation would like to support young people.</p><form id="joinForm" data-type="access" style="display:grid;gap:14px"><div class="grid2"><div class="field"><label for="fName">Organisation or community group</label><input id="fName" required maxlength="80" placeholder="School, department, club, NPO or community group"></div><div class="field"><label for="fContactName">Your name</label><input id="fContactName" required maxlength="80" autocomplete="name"></div></div><div class="field"><label for="fContact">Email or phone</label><input id="fContact" required maxlength="80" autocomplete="email"></div><div class="field"><label for="fNotes">How would you like to take part?</label><textarea id="fNotes" maxlength="400" placeholder="For example: create an education, sport or skills Circle; access partner resources; or support an existing programme."></textarea></div>'+consent()+'<div><button class="btn" type="submit">Request partner access</button></div></form><div id="joinMsg" aria-live="polite" style="margin-top:14px"></div></div></div></div>';
  }
  var tabs=[["overview","Overview"],["communities","My circles"]];
  if(S.siteSettings.messages_enabled)tabs.push(["messages","Messages"]);
@@ -1115,7 +1317,7 @@ function dashPage(){
   '<div class="cards" style="margin-top:18px"><div class="card"><h3>Cricket tutorials</h3>'+progBar(S.prog.c.length,CRICKET.length)+'<p>'+S.prog.c.length+' of '+CRICKET.length+' lessons complete</p><button class="btn alt" data-dash="cricket">Continue</button></div>'+
   '<div class="card"><h3>Reading club training</h3>'+progBar(S.prog.r.length,READING.length)+'<p>'+S.prog.r.length+' of '+READING.length+' modules complete</p><button class="btn alt" data-dash="reading">Continue</button></div>'+
   '<div class="card"><h3>Session plans</h3><p>Printable-style plans for practice days and reading circles.</p><button class="btn alt" data-dash="resources">Open resources</button></div>'+
-  (S.canEdit?'<div class="card hl"><span class="badge">Editors</span><h3>Run the newsroom and league</h3><p>Publish press releases and record match results.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="#press" data-go="press">Press</a><a class="btn" href="#cricket" data-go="cricket">League</a></div></div>':'')+'</div>'+rolePortalHTML();
+  (S.canEdit?'<div class="card hl"><span class="badge">Editors</span><h3>Run the newsroom and league</h3><p>Publish press releases and record match results.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="#press" data-go="press">Press</a><a class="btn" href="#cricket" data-go="cricket">League</a></div></div>':'')+'</div>'+circleManagerRequestHTML()+rolePortalHTML();
  return '<div class="wrap"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px"><div class="dtabs" role="tablist" aria-label="Dashboard sections">'+tabs.map(function(t){return '<button class="chip" role="tab" data-dash="'+t[0]+'" aria-selected="'+(S.dashTab===t[0])+'">'+t[1]+'</button>'}).join("")+'</div><button class="btn alt sm" type="button" data-signout>Sign out</button></div><div id="dashBody">'+c+'</div></div>';
 }
 function bindDash(){
@@ -1142,6 +1344,26 @@ function bindDash(){
   downloadText("mini-circles-signups.csv",data);m.textContent="CSV download started.";
  };
  var deleteUser=$("#deleteUserForm");
+ var circleManagerForm=$("#circleManagerForm");
+ if(circleManagerForm)circleManagerForm.onsubmit=function(e){
+  e.preventDefault();
+  var status=$("#circleManagerMsg"),id=$("#circleManagerUser").value,enabled=$("#circleManagerAction").value==="true";
+  var person=S.adminUsers.find(function(d){return d.id===id}),button=circleManagerForm.querySelector('button[type="submit"]');
+  if(!S.client||!S.canEdit){status.textContent="Circle Manager access requires Site Admin access and the site data service.";return}
+  if(!person||person.canEdit){status.textContent="Select an eligible member account.";return}
+  button.disabled=true;status.textContent="Saving Circle Manager access…";
+  S.client.functions.invoke("admin-delete-user",{body:{action:"set-circle-manager",userId:id,enabled:enabled}})
+   .then(function(r){
+    if(r.error)throw r.error;
+    if(!r.data||!r.data.success||r.data.circleManager!==enabled)throw new Error(r.data&&r.data.error||"The role service returned no confirmation.");
+    person.circleManager=enabled;
+    var option=$("#circleManagerUser").selectedOptions[0];
+    if(option){var label=(person.name?person.name+" · ":"")+(person.email||person.id.slice(0,8));option.textContent=label+(enabled?" · Circle Manager":"")}
+    status.textContent=enabled?"Circle Manager access granted.":"Circle Manager access revoked.";
+    button.disabled=false;
+   })
+   .catch(function(err){button.disabled=false;status.textContent="Could not update Circle Manager access: "+(err&&err.message||"check Site Admin access and Edge Function deployment.")});
+ };
  if(deleteUser)deleteUser.onsubmit=function(e){
   e.preventDefault();
   var status=$("#deleteUserMsg"),id=$("#deleteUserId").value,person=S.adminUsers.find(function(d){return d.id===id});
@@ -1169,7 +1391,7 @@ function bindDash(){
 }
 
 /* ---------- router + render ---------- */
-var pages={home:homePage,cricket:cricketPage,reading:readingPage,communities:communitiesPage,press:pressPage,join:joinPage,dashboard:dashPage};
+var pages={home:homePage,about:aboutPage,cricket:cricketPage,reading:readingPage,communities:communitiesPage,press:pressPage,join:joinPage,dashboard:dashPage};
 pages.feed=feedPage;
 function stopTimer(){if(S.timer){clearInterval(S.timer);S.timer=null}}
 function setSlide(i){
@@ -1285,7 +1507,7 @@ function bindRoute(r){
  }
  if(r==="join")bindJoin();
  if(r==="dashboard"){
-  if(S.signedIn){bindDash()}
+  if(S.signedIn){bindDash();bindJoin()}
   else{
    bindJoin();
    var auth=$("#authForm");
@@ -1315,13 +1537,16 @@ function render(keepScroll){
  if(mobileFeedNav)mobileFeedNav.hidden=!S.siteSettings.feed_enabled;
  $$("#nav a").forEach(function(a){if(a.getAttribute("data-r")===r)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
  $$("#mobileNav a").forEach(function(a){if(a.getAttribute("data-r")===r)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
- var mobileMore=$("#mobileMore"),moreRoutes=["cricket","reading","press","dashboard"];
+ var mobileMore=$("#mobileMore"),moreRoutes=["about","cricket","reading","press","dashboard"];
  if(mobileMore){mobileMore.open=false;mobileMore.classList.toggle("is-current",moreRoutes.indexOf(r)>-1)}
  $("#lockico").style.display=S.signedIn?"none":"";
+ $("#accountLabel").textContent=S.signedIn?"Dashboard":"Sign in";
+ $("#mobileAccountLabel").textContent=S.signedIn?"Dashboard":"Sign in";
  $("#app").innerHTML=pages[r]();
  mountLeague();mountPress();bindLeagueBind();
  bindRoute(r);
  if(keepScroll)window.scrollTo(0,y);else window.scrollTo(0,0);
+ scheduleTranslation();
 }
 function bindLeagueBind(){bindLeagueEditor();bindLeagueTabs()}
 function bindLeagueTabs(){}
@@ -1336,6 +1561,7 @@ function live(){
  if(S.selectedCircle&&S.route==="communities"&&S.circleRefreshRequested){S.circleRefreshRequested=false;openCircle(S.selectedCircle.id)}
  var sb=$("#signupBox");if(sb){sb.innerHTML=signupsHTML();bindDash()}
  var gs=$("#gsearch");if(gs&&gs.value)runSearch(gs.value);
+ scheduleTranslation();
 }
 function route(){
  var h=(location.hash||"").slice(1);
@@ -1363,7 +1589,7 @@ function restoreCircleRoute(){
 }
 document.addEventListener("click",function(e){
  var g=e.target.closest("[data-go]");
- if(g){e.preventDefault();go(g.getAttribute("data-go"),{join:g.getAttribute("data-join"),dash:g.getAttribute("data-dash"),group:g.getAttribute("data-group")});return}
+ if(g){e.preventDefault();var circleId=g.getAttribute("data-circle-open");if(circleId)S.openCircleAfterRoute=circleId;go(g.getAttribute("data-go"),{join:g.getAttribute("data-join"),dash:g.getAttribute("data-dash"),group:g.getAttribute("data-group")});return}
  var circle=e.target.closest("[data-circle-open]");
  if(circle){var id=circle.getAttribute("data-circle-open");if(S.route==="communities")openCircle(id);else{S.openCircleAfterRoute=id;go("communities")}return}
  var d=e.target.closest("button[data-dash]");
@@ -1495,6 +1721,7 @@ function initData(){
   });
  });
 }
+initLanguage();
 initTheme();
 route();
 initData();

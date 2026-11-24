@@ -53,7 +53,7 @@ Deno.serve(async (request: Request) => {
     return reply(403, { error: "Site Admin access is required." });
   }
 
-  let payload: { action?: unknown; page?: unknown; userId?: unknown };
+  let payload: { action?: unknown; page?: unknown; userId?: unknown; enabled?: unknown };
   try {
     payload = await request.json();
   } catch {
@@ -81,7 +81,7 @@ Deno.serve(async (request: Request) => {
     }
     const users = accountPage.users;
     const { data: profiles, error: usersProfileError } = users.length
-      ? await adminClient.from("profiles").select("id,name,can_edit").in("id", users.map((user) => user.id))
+      ? await adminClient      .from("profiles").select("id,name,can_edit,circle_manager").in("id", users.map((user) => user.id))
       : { data: [], error: null };
     if (usersProfileError) {
       console.error("Could not load account profile details.", usersProfileError);
@@ -96,10 +96,50 @@ Deno.serve(async (request: Request) => {
           email: user.email ?? null,
           name: profile?.name ?? null,
           canEdit: !!profile?.can_edit,
+          circleManager: !!profile?.circle_manager,
         };
       }),
       hasMore: users.length === pageSize,
     });
+  }
+  if (action === "set-circle-manager") {
+    const userId = payload.userId;
+    const enabled = payload.enabled;
+    if (typeof userId !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(userId)) {
+      return reply(400, { error: "A valid userId is required." });
+    }
+    if (typeof enabled !== "boolean") {
+      return reply(400, { error: "A boolean enabled value is required." });
+    }
+    if (userId === userData.user.id) {
+      return reply(400, { error: "Site Admins do not need Circle Manager access." });
+    }
+
+    const { data: target, error: targetError } = await adminClient.auth.admin.getUserById(userId);
+    if (targetError || !target.user) {
+      return reply(404, { error: "That account could not be found." });
+    }
+    const { data: targetProfile, error: targetProfileError } = await adminClient
+      .from("profiles")
+      .select("can_edit")
+      .eq("id", userId)
+      .maybeSingle();
+    if (targetProfileError) {
+      console.error("Could not load the target account's role.", targetProfileError);
+      return reply(500, { error: "Could not verify the target account." });
+    }
+    if (targetProfile?.can_edit) {
+      return reply(400, { error: "Site Admins do not need Circle Manager access." });
+    }
+
+    const { error: updateError } = await adminClient
+      .from("profiles")
+      .upsert({ id: userId, circle_manager: enabled });
+    if (updateError) {
+      console.error("Could not update Circle Manager access.", updateError);
+      return reply(500, { error: "Circle Manager access could not be updated." });
+    }
+    return reply(200, { success: true, circleManager: enabled });
   }
   if (action !== "delete") {
     return reply(400, { error: "Unknown account management action." });
