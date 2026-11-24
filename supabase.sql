@@ -394,6 +394,16 @@ create table if not exists public.circle_members (
   primary key (circle_id, user_id)
 );
 
+create table if not exists public.circle_competitions (
+  id uuid primary key default gen_random_uuid(),
+  circle_id uuid not null unique references public.circles(id) on delete cascade,
+  name text not null check (char_length(btrim(name)) between 1 and 100),
+  format text not null check (format in ('league','tournament')),
+  teams jsonb not null default '[]'::jsonb check (jsonb_typeof(teams) = 'array'),
+  matches jsonb not null default '[]'::jsonb check (jsonb_typeof(matches) = 'array'),
+  updated_at timestamptz not null default now()
+);
+
 alter table public.circle_members
   add column if not exists role text not null default 'member';
 update public.circle_members set role = 'member'
@@ -453,6 +463,7 @@ create table if not exists public.circle_invitations (
 
 alter table public.circles enable row level security;
 alter table public.circle_members enable row level security;
+alter table public.circle_competitions enable row level security;
 alter table public.circle_posts enable row level security;
 alter table public.circle_invitations enable row level security;
 alter table public.feed_engagements enable row level security;
@@ -522,6 +533,34 @@ grant execute on function public.is_circle_manager(uuid) to authenticated;
 grant execute on function public.is_circle_admin(uuid) to authenticated;
 grant execute on function public.is_circle_moderator(uuid) to authenticated;
 grant execute on function public.is_circle_member(uuid) to authenticated;
+
+drop policy if exists "Public can read sports circle competitions" on public.circle_competitions;
+create policy "Public can read sports circle competitions"
+on public.circle_competitions for select
+to anon, authenticated
+using (
+  exists (
+    select 1 from public.circles c
+    where c.id = circle_competitions.circle_id and c.type in ('Cricket','Sport & wellbeing')
+  )
+);
+
+drop policy if exists "Circle admins can manage sports circle competitions" on public.circle_competitions;
+create policy "Circle admins can manage sports circle competitions"
+on public.circle_competitions for all
+to authenticated
+using (
+  public.is_circle_admin(circle_competitions.circle_id) and exists (
+    select 1 from public.circles c
+    where c.id = circle_competitions.circle_id and c.type in ('Cricket','Sport & wellbeing')
+  )
+)
+with check (
+  public.is_circle_admin(circle_competitions.circle_id) and exists (
+    select 1 from public.circles c
+    where c.id = circle_competitions.circle_id and c.type in ('Cricket','Sport & wellbeing')
+  )
+);
 
 create policy "Public can discover circles"
 on public.circles for select

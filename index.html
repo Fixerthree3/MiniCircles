@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Mini Circles connects young people, families and community organisations through reading, youth sport and local Circles for learning, belonging and opportunity.">
-<meta name="theme-color" content="#E92F50">
+<meta name="theme-color" content="#A32D45">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mini Circles">
 <meta property="og:description" content="Discover our vision and mission, join a youth programme or partner with us to create a Circle for positive local impact.">
@@ -23,9 +23,9 @@ window.MINICIRCLES_CONFIG={
 /* Brand circles (ball + reading circle) are the one recurring motif. */
 :root{
   color-scheme:dark;
-  --bg:#E92F50; --surface:#004aad; --soft:#073b82; --ink:#FFF9ED; --muted:#E1E4F6; --line:#6f98d7;
-  --accent:#FFD60A; --pick:#FF3B5C; --btn:#FF3B5C; --btn-ink:#FFFFFF; --yellow:#FFD60A; --red:#FF3B5C; --ok:#18D6A4; --warn:#FFB020;
-  --s1-bg:#004aad; --s2-bg:#E92F50; --s3-bg:#FFD60A; --s4-bg:#004aad;
+  --bg:#421126; --surface:#18385D; --soft:#243D5B; --ink:#FFF9ED; --muted:#D6DCE8; --line:#527091;
+  --accent:#E3BC43; --pick:#B52D48; --btn:#B52D48; --btn-ink:#FFFFFF; --yellow:#E3BC43; --red:#B52D48; --ok:#18D6A4; --warn:#E3BC43;
+  --s1-bg:#173F6A; --s2-bg:#A32D45; --s3-bg:#DDB74F; --s4-bg:#173F6A;
   --font-d:"Ubuntu",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --font-b:"Ubuntu",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
@@ -55,7 +55,7 @@ a{color:var(--accent)}
 .programme-card.navy{background:var(--s1-bg)}
 .programme-card p{max-width:42ch;margin:8px 0 16px;color:inherit;opacity:.88}
 .programme-card .btn{background:#fff;color:#12151C}
-.programme-card::after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;right:-48px;bottom:-58px;border:20px solid rgba(255,194,14,.92);box-shadow:0 0 0 20px rgba(255,255,255,.12)}
+.programme-card::after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;right:-48px;bottom:-58px;border:20px solid rgba(255,194,14,.58);box-shadow:0 0 0 20px rgba(255,255,255,.1)}
 .trust-strip{display:flex;justify-content:center;align-items:center;gap:12px 28px;flex-wrap:wrap;text-align:center;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
 .trust-strip b{font-family:var(--font-d)}
 .trust-strip span{color:var(--muted);font-size:.9rem}
@@ -65,7 +65,7 @@ a{color:var(--accent)}
 .join-side{display:grid;gap:12px}
 .join-check{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--line);padding-top:12px;color:var(--muted)}
 .join-check i{width:24px;height:24px;border-radius:50%;background:var(--yellow);color:#12151C;display:grid;place-items:center;font-size:.75rem;font-weight:800;font-style:normal;flex:none}
-.community-hero{position:relative;overflow:hidden;background:linear-gradient(125deg,#E92F50,#004aad 58%,#FFD60A);color:#fff;border-radius:24px;padding:30px}
+.community-hero{position:relative;overflow:hidden;background:linear-gradient(125deg,#A32D45,#234A70 58%,#DDB74F);color:#fff;border-radius:24px;padding:30px}
 .community-hero p{max-width:48ch;margin:8px 0 16px;opacity:.86}
 .community-hero .btn{background:#fff;color:#12151C}
 .circle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}
@@ -109,10 +109,10 @@ a{color:var(--accent)}
 .pathway-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .pathway-card{position:relative;display:grid;align-content:start;gap:8px;min-height:154px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--surface);text-decoration:none;color:var(--ink);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
 .pathway-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 10px 24px rgba(27,42,65,.1)}
-.pathway-card:nth-child(1){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--red) 32%,var(--surface)))}
-.pathway-card:nth-child(2){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--yellow) 28%,var(--surface)))}
-.pathway-card:nth-child(3){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--red) 18%,var(--surface)))}
-.pathway-card:nth-child(4){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--yellow) 18%,var(--surface)))}
+.pathway-card:nth-child(1){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--red) 18%,var(--surface)))}
+.pathway-card:nth-child(2){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--yellow) 14%,var(--surface)))}
+.pathway-card:nth-child(3){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--red) 12%,var(--surface)))}
+.pathway-card:nth-child(4){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--yellow) 12%,var(--surface)))}
 .pathway-number{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:var(--pick);color:#fff;font:800 .78rem var(--font-d)}
 .pathway-card:nth-child(2) .pathway-number{background:var(--yellow);color:#12151C}
 .pathway-card:nth-child(3) .pathway-number{background:#A8101B}
@@ -124,7 +124,7 @@ a{color:var(--accent)}
 .about-teaser p{max-width:62ch;margin-top:8px;color:var(--muted)}
 .purpose-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .purpose-card,.outcome-card{display:grid;align-content:start;gap:10px;padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
-.purpose-card:first-child{background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#FFC20E 26%,var(--surface)))}
+.purpose-card:first-child{background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#FFC20E 14%,var(--surface)))}
 .purpose-card h3{font-size:1.35rem}
 .purpose-card p,.outcome-card p{color:var(--muted)}
 .outcome-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
@@ -138,7 +138,7 @@ a{color:var(--accent)}
 .about-hero .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
 .community-hero .btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
 .audience-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.audience-card{padding:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,var(--soft),color-mix(in srgb,var(--yellow) 18%,var(--soft)))}
+.audience-card{padding:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,var(--soft),color-mix(in srgb,var(--yellow) 12%,var(--soft)))}
 .audience-card p{margin-top:7px;color:var(--muted);font-size:.92rem}
 .tool-group+.tool-group{margin-top:22px}
 .tool-group-heading{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -200,7 +200,7 @@ a{color:var(--accent)}
   .language-control{margin-left:auto}
   .language-status{max-width:16ch}
   body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
-  .mobile-nav{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:7px max(8px,env(safe-area-inset-left,0px)) max(7px,env(safe-area-inset-bottom,0px));border-top:1px solid rgba(255,255,255,.2);background:#A80D27;box-shadow:0 -8px 24px rgba(48,0,10,.18)}
+  .mobile-nav{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:7px max(8px,env(safe-area-inset-left,0px)) max(7px,env(safe-area-inset-bottom,0px));border-top:1px solid rgba(255,255,255,.2);background:#741126;box-shadow:0 -8px 24px rgba(48,0,10,.18)}
   .mobile-nav-link,.mobile-more>summary{min-width:0;min-height:52px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;padding:5px 2px;border:0;border-radius:12px;background:transparent;color:#fff;font:600 .68rem/1.1 var(--font-b);text-decoration:none;cursor:pointer}
   .mobile-nav-link svg,.mobile-more>summary svg{width:21px;height:21px;flex:none}
   .mobile-nav-link[aria-current="page"],.mobile-more.is-current>summary{background:var(--yellow);color:#30251F}
@@ -219,7 +219,7 @@ section{margin-top:36px}
 .eyebrow{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);margin-bottom:6px;display:block}
 
 /* buttons, chips, fields */
-.btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:700;background:linear-gradient(110deg,#FF3E62,#FFB800);color:var(--btn-ink);padding:11px 18px;border-radius:999px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;box-shadow:0 7px 20px rgba(255,62,98,.32)}
+.btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:700;background:linear-gradient(110deg,#A32D45,#B52D48);color:var(--btn-ink);padding:11px 18px;border-radius:999px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;box-shadow:0 7px 20px rgba(84,19,40,.28)}
 .btn:hover{filter:brightness(1.08)}
 .btn.alt{background:linear-gradient(110deg,#8052E8,#00AFA2);color:#fff}
 .btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
@@ -272,7 +272,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--red);outline:none;box
 .slide .btn{background:#fff;color:#12151C}
 .slide .btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
 .s1{background:var(--s1-bg)} .s2{background:var(--s2-bg)} .s3{background:var(--s3-bg);color:#30251F} .s4{background:var(--s4-bg)}
-.s3 .btn{background:#C8102E;color:#fff}
+.s3 .btn{background:#8F263D;color:#fff}
 .rings{position:absolute;right:-70px;top:50%;width:300px;height:300px;transform:translateY(-50%);pointer-events:none}
 .rings i{position:absolute;border-radius:50%;border:16px solid;inset:0}
 .rings i:nth-child(2){inset:48px}
@@ -353,7 +353,7 @@ footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
 /* Warm brand backdrop with a subtle circle motif behind readable content. */
 body{background-color:#421126;background-image:radial-gradient(circle at 10% 12%,transparent 0 118px,rgba(255,214,10,.055) 119px 121px,transparent 122px),radial-gradient(circle at 92% 72%,transparent 0 158px,rgba(255,214,10,.05) 159px 162px,transparent 163px),radial-gradient(ellipse at 14% 2%,rgba(255,214,10,.14),transparent 29%),radial-gradient(ellipse at 92% 20%,rgba(255,82,73,.22),transparent 32%),radial-gradient(ellipse at 76% 88%,rgba(255,214,10,.09),transparent 26%),linear-gradient(135deg,#421126 0%,#70162F 48%,#4C1230 100%);background-attachment:fixed}
 main{padding-top:24px}
-.content-group{border:2px solid rgba(255,255,255,.15);background:linear-gradient(145deg,#004aad,#003783 82%);box-shadow:0 16px 38px rgba(0,30,80,.3),0 0 26px rgba(255,214,10,.13)}
+.content-group{border:1px solid rgba(255,255,255,.16);background:linear-gradient(145deg,#18385D,#203753 82%);box-shadow:0 14px 34px rgba(25,8,19,.22),0 0 20px rgba(227,188,67,.07)}
 .pathway-card{border-color:rgba(255,255,255,.18);box-shadow:0 9px 24px rgba(47,7,30,.28)}
 .pathway-card:nth-child(1){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--red) 32%,var(--surface)))}
 .pathway-card:nth-child(2){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--yellow) 28%,var(--surface)))}
@@ -367,8 +367,8 @@ main{padding-top:24px}
 .pathway-number{display:none}
 .journey-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .journey-card{display:grid;align-content:start;gap:9px;padding:18px;border:1px solid rgba(255,255,255,.18);border-radius:18px;background:var(--surface);box-shadow:0 8px 22px rgba(47,7,30,.2)}
-.journey-card:nth-child(2){background:color-mix(in srgb,#FFC20E 24%,var(--surface))}
-.journey-card:nth-child(3){background:color-mix(in srgb,var(--red) 20%,var(--surface))}
+.journey-card:nth-child(2){background:color-mix(in srgb,#FFC20E 12%,var(--surface))}
+.journey-card:nth-child(3){background:color-mix(in srgb,var(--red) 12%,var(--surface))}
 .journey-step{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
 .journey-card p{color:var(--muted);font-size:.92rem}
 .auth-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:16px;max-width:920px;margin:10px auto}
@@ -531,7 +531,7 @@ var SAMPLE_FEED=[
  {id:"sample-post-3",circle_id:"sample-3",author:"Tembisa Book Crew",body:"Graphic novels are on the table this week. Everyone can recommend one for our next read.",created_at:"2026-11-20T09:00:00Z"}
 ];
 
-var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,passwordRecovery:false,profileComplete:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,translationTimer:null,translationRun:0,translationRunning:false,translationPending:false,language:"en",prog:{c:[],r:[]},ready:false,client:null,circles:[],circlesLoaded:false,memberships:[],circleMembers:[],circleMembersFor:null,followingUsers:[],engagements:[],savedPosts:[],savedPostRecords:[],savedPostsError:null,posts:[],postsLoaded:false,sharedPostId:null,sharedPostLoading:false,sharedPostError:null,comments:[],directMessages:[],directory:[],directoryLoaded:false,directoryError:null,adminUsers:[],adminUsersLoaded:false,adminUsersLoading:false,adminUsersError:null,updates:null,siteSettings:{circles_enabled:true,feed_enabled:true,messages_enabled:true,events_enabled:true},selectedCircle:null,openCircleAfterRoute:null,pendingCircleSlug:null,circleQuery:"",circleType:"All",feedTab:"recommended",pendingCircleId:null};
+var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,passwordRecovery:false,profileComplete:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,translationTimer:null,translationRun:0,translationRunning:false,translationPending:false,language:"en",prog:{c:[],r:[]},ready:false,client:null,circles:[],circlesLoaded:false,circleCompetitions:[],circleCompetitionsLoaded:false,circleCompetitionsError:null,memberships:[],circleMembers:[],circleMembersFor:null,followingUsers:[],engagements:[],savedPosts:[],savedPostRecords:[],savedPostsError:null,posts:[],postsLoaded:false,sharedPostId:null,sharedPostLoading:false,sharedPostError:null,comments:[],directMessages:[],directory:[],directoryLoaded:false,directoryError:null,adminUsers:[],adminUsersLoaded:false,adminUsersLoading:false,adminUsersError:null,updates:null,siteSettings:{circles_enabled:true,feed_enabled:true,messages_enabled:true,events_enabled:true},selectedCircle:null,openCircleAfterRoute:null,pendingCircleSlug:null,circleQuery:"",circleType:"All",feedTab:"recommended",pendingCircleId:null};
 var translatedSources=new WeakMap(),translatedAttributes=new WeakMap(),translationWrites=new WeakSet();
 var translationCache=Object.create(null);
 try{S.pendingCircleId=sessionStorage.getItem("mc-circle-entry-id")}catch(e){}
@@ -711,10 +711,10 @@ function mountLeague(){
 }
 function leagueEditorHTML(){
  if(!S.canEdit)return"";
- if(!S.db)return'<div class="msg warn">Results can only be saved while the page can reach its data store.</div>';
+ if(!S.client)return'<div class="msg warn">Results can only be saved while the page can reach its data store.</div>';
  var g=S.group,teams=rows(g).map(function(x){return x.n});
  var opts=teams.map(function(n){return '<option>'+esc(n)+'</option>'}).join("");
- return '<div class="panel" style="display:grid;gap:14px"><div><span class="badge">Editors only</span><h3 style="margin-top:8px">Update the league table ('+GROUPS[g]+')</h3><p class="note">Switch the age group above, then record a result or add a team. Changes show for everyone straight away.</p></div>'+
+ return '<div class="panel" style="display:grid;gap:14px"><div><span class="badge">Site Admin only</span><h3 style="margin-top:8px">Update the foundation league table ('+GROUPS[g]+')</h3><p class="note">Switch the age group above, then record a result or add a team. Changes show for everyone straight away.</p></div>'+
  '<form id="resForm" class="grid2"><div class="field"><label for="resA">Team A</label><select id="resA">'+opts+'</select></div><div class="field"><label for="resB">Team B</label><select id="resB">'+opts+'</select></div>'+
  '<div class="field"><label for="resR">Result</label><select id="resR"><option value="a">Team A won</option><option value="b">Team B won</option><option value="t">Tie</option></select></div><div class="field" style="align-self:end"><button class="btn" type="submit">Record result</button></div></form>'+
  '<form id="teamForm" class="grid2"><div class="field"><label for="newTeam">Add a team to '+GROUPS[g]+'</label><input id="newTeam" maxlength="60" placeholder="Team name" required></div><div class="field" style="align-self:end"><button class="btn alt" type="submit">Add team</button></div></form><div id="leagueMsg" aria-live="polite"></div></div>';
@@ -731,12 +731,12 @@ function bindLeagueEditor(){
   if(a===b){say("Pick two different teams.",false);return}
   var g=cloneGroups(),L=g[S.group];var A=L.find(function(x){return x.n===a}),B=L.find(function(x){return x.n===b});
   if(r==="a"){A.w++;B.l++}else if(r==="b"){B.w++;A.l++}else{A.t++;B.t++}
-  saveLeague(g).then(function(){say("Result saved.",true)}).catch(function(){say("Could not save. You may not have editor access.",false)})};
+  saveLeague(g).then(function(){S.league={groups:g};mountLeague();bindLeagueEditor();say("Result saved.",true)}).catch(function(){say("Could not save. You may not have editor access.",false)})};
  if(tf)tf.onsubmit=function(e){e.preventDefault();var n=$("#newTeam").value.trim();if(!n)return;
   var g=cloneGroups();g[S.group]=g[S.group]||[];
   if(g[S.group].some(function(x){return x.n.toLowerCase()===n.toLowerCase()})){say("That team is already in this group.",false);return}
   g[S.group].push({n:n,w:0,l:0,t:0});
-  saveLeague(g).then(function(){say("Team added.",true);tf.reset()}).catch(function(){say("Could not save. You may not have editor access.",false)})};
+  saveLeague(g).then(function(){S.league={groups:g};mountLeague();bindLeagueEditor();say("Team added.",true)}).catch(function(){say("Could not save. You may not have editor access.",false)})};
 }
 
 /* ---------- press ---------- */
@@ -1076,6 +1076,28 @@ function circlePostsHTML(circle){
   var commentForm=S.signedIn&&persisted?'<form data-circle-comment="'+esc(p.id)+'" style="display:flex;gap:8px;margin-top:8px"><label class="sr" for="comment_'+esc(p.id)+'">Reply to this update</label><input id="comment_'+esc(p.id)+'" data-comment-body="'+esc(p.id)+'" maxlength="1000" required placeholder="Write a reply"><button class="btn sm" type="submit">Reply</button></form><span class="note" data-comment-msg="'+esc(p.id)+'" aria-live="polite"></span>':'';
   return '<article class="post" id="post_'+esc(p.id)+'"><div class="post-head"><div class="post-author">'+circleAvatarHTML(circle,"feed-profile-picture")+'<div><b>'+esc(circle.name)+'</b><div class="note">'+esc(p.author||"Member")+' · '+esc(feedDate(p.created_at))+'</div></div></div>'+(canModerateCircle(circle)&&persisted?'<button class="btn line sm" type="button" data-delete-post="'+esc(p.id)+'">Remove update</button>':'')+'</div>'+postMediaHTML(p)+'<p class="post-copy">'+esc(p.body||"")+'</p><div class="reply-list">'+(commentList||'<p class="note">No replies yet.</p>')+commentForm+'</div></article>'}).join("");
 }
+function isSportsCircle(circle){return circle.type==="Cricket"||circle.type==="Sport & wellbeing"}
+function circleCompetition(circle){return S.circleCompetitions.find(function(item){return String(item.circle_id)===String(circle.id)})}
+function circleCompetitionHTML(circle){
+ if(!isSportsCircle(circle))return"";
+ var comp=circleCompetition(circle),admin=canManageCircle(circle);
+ if(S.circleCompetitionsError)return '<section class="panel" style="margin-top:14px"><h3>League & tournament log</h3><div class="msg warn">Could not load this Circle’s competition log. Check the competition table setup and try again.</div></section>';
+ if(!S.circleCompetitionsLoaded)return '<section class="panel" style="margin-top:14px"><h3>League & tournament log</h3><p class="note">Loading competition details…</p></section>';
+ if(!comp)return '<section class="panel" style="display:grid;gap:12px;margin-top:14px"><div><span class="eyebrow">Sports organisation tools</span><h3>League & tournament log</h3><p class="note">Circle Admins can set up a competition, add teams and record match results.</p></div>'+(admin?'<form id="circleCompetitionForm" class="grid2"><div class="field"><label for="circleCompetitionName">Competition name</label><input id="circleCompetitionName" maxlength="100" required placeholder="Community league"></div><div class="field"><label for="circleCompetitionFormat">Competition format</label><select id="circleCompetitionFormat"><option value="league">League</option><option value="tournament">Tournament</option></select></div><div class="field" style="align-self:end"><button class="btn" type="submit">Create competition</button></div><span id="circleCompetitionMsg" class="note" role="status" aria-live="polite"></span></form>':'<p class="note">No competition has been set up for this Circle yet.</p>')+'</section>';
+ var teams=Array.isArray(comp.teams)?comp.teams:[],matches=Array.isArray(comp.matches)?comp.matches:[];
+ var standings=teams.map(function(team){return {name:team.name,w:team.w|0,l:team.l|0,t:team.t|0,p:(team.w|0)+(team.l|0)+(team.t|0),pts:2*(team.w|0)+(team.t|0)}})
+  .sort(function(a,b){return b.pts-a.pts||b.w-a.w||a.name.localeCompare(b.name)});
+ var teamOptions=teams.map(function(team){return '<option>'+esc(team.name)+'</option>'}).join("");
+ var table=standings.length?'<div class="tablewrap" tabindex="0" aria-label="'+esc(comp.name)+' standings"><table><thead><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>L</th><th>T</th><th>Pts</th></tr></thead><tbody>'+standings.map(function(team,index){return '<tr'+(index===0?' class="lead"':'')+'><td class="pos">'+(index+1)+'</td><td class="team">'+esc(team.name)+'</td><td>'+team.p+'</td><td>'+team.w+'</td><td>'+team.l+'</td><td>'+team.t+'</td><td class="pts">'+team.pts+'</td></tr>'}).join("")+'</tbody></table></div>':'<div class="msg">No teams have been added to this competition yet.</div>';
+ var matchLog=matches.length?'<div class="tablewrap" tabindex="0" aria-label="'+esc(comp.name)+' match log"><table style="min-width:500px"><thead><tr><th>Date</th><th>Team A</th><th>Result</th><th>Team B</th></tr></thead><tbody>'+matches.slice().reverse().map(function(match){return '<tr><td>'+esc(fmtDate(match.date))+'</td><td>'+esc(match.a)+'</td><td>'+esc(match.result==="t"?"Tie":match.result==="a"?match.a+" won":match.b+" won")+'</td><td>'+esc(match.b)+'</td></tr>'}).join("")+'</tbody></table></div>':'<p class="note">Recorded match results will appear here.</p>';
+ var controls=admin?'<form id="circleCompetitionSettingsForm" class="grid2"><div class="field"><label for="circleCompetitionName">Competition name</label><input id="circleCompetitionName" maxlength="100" required value="'+esc(comp.name)+'"></div><div class="field"><label for="circleCompetitionFormat">Competition format</label><select id="circleCompetitionFormat"><option value="league"'+(comp.format==="league"?" selected":"")+'>League</option><option value="tournament"'+(comp.format==="tournament"?" selected":"")+'>Tournament</option></select></div><div class="field" style="align-self:end"><button class="btn alt sm" type="submit">Save competition details</button></div><span class="note" id="circleCompetitionSettingsMsg" role="status" aria-live="polite"></span></form><div class="grid2"><form id="circleCompetitionTeamForm" style="display:flex;gap:8px;align-items:end;flex-wrap:wrap"><div class="field" style="flex:1"><label for="circleCompetitionTeam">Add a team</label><input id="circleCompetitionTeam" maxlength="60" required></div><button class="btn alt sm" type="submit">Add team</button><span id="circleCompetitionTeamMsg" class="note" role="status" aria-live="polite"></span></form><form id="circleCompetitionResultForm" class="grid2"><div class="field"><label for="circleCompetitionTeamA">Team A</label><select id="circleCompetitionTeamA"'+(teams.length<2?' disabled':'')+'>'+teamOptions+'</select></div><div class="field"><label for="circleCompetitionTeamB">Team B</label><select id="circleCompetitionTeamB"'+(teams.length<2?' disabled':'')+'>'+teamOptions+'</select></div><div class="field"><label for="circleCompetitionResult">Result</label><select id="circleCompetitionResult"><option value="a">Team A won</option><option value="b">Team B won</option><option value="t">Tie</option></select></div><div class="field"><label for="circleCompetitionDate">Match date</label><input id="circleCompetitionDate" type="date" required value="'+today()+'"></div><button class="btn alt sm" type="submit"'+(teams.length<2?' disabled':'')+'>Record result</button><span id="circleCompetitionResultMsg" class="note" role="status" aria-live="polite">'+(teams.length<2?'Add at least two teams to record a result.':'')+'</span></form></div>':'';
+ return '<section class="panel" style="display:grid;gap:14px;margin-top:14px"><div><span class="eyebrow">'+esc(comp.format==="tournament"?"Tournament":"League")+' log</span><h3>'+esc(comp.name)+'</h3><p class="note">Standings award 2 points for a win and 1 for a tie.</p></div>'+table+'<div><h4>Match log</h4>'+matchLog+'</div>'+controls+'</section>';
+}
+function saveCircleCompetition(circle,competition){
+ if(!S.client)return Promise.reject(new Error("Competition records require the site data service."));
+ return S.client.from("circle_competitions").upsert({circle_id:circle.id,name:competition.name,format:competition.format,teams:competition.teams,matches:competition.matches,updated_at:new Date().toISOString()},{onConflict:"circle_id"}).select("*").single()
+  .then(function(r){if(r.error)throw r.error;if(!r.data)throw new Error("The competition was not saved.");S.circleCompetitions=S.circleCompetitions.filter(function(item){return String(item.circle_id)!==String(circle.id)}).concat([r.data]);S.circleCompetitionsLoaded=true;S.circleCompetitionsError=null;openCircle(circle.id);return r.data});
+}
 function circleMembersHTML(circle){
  if(!canManageCircle(circle))return"";
  var members=S.circleMembersFor===String(circle.id)?S.circleMembers:[];
@@ -1106,8 +1128,8 @@ function openCircle(id){
  var circleFeed=member?circlePostsHTML(circle):'<div class="msg">Sign in and join this Circle to enter its member feed.</div>';
  var mediaComposer=canManageCircle(circle)?'<div class="media-upload"><div class="field"><label for="circlePostMedia">Add a photo or video</label><input id="circlePostMedia" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"><span class="note">JPEG, PNG, WebP, MP4 or WebM; up to 20 MB.</span></div></div>':'';
  var entry=S.signedIn?(member?'<form id="circlePostForm" style="display:grid;gap:10px;margin-top:12px"><label class="sr" for="circlePost">Post to the circle</label><textarea id="circlePost" maxlength="600" required placeholder="Share an update with the circle..."></textarea>'+mediaComposer+'<button class="btn sm" type="submit">Post update</button><span id="circlePostMsg" class="note" aria-live="polite"></span></form>':'<div class="msg" style="margin-top:12px">Join this Circle to see your member feed and share updates.<br><button class="btn sm" id="joinCircle" type="button" style="margin-top:10px">Join this circle</button><span id="circleEntryMsg" class="note" aria-live="polite" style="display:block;margin-top:6px"></span></div>'):'<div class="msg" style="margin-top:12px">Sign in with your email and password to join this Circle.<br><a class="btn sm" id="circleSignIn" href="#dashboard" data-go="dashboard" data-circle-open="'+esc(circle.id)+'" style="margin-top:10px">Sign in or create account</a></div>';
- var managerTools=circleMembersHTML(circle),moderatorHelp=role==="Moderator"?'<div class="msg" style="margin-top:14px"><b>Moderator tools</b><br>Remove harmful or off-topic updates and replies using the controls on each post.</div>':"";
- el.innerHTML='<div class="panel" style="margin-top:8px"><div class="sec-head"><div style="display:flex;gap:12px;align-items:center">'+circleAvatarHTML(circle)+'<div><span class="eyebrow">'+esc(circle.type)+' circle portal</span><h2>'+esc(circle.name)+'</h2></div></div><button class="btn alt sm" type="button" data-close-circle>Close</button></div><p>'+esc(circle.area||"Community")+' &bull; '+esc(circle.members||0)+' members</p><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px"><span class="badge">'+esc(role)+'</span><span class="badge soft">@'+esc(circle.slug||slugify(circle.name))+'</span><a class="btn line sm" href="'+esc(link)+'">Share page</a><button class="btn alt sm" type="button" data-copy-circle="'+esc(link)+'">Copy link</button></div><span id="circleShareMsg" class="note" aria-live="polite"></span><p style="margin:12px 0 14px">'+esc(circle.description||"")+'</p><div class="grid2"><div><h3 style="margin-bottom:10px">Circle feed</h3><div class="feed">'+circleFeed+'</div>'+entry+moderatorHelp+'</div><aside><h3 style="margin-bottom:10px">About this circle</h3><div class="member-list"><div class="member"><span><b>Meeting</b><br><small class="note">'+esc(circle.meeting||"Contact the manager")+'</small></span></div><div class="member"><span><b>Role guide</b><br><small class="note">Admins manage details and roles; moderators remove content; members post and reply.</small></span></div></div></aside></div>'+managerTools+'</div>';
+ var managerTools=circleMembersHTML(circle),competitionTools=circleCompetitionHTML(circle),moderatorHelp=role==="Moderator"?'<div class="msg" style="margin-top:14px"><b>Moderator tools</b><br>Remove harmful or off-topic updates and replies using the controls on each post.</div>':"";
+ el.innerHTML='<div class="panel" style="margin-top:8px"><div class="sec-head"><div style="display:flex;gap:12px;align-items:center">'+circleAvatarHTML(circle)+'<div><span class="eyebrow">'+esc(circle.type)+' circle portal</span><h2>'+esc(circle.name)+'</h2></div></div><button class="btn alt sm" type="button" data-close-circle>Close</button></div><p>'+esc(circle.area||"Community")+' &bull; '+esc(circle.members||0)+' members</p><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px"><span class="badge">'+esc(role)+'</span><span class="badge soft">@'+esc(circle.slug||slugify(circle.name))+'</span><a class="btn line sm" href="'+esc(link)+'">Share page</a><button class="btn alt sm" type="button" data-copy-circle="'+esc(link)+'">Copy link</button></div><span id="circleShareMsg" class="note" aria-live="polite"></span><p style="margin:12px 0 14px">'+esc(circle.description||"")+'</p><div class="grid2"><div><h3 style="margin-bottom:10px">Circle feed</h3><div class="feed">'+circleFeed+'</div>'+entry+moderatorHelp+'</div><aside><h3 style="margin-bottom:10px">About this circle</h3><div class="member-list"><div class="member"><span><b>Meeting</b><br><small class="note">'+esc(circle.meeting||"Contact the manager")+'</small></span></div><div class="member"><span><b>Role guide</b><br><small class="note">Admins manage details and roles; moderators remove content; members post and reply.</small></span></div></div></aside></div>'+competitionTools+managerTools+'</div>';
  $("#circleDetail").scrollIntoView({block:"start",behavior:reduce?"auto":"smooth"});
  bindCircleDetail(circle);
  loadCircleMembers(circle);
@@ -1115,6 +1137,40 @@ function openCircle(id){
 function bindCircleDetail(circle){
  var close=$("[data-close-circle]");
  if(close)close.onclick=function(){S.selectedCircle=null;$("#circleDetailBody").innerHTML=""};
+ var createCompetition=$("#circleCompetitionForm");
+ if(createCompetition)createCompetition.onsubmit=function(e){e.preventDefault();var msg=$("#circleCompetitionMsg"),name=$("#circleCompetitionName").value.trim();
+  if(!canManageCircle(circle)){msg.textContent="Circle Admin access is required.";return}
+  if(!name){msg.textContent="Enter a competition name.";return}
+  saveCircleCompetition(circle,{name:name,format:$("#circleCompetitionFormat").value,teams:[],matches:[]})
+   .catch(function(err){var status=$("#circleCompetitionMsg");if(status)status.textContent="Could not create the competition: "+(err&&err.message||"check Circle Admin access and table setup.")});
+ };
+ var competitionSettings=$("#circleCompetitionSettingsForm");
+ if(competitionSettings)competitionSettings.onsubmit=function(e){e.preventDefault();var msg=$("#circleCompetitionSettingsMsg"),current=circleCompetition(circle),name=$("#circleCompetitionName").value.trim();
+  if(!canManageCircle(circle)||!current){msg.textContent="Circle Admin access is required.";return}
+  if(!name){msg.textContent="Enter a competition name.";return}
+  saveCircleCompetition(circle,{name:name,format:$("#circleCompetitionFormat").value,teams:current.teams||[],matches:current.matches||[]})
+   .catch(function(err){var status=$("#circleCompetitionSettingsMsg");if(status)status.textContent="Could not save competition details: "+(err&&err.message||"check Circle Admin access and table setup.")});
+ };
+ var addCompetitionTeam=$("#circleCompetitionTeamForm");
+ if(addCompetitionTeam)addCompetitionTeam.onsubmit=function(e){e.preventDefault();var msg=$("#circleCompetitionTeamMsg"),current=circleCompetition(circle),name=$("#circleCompetitionTeam").value.trim();
+  if(!canManageCircle(circle)||!current){msg.textContent="Circle Admin access is required.";return}
+  if((current.teams||[]).some(function(team){return String(team.name).toLowerCase()===name.toLowerCase()})){msg.textContent="That team is already in this competition.";return}
+  var teams=(current.teams||[]).slice();teams.push({name:name,w:0,l:0,t:0});
+  saveCircleCompetition(circle,{name:current.name,format:current.format,teams:teams,matches:current.matches||[]})
+   .catch(function(err){var status=$("#circleCompetitionTeamMsg");if(status)status.textContent="Could not add the team: "+(err&&err.message||"check Circle Admin access and table setup.")});
+ };
+ var competitionResult=$("#circleCompetitionResultForm");
+ if(competitionResult)competitionResult.onsubmit=function(e){e.preventDefault();var msg=$("#circleCompetitionResultMsg"),current=circleCompetition(circle),a=$("#circleCompetitionTeamA").value,b=$("#circleCompetitionTeamB").value,result=$("#circleCompetitionResult").value,date=$("#circleCompetitionDate").value;
+  if(!canManageCircle(circle)||!current){msg.textContent="Circle Admin access is required.";return}
+  if(a===b){msg.textContent="Choose two different teams.";return}
+  if(!date||isNaN(new Date(date+"T00:00:00").getTime())){msg.textContent="Choose a valid match date.";return}
+  var teams=(current.teams||[]).map(function(team){return {name:team.name,w:team.w|0,l:team.l|0,t:team.t|0}}),teamA=teams.find(function(team){return team.name===a}),teamB=teams.find(function(team){return team.name===b});
+  if(!teamA||!teamB){msg.textContent="Choose teams in this competition.";return}
+  if(result==="a"){teamA.w++;teamB.l++}else if(result==="b"){teamB.w++;teamA.l++}else{teamA.t++;teamB.t++}
+  var matches=(current.matches||[]).slice();matches.push({a:a,b:b,result:result,date:date});
+  saveCircleCompetition(circle,{name:current.name,format:current.format,teams:teams,matches:matches})
+   .catch(function(err){var status=$("#circleCompetitionResultMsg");if(status)status.textContent="Could not record the result: "+(err&&err.message||"check Circle Admin access and table setup.")});
+ };
  var profileImageForm=$("#circleProfileImageForm");
  if(profileImageForm)profileImageForm.onsubmit=function(e){
   e.preventDefault();var msg=$("#circleProfileImageMsg"),input=$("#circleProfileImage"),file=input.files&&input.files[0],button=profileImageForm.querySelector("button[type=submit]");
@@ -1273,7 +1329,7 @@ function rolePortalHTML(){
   adminTiles.push(toolTile("people","Members & accounts","Review signed-in members and securely remove an account when needed.",'<button class="btn alt" type="button" data-dash="users">Manage users</button>',"Site Admin"));
   adminTiles.push(toolTile("settings","Platform settings","Enable or pause platform features.",'<button class="btn alt" type="button" data-dash="settings">Manage settings</button>',"Site Admin"));
   adminTiles.push(toolTile("circle","All Circles","Open Circle pages, manage roles, moderate content and share public links.",'<a class="btn alt" href="#communities" data-go="communities">Manage Circles</a>',"Site Admin"));
-  adminTiles.push(toolTile("news","Newsroom & league","Publish foundation news and maintain league results.",'<div class="post-actions"><a class="btn alt sm" href="#press" data-go="press">Newsroom</a><a class="btn alt sm" href="#cricket" data-go="cricket">League</a></div>',"Site Admin"));
+  adminTiles.push(toolTile("news","Newsroom & league","Publish foundation news and manage its standings, teams and match results.",'<div class="post-actions"><a class="btn alt sm" href="#press" data-go="press">Newsroom</a><a class="btn alt sm" href="#cricket" data-go="cricket">Edit foundation league</a></div>',"Site Admin"));
  }
  var owned=circlesList().filter(function(c){return circleRole(c)==="Circle Admin"});
  if(owned.length)owned.forEach(function(c){adminCircleTiles.push(toolTile("circle",c.name,"Edit Circle details, manage members, assign roles and copy its shareable link.",'<button class="btn alt" type="button" data-circle-open="'+esc(c.id)+'">Open Circle Admin</button>',"Circle Admin"))});
@@ -1713,6 +1769,8 @@ function loadSupabaseContent(){
  });
  S.client.from("press").select("*").order("date",{ascending:false}).limit(200).then(function(r){if(!r.error){S.press=(r.data||[]).map(function(p){p.id=p.id;return p});live()}});
  S.client.from("league").select("groups").eq("id","current").maybeSingle().then(function(r){if(!r.error&&r.data){S.league={groups:r.data.groups};live()}});
+ S.client.from("circle_competitions").select("*").then(function(r){if(r.error)throw r.error;S.circleCompetitions=r.data||[];S.circleCompetitionsLoaded=true;S.circleCompetitionsError=null;S.circleRefreshRequested=true;live()})
+  .catch(function(){S.circleCompetitions=[];S.circleCompetitionsLoaded=true;S.circleCompetitionsError=true;S.circleRefreshRequested=true;live()});
  S.client.from("circles").select("*").order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){S.circles=(r.data||[]).map(function(c){c.members=c.members||0;return c});S.circlesLoaded=true;live();if(S.pendingCircleId&&S.route==="communities")openCircle(S.pendingCircleId);if(S.openCircleAfterRoute&&S.route==="communities"&&S.circles.some(function(c){return String(c.id)===String(S.openCircleAfterRoute)})){var id=S.openCircleAfterRoute;S.openCircleAfterRoute=null;openCircle(id)}if(S.pendingCircleSlug&&S.route==="communities")openCircleBySlug(S.pendingCircleSlug)}});
  S.client.from("circle_posts").select("*").order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){var posts=r.data||[],shared=S.sharedPostId&&S.posts.find(function(p){return String(p.id)===String(S.sharedPostId)});if(shared&&!posts.some(function(p){return String(p.id)===String(shared.id)}))posts.push(shared);S.posts=posts;S.postsLoaded=true;S.circleRefreshRequested=true;live()}});
  S.client.from("site_updates").select("*").order("date",{ascending:true}).limit(100).then(function(r){if(!r.error){S.updates=r.data||[];live();if(S.route==="home"){$("#homeUpdates")&&($("#homeUpdates").innerHTML=updatesHTML());bindHomeUpdates()}}});
@@ -1741,7 +1799,7 @@ function loadSupabaseContent(){
 }
 function initData(){
  var cfg=window.MINICIRCLES_CONFIG||{},url=cfg.supabaseUrl, key=cfg.supabaseAnonKey;
- if(!url||!key||!window.supabase){render(true);return}
+ if(!url||!key||!window.supabase){S.circleCompetitionsLoaded=true;render(true);return}
  S.client=window.supabase.createClient(url,key);
  S.client.auth.getSession().then(function(r){
   var session=r.data&&r.data.session;
