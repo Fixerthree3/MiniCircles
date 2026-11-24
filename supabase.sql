@@ -59,15 +59,26 @@ create table if not exists public.signups (
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   name text,
+  username text,
   interests text[] not null default '{}',
   can_edit boolean not null default false,
   circle_manager boolean not null default false
 );
 
 alter table public.profiles
+  add column if not exists username text;
+alter table public.profiles
   add column if not exists circle_manager boolean not null default false;
 alter table public.profiles
   add column if not exists interests text[] not null default '{}';
+alter table public.profiles
+  drop constraint if exists profiles_username_format;
+alter table public.profiles
+  add constraint profiles_username_format
+  check (username is null or username ~ '^[a-z0-9][a-z0-9._-]{2,23}$');
+create unique index if not exists profiles_username_lower_idx
+  on public.profiles (lower(username))
+  where username is not null;
 
 create table if not exists public.site_updates (
   id uuid primary key default gen_random_uuid(),
@@ -201,6 +212,27 @@ $$;
 create trigger protect_profile_permissions
 before insert or update on public.profiles
 for each row execute function public.keep_profile_permissions_private();
+
+create or replace function public.create_profile_for_new_user()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  raw_username text := nullif(btrim(new.raw_user_meta_data ->> 'username'), '');
+begin
+  insert into public.profiles (id, name, username)
+  values (new.id, raw_username, lower(raw_username))
+  on conflict (id) do nothing;
+  return new;
+end;
+$$;
+
+drop trigger if exists create_profile_after_auth_signup on auth.users;
+create trigger create_profile_after_auth_signup
+after insert on auth.users
+for each row execute function public.create_profile_for_new_user();
 
 create policy "Users can create own profile"
 on public.profiles for insert

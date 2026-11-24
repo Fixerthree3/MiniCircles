@@ -9,20 +9,23 @@ The easiest no-server option is Supabase plus Netlify or GitHub Pages.
 1. Create a Supabase project.
 2. Run [`supabase.sql`](supabase.sql) in the Supabase SQL editor.
 3. In **Authentication > URL Configuration**, add the final website URL to **Site URL** and **Redirect URLs**.
-4. In **Authentication > Providers**, enable Email.
+4. In **Authentication > Providers**, enable Email and password sign-in. Configure the confirmation and password-reset redirect URLs in **Authentication > URL Configuration**.
 5. Create an editor account, then add it to `public.profiles`:
 
    ```sql
    insert into public.profiles (id, name, can_edit)
    select id, 'Foundation Editor', true
    from auth.users
-   where email = 'your-editor@example.org';
+   where email = 'your-editor@example.org'
+   on conflict (id) do update set name = excluded.name, can_edit = true;
    ```
 
 6. Put the project URL and public publishable/anon key in `window.MINICIRCLES_CONFIG` in [`index.html`](index.html).
 7. Deploy `index.html` to Netlify or GitHub Pages.
 
-The Home page is the default landing page, with an **About** page for the Foundation relationship, vision, mission, impact areas, and participation journeys. It has quick paths for common tasks and dedicated sections for news, programmes, and partner organisations. Primary journeys are surfaced in three clicks or fewer. Reading circles and youth cricket are the active programmes; Circle topics also support Education, Sport & wellbeing, Skills & employment, and Other for approved partner-led communities. Visitors can explore Circle portals and sign in with an email link. Signed-in members can follow Circles and other members, like, comment on, share, and save posts, and set interests for their recommended feed. Adults can request Circle Manager access; Site Admins review those requests and grant or revoke access in the Users area. Circle Admins can add images or videos to Circle updates and upload a Circle profile picture. Site editors manage announcements and events from the Home page.
+For an existing Supabase project, re-run the updated `supabase.sql` to add unique usernames and create profiles automatically for new accounts.
+
+The Home page is the default landing page, with an **About** page for the Foundation relationship, vision, mission, impact areas, and participation journeys. It has quick paths for common tasks and dedicated sections for news, programmes, and partner organisations. Primary journeys are surfaced in three clicks or fewer. Reading circles and youth cricket are the active programmes; Circle topics also support Education, Sport & wellbeing, Skills & employment, and Other for approved partner-led communities. Visitors can explore Circle portals. New accounts use a username, email and password, and confirm their email address once if email confirmation is enabled in Supabase; subsequent sign-ins use email and password without sending an email. Existing passwordless accounts can use **Forgot your password?** once to set a password. Signed-in members can follow Circles and other members, like, comment on, share, and save posts, and set interests for their recommended feed. Adults can request Circle Manager access; Site Admins review those requests and grant or revoke access in the Users area. Circle Admins can add images or videos to Circle updates and upload a Circle profile picture. Site editors manage announcements and events from the Home page.
 
 The SQL setup includes profile interests, follows, feed engagement and saved posts, announcements/events, Circle slugs and profile pictures, role-aware moderation, member discovery, and private direct messages. Circle post comments are visible on public posts and may be added by signed-in users; Circle moderation permissions still control removals. Circle roles are Site Admin (`profiles.can_edit`), Circle Admin (Circle manager or `circle_members.role = 'admin'`), Moderator (`circle_members.role = 'moderator'`), and Member. Direct messages are visible only to their sender and recipient; the signed-in member directory exposes display names, not email addresses. The separate Site Admin account-management function returns account emails only to verified Site Admins.
 
