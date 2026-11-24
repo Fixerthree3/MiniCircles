@@ -158,6 +158,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--navy);outline:none;bo
 .card.hl{background:var(--navy);border-color:var(--navy);color:#fff}
 .card.hl p{color:#D6DCE8}
 .card.hl h3{color:#fff}
+.tool-tile{min-height:180px}
+.tool-icon{width:44px;height:44px;border-radius:14px;background:var(--soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.tool-icon svg{width:23px;height:23px}
+.tool-tile .tool-title{display:flex;align-items:center;gap:10px}
+.tool-tile .btn{margin-top:auto}
+.danger{color:#A20E1D}
+@media (max-width:640px){.tool-tile{min-height:0}.tool-tile .post-actions{display:grid;grid-template-columns:1fr}}
 
 /* banner carousel */
 .banner{position:relative;border-radius:22px;overflow:hidden;background:var(--navy)}
@@ -337,11 +344,12 @@ var SAMPLE_FEED=[
  {id:"sample-post-3",circle_id:"sample-3",author:"Tembisa Book Crew",body:"Graphic novels are on the table this week. Everyone can recommend one for our next read.",created_at:"2026-11-20T09:00:00Z"}
 ];
 
-var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,profileComplete:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,prog:{c:[],r:[]},ready:false,client:null,circles:[],memberships:[],followingUsers:[],engagements:[],posts:[],updates:null,selectedCircle:null,openCircleAfterRoute:null,circleQuery:"",circleType:"All",feedTab:"recommended",pendingCircleId:null};
+var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,profileComplete:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,prog:{c:[],r:[]},ready:false,client:null,circles:[],circlesLoaded:false,memberships:[],circleMembers:[],circleMembersFor:null,followingUsers:[],engagements:[],posts:[],postsLoaded:false,comments:[],directMessages:[],directory:[],directoryLoaded:false,directoryError:null,adminUsers:[],adminUsersLoaded:false,adminUsersLoading:false,adminUsersError:null,updates:null,siteSettings:{theme:"system",circles_enabled:true,feed_enabled:true,messages_enabled:true,events_enabled:true},selectedCircle:null,openCircleAfterRoute:null,pendingCircleSlug:null,circleQuery:"",circleType:"All",feedTab:"recommended",pendingCircleId:null};
 try{S.pendingCircleId=sessionStorage.getItem("mc-circle-entry-id")}catch(e){}
 try{var pp=JSON.parse(localStorage.getItem("mc-progress")||"null");if(pp&&pp.c&&pp.r)S.prog=pp}catch(e){}
 function saveProg(){try{localStorage.setItem("mc-progress",JSON.stringify(S.prog))}catch(e){}}
 function fmtDate(d){try{return new Date(d+"T00:00:00").toLocaleDateString("en-ZA",{day:"numeric",month:"short",year:"numeric"})}catch(e){return d}}
+function localDateTime(d){d=d||new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16)}
 function downloadText(filename,data){
  var blob=new Blob([data],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
  a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},500);
@@ -349,7 +357,7 @@ function downloadText(filename,data){
 function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function pressList(){var l=(S.press&&S.press.length)?S.press:SAMPLE_PRESS;return l.slice().sort(function(a,b){return String(b.date).localeCompare(String(a.date))})}
 function siteUpdates(){var d=today();return (S.updates||SAMPLE_UPDATES).slice().sort(function(a,b){var af=String(a.date)>=d,bf=String(b.date)>=d;if(af!==bf)return af?-1:1;return af?String(a.date).localeCompare(String(b.date)):String(b.date).localeCompare(String(a.date))})}
-function feedPosts(){return S.posts.length?S.posts:SAMPLE_FEED}
+function feedPosts(){return S.postsLoaded?S.posts:SAMPLE_FEED}
 function groupsData(){return (S.league&&S.league.groups)?S.league.groups:SAMPLE_LEAGUE}
 function isSampleLeague(){return !(S.league&&S.league.groups)}
 function rows(g){var r=(groupsData()[g]||[]).map(function(x){return {n:x.n,w:x.w|0,l:x.l|0,t:x.t|0,p:(x.w|0)+(x.l|0)+(x.t|0),pts:2*(x.w|0)+(x.t|0)}});
@@ -360,7 +368,17 @@ var ICON={search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
  prev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>',
  next:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>',
  pause:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
- play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'};
+ play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+ news:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v15H4z"/><path d="M8 9h8M8 13h8M8 17h4"/></svg>',
+ events:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3"/></svg>',
+ people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1zM17 11a3 3 0 1 0-1-5.8M18 14a5 5 0 0 1 3 5v1"/></svg>',
+ settings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.7 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.7-1.4-2.4 1.4-1.1a7 7 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.7-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.7 1l1.7-.7 1.4 2.4-1.4 1.1a7 7 0 0 1 0 2z"/></svg>',
+ circle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>',
+ message:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8 8 0 0 1-3.5-.8L4 20l1.4-3.4A7.2 7.2 0 0 1 4 12c0-4.1 3.6-7.5 8-7.5s8 3.1 8 7z"/></svg>',
+ shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6z"/><path d="m9 12 2 2 4-4"/></svg>'};
+function toolTile(icon,title,summary,action,badge){
+ return '<article class="card tool-tile"><div class="tool-title"><span class="tool-icon" aria-hidden="true">'+(ICON[icon]||ICON.circle)+'</span><h3>'+esc(title)+'</h3></div>'+(badge?'<span class="badge soft">'+esc(badge)+'</span>':'')+'<p>'+esc(summary)+'</p>'+action+'</article>';
+}
 
 /* ---------- league ---------- */
 function leagueHTML(g,compact){
@@ -484,8 +502,8 @@ function profileSetupHTML(){
 }
 function updatesHTML(){
  var updates=siteUpdates();
- var list=updates.map(function(u){return '<article class="site-update"><header><div><span class="badge '+(u.kind==="Event"?"":"soft")+'">'+esc(u.kind||"Announcement")+'</span> <span class="note">'+esc(fmtDate(u.date))+'</span></div>'+(S.canEdit&&S.client&&!u.sample?'<button class="btn line sm" type="button" data-delete-update="'+esc(u.id)+'">Delete</button>':'')+'</header><h3 style="margin-top:7px">'+esc(u.title)+'</h3><p class="note">'+esc(u.summary||"")+'</p></article>'}).join("");
- var editor=S.canEdit?'<form id="siteUpdateForm" class="panel" style="display:grid;gap:12px"><h3>Publish an announcement or event</h3><div class="grid2"><div class="field"><label for="updateTitle">Title</label><input id="updateTitle" maxlength="120" required></div><div class="field"><label for="updateKind">Type</label><select id="updateKind"><option>Announcement</option><option>Event</option></select></div><div class="field"><label for="updateDate">Date</label><input id="updateDate" type="date" required value="'+today()+'"></div><div class="field"><label for="updateSummary">Details</label><input id="updateSummary" maxlength="240" required></div></div><button class="btn sm" type="submit">Publish update</button><span id="updateMsg" class="note" aria-live="polite"></span></form>':'';
+ var list=updates.map(function(u){var scheduled=u.publish_at&&Date.parse(u.publish_at)>Date.now();return '<article class="site-update"><header><div><span class="badge '+(u.kind==="Event"?"":"soft")+'">'+esc(u.kind||"Announcement")+'</span> <span class="note">'+esc(fmtDate(u.date))+'</span>'+(scheduled?'<span class="badge soft">Scheduled</span>':'')+'</div>'+(S.canEdit&&S.client&&!u.sample?'<button class="btn line sm" type="button" data-delete-update="'+esc(u.id)+'">Delete</button>':'')+'</header><h3 style="margin-top:7px">'+esc(u.title)+'</h3><p class="note">'+esc(u.summary||"")+'</p>'+(scheduled?'<p class="note">Publishes '+esc(new Date(u.publish_at).toLocaleString())+'</p>':'')+'</article>'}).join("");
+ var editor=S.canEdit?'<form id="siteUpdateForm" class="panel" style="display:grid;gap:12px"><h3>Publish or schedule an announcement or event</h3><div class="grid2"><div class="field"><label for="updateTitle">Title</label><input id="updateTitle" maxlength="120" required></div><div class="field"><label for="updateKind">Type</label><select id="updateKind"><option>Announcement</option><option>Event</option></select></div><div class="field"><label for="updateDate">Event or key date</label><input id="updateDate" type="date" required value="'+today()+'"></div><div class="field"><label for="updatePublishAt">Publish at</label><input id="updatePublishAt" type="datetime-local" required value="'+localDateTime()+'"></div></div><div class="field"><label for="updateSummary">Details</label><input id="updateSummary" maxlength="240" required></div><button class="btn sm" type="submit">Save announcement</button><span id="updateMsg" class="note" aria-live="polite"></span></form>':'';
  return '<div class="site-updates">'+(list||'<div class="msg">There are no current announcements or events.</div>')+editor+'</div>';
 }
 function postCardHTML(p){
@@ -519,20 +537,22 @@ function renderHomeFeed(){
  }
 }
 function homePage(){
+ var updatesSection=S.siteSettings.events_enabled?'<section><div class="sec-head"><div><span class="eyebrow">From the foundation</span><h2>Announcements and dates</h2><p>Important site-wide news and upcoming community events.</p></div></div><div id="homeUpdates">'+updatesHTML()+'</div></section>':'';
+ var feedSection=S.siteSettings.feed_enabled?'<section><div class="sec-head"><div><span class="eyebrow">Your community</span><h2>Personalised feed</h2><p>Keep up with Circles and members you follow, or discover recommended posts.</p></div><a class="btn alt sm" href="#communities" data-go="communities">Explore Circles</a></div><div class="feed-tabs" role="tablist" aria-label="Feed"><button class="chip" role="tab" data-feed="following" aria-selected="'+(S.feedTab==="following")+'">Following</button><button class="chip" role="tab" data-feed="recommended" aria-selected="'+(S.feedTab==="recommended")+'">Recommended</button></div><div class="feed" id="homeFeedList"></div></section>':'';
+ var circlePromo=S.siteSettings.circles_enabled?'<section><div class="community-hero" style="margin-top:0"><span class="eyebrow" style="color:#FFC20E">Community circles</span><h2>Find a circle or build your own</h2><p>Follow activity, share updates and help a local cricket or reading community grow.</p><a class="btn" href="#communities" data-go="communities">Explore circles</a></div></section>':'';
  return '<div class="wrap">'+profileSetupHTML()+
  '<div class="banner" id="banner" role="region" aria-roledescription="carousel" aria-label="Featured news"><div class="track" id="track">'+slidesHTML()+'</div>'+
  '<div class="bnav"><div class="dots" id="dots">'+[0,1,2,3].map(function(i){return '<button class="dot" data-slide="'+i+'" aria-label="Go to slide '+(i+1)+'"></button>'}).join("")+'</div>'+
  '<button class="ctl" id="bpause" aria-label="Pause slideshow">'+ICON.pause+'</button><button class="ctl" id="bprev" aria-label="Previous slide">'+ICON.prev+'</button><button class="ctl" id="bnext" aria-label="Next slide">'+ICON.next+'</button></div></div>'+
  '<section style="margin-top:22px"><div class="search"><label class="sr" for="gsearch">Search the site</label>'+ICON.search+'<input id="gsearch" type="search" placeholder="Search teams, press releases, lessons&hellip;" autocomplete="off"></div><div id="searchRes" aria-live="polite"></div></section>'+
- '<section><div class="sec-head"><div><span class="eyebrow">From the foundation</span><h2>Announcements and dates</h2><p>Important site-wide news and upcoming community events.</p></div></div><div id="homeUpdates">'+updatesHTML()+'</div></section>'+
- '<section><div class="sec-head"><div><span class="eyebrow">Your community</span><h2>Personalised feed</h2><p>Keep up with Circles and members you follow, or discover recommended posts.</p></div><a class="btn alt sm" href="#communities" data-go="communities">Explore Circles</a></div><div class="feed-tabs" role="tablist" aria-label="Feed"><button class="chip" role="tab" data-feed="following" aria-selected="'+(S.feedTab==="following")+'">Following</button><button class="chip" role="tab" data-feed="recommended" aria-selected="'+(S.feedTab==="recommended")+'">Recommended</button></div><div class="feed" id="homeFeedList"></div></section>'+
+ updatesSection+feedSection+
   '<div class="impact-strip" aria-label="Mini Circles programmes"><div class="impact"><i>3</i><div><b>Age groups</b><span>Under 11, 13 and 15 cricket</span></div></div><div class="impact"><i>2</i><div><b>Ways to take part</b><span>Sport and reading, together</span></div></div><div class="impact"><i>1</i><div><b>Community purpose</b><span>Every team and circle matters</span></div></div></div>'+
  '<section><div class="sec-head"><div><span class="eyebrow">Splendid Sports</span><h2>League table</h2></div><a class="btn alt sm" href="#cricket" data-go="cricket">Fixtures and cricket</a></div><div data-league="compact"></div></section>'+
   '<section><div class="sec-head"><div><span class="eyebrow">Choose your next move</span><h2>Learn, play and belong</h2></div></div><div class="programme-grid">'+
    '<article class="programme-card navy"><span class="badge">Sport</span><h3 style="font-size:1.55rem;margin-top:10px">Take the field</h3><p>Join a youth cricket team, find coaching guidance and follow every result in a fair, friendly league.</p><a class="btn" href="#join" data-go="join" data-join="cricket">Sign up a team</a></article>'+
    '<article class="programme-card red"><span class="badge">Literacy</span><h3 style="font-size:1.55rem;margin-top:10px">Open a new story</h3><p>Start a reading circle for your school or community, in a language and format members choose.</p><a class="btn" href="#join" data-go="join" data-join="reading">Start a circle</a></article>'+
   '</div></section>'+
-  '<section><div class="community-hero" style="margin-top:0"><span class="eyebrow" style="color:#FFC20E">Community circles</span><h2>Find a circle or build your own</h2><p>Follow activity, share updates and help a local cricket or reading community grow.</p><a class="btn" href="#communities" data-go="communities">Explore circles</a></div></section>'+
+ circlePromo+
  '<section><div class="sec-head"><div><span class="eyebrow">Newsroom</span><h2>Latest press</h2></div><a class="btn alt sm" href="#press" data-go="press">All press releases</a></div><div class="cards" id="homePress"></div></section>'+
  '<section><div class="two"><div class="panel"><span class="eyebrow">For schools and education departments</span><h3>Reading that learners choose</h3><p class="note" style="margin-top:8px">Boomerang circles build reading habits, vocabulary and confidence through choice and conversation, with no marks attached. Members can read in their home language, and facilitators get free training in the dashboard.</p></div>'+
  '<div class="panel"><span class="eyebrow">For sport bodies and fans</span><h3>A pathway from the first catch</h3><p class="note" style="margin-top:8px">Splendid Sports gives new teams a league structure, coaching tutorials and fair-play habits, with a public table that fans can follow week by week.</p></div></div></section>'+
@@ -613,7 +633,20 @@ function bindJoin(){
 }
 
 /* ---------- community circles ---------- */
-function circlesList(){return S.circles&&S.circles.length?S.circles:SAMPLE_CIRCLES}
+function circlesList(){return S.circlesLoaded?S.circles:(S.circles&&S.circles.length?S.circles:SAMPLE_CIRCLES)}
+function slugify(s){return String(s||"circle").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"circle"}
+function uniqueCircleSlug(s){var base=slugify(s),slug=base,n=2;while(circlesList().some(function(c){return c.slug===slug}))slug=base+"-"+n++;return slug}
+function circleLink(c){return location.origin+location.pathname+"#c/"+encodeURIComponent(c.slug||slugify(c.name))}
+function circleRole(c){
+ if(!S.signedIn)return"Visitor";
+ if(S.canEdit)return"Site Admin";
+ if(c.manager_id===S.me.id)return"Circle Admin";
+ var m=S.memberships.find(function(x){return String(x.circle_id)===String(c.id)});
+ return m&&m.role==="admin"?"Circle Admin":m&&m.role==="moderator"?"Moderator":m?"Member":"Visitor";
+}
+function canManageCircle(c){var r=circleRole(c);return r==="Site Admin"||r==="Circle Admin"}
+function canModerateCircle(c){var r=circleRole(c);return r==="Site Admin"||r==="Circle Admin"||r==="Moderator"}
+function openCircleBySlug(slug){var circle=circlesList().find(function(c){return String(c.slug||slugify(c.name)).toLowerCase()===String(slug).toLowerCase()});if(circle)openCircle(circle.id)}
 function filteredCircles(){
  var q=S.circleQuery.trim().toLowerCase(),type=S.circleType;
  return circlesList().filter(function(c){
@@ -624,37 +657,86 @@ function filteredCircles(){
 function circleCard(c){
  var member=S.memberships.some(function(m){return m.circle_id===c.id});
  var cls=c.type==="Reading"?"reading":"cricket";
- return '<article class="circle-card '+cls+' '+(c.featured?"featured":"")+'"><span class="badge soft">'+esc(c.type)+'</span><h3>'+esc(c.name)+'</h3><p class="note">'+esc(c.description||"")+'</p><div class="circle-meta"><span>'+esc(c.area||"Community")+'</span><span>&bull;</span><span>'+esc(c.members||0)+' members</span><span>&bull;</span><span>'+esc(c.status||"open")+'</span></div><div class="circle-actions"><button class="btn sm" type="button" data-circle-open="'+esc(c.id)+'">Enter circle</button><button class="btn alt sm" type="button" data-circle-follow="'+esc(c.id)+'">'+(member?"Following":"Join circle")+'</button></div></article>';
+ return '<article class="circle-card '+cls+' '+(c.featured?"featured":"")+'"><span class="badge soft">'+esc(c.type)+'</span><h3>'+esc(c.name)+'</h3><p class="note">'+esc(c.description||"")+'</p><div class="circle-meta"><span>'+esc(c.area||"Community")+'</span><span>&bull;</span><span>'+esc(c.members||0)+' members</span><span>&bull;</span><span>'+esc(c.status||"open")+'</span></div><div class="circle-actions"><button class="btn sm" type="button" data-circle-open="'+esc(c.id)+'">Enter circle</button><button class="btn alt sm" type="button" data-circle-follow="'+esc(c.id)+'">'+(member?"Following":"Join circle")+'</button><a class="btn line sm" href="#c/'+encodeURIComponent(c.slug||slugify(c.name))+'">Share page</a></div></article>';
 }
 function communitiesPage(){
- var c=circlesList();
- return '<div class="wrap"><div class="community-hero"><span class="eyebrow" style="color:#FFC20E">Mini Circles community</span><h1>Find your people. Start something meaningful.</h1><p>Follow cricket and reading circles near you, meet adult-led groups and create a circle that grows into a community.</p><button class="btn" type="button" data-open-create>Start a circle</button></div>'+
- '<section><div class="sec-head"><div><span class="eyebrow">Explore circles</span><h2>There is room to belong</h2></div></div><div class="directory-tools"><div class="field"><label for="circleSearch">Search</label><input id="circleSearch" type="search" placeholder="Name, area or activity" value="'+esc(S.circleQuery)+'"></div><div class="field" style="flex:0 1 180px"><label for="circleType">Type</label><select id="circleType"><option'+(S.circleType==="All"?" selected":"")+'>All</option><option'+(S.circleType==="Cricket"?" selected":"")+'>Cricket</option><option'+(S.circleType==="Reading"?" selected":"")+'>Reading</option></select></div></div><div class="circle-grid" id="circleGrid" style="margin-top:14px">'+filteredCircles().map(circleCard).join("")+'</div></section>'+
+ if(!S.siteSettings.circles_enabled)return '<div class="wrap"><div class="msg warn">Circle discovery is temporarily disabled by the Site Admin.</div></div>';
+ var circles=filteredCircles();
+ var canStartCircle=!S.client||(S.signedIn&&(S.canEdit||S.me&&S.me.circle_manager));
+ var startButton=canStartCircle?'<button class="btn" type="button" data-open-create>Start a circle</button>':'<a class="btn" href="#dashboard" data-go="dashboard">Request Circle Admin access</a>';
+ var createPanel=canStartCircle?'<section id="circleCreate" hidden><div class="grid2" style="align-items:start"><div class="panel"><h3>Create your own circle</h3><form id="createCircleForm" style="display:grid;gap:14px;margin-top:12px"><div class="grid2"><div class="field"><label for="circleName">Circle name</label><input id="circleName" required maxlength="80"></div><div class="field"><label for="circleKind">Circle type</label><select id="circleKind"><option>Cricket</option><option>Reading</option></select></div><div class="field"><label for="circleSlug">Share tag (optional)</label><input id="circleSlug" maxlength="60" placeholder="Generated from the Circle name"></div></div><div class="grid2"><div class="field"><label for="circleArea">Town or area</label><input id="circleArea" required maxlength="80"></div><div class="field"><label for="circleMeet">Usual meeting time</label><input id="circleMeet" maxlength="80" placeholder="Saturday 09:00"></div></div><div class="field"><label for="circleDescription">What will members do?</label><textarea id="circleDescription" required maxlength="400"></textarea></div>'+consent()+'<button class="btn" type="submit">Create circle</button><div id="createCircleMsg" aria-live="polite"></div></form></div><aside class="panel join-side"><span class="eyebrow">Circle manager essentials</span><h3>Lead with confidence</h3><div class="join-check"><i>1</i><span>Add an adult leader and adult contact.</span></div><div class="join-check"><i>2</i><span>Share plans, dates and useful resources.</span></div><div class="join-check"><i>3</i><span>Invite members and moderate discussion.</span></div></aside></div></section>':'';
+ return '<div class="wrap"><div class="community-hero"><span class="eyebrow" style="color:#FFC20E">Mini Circles community</span><h1>Find your people. Start something meaningful.</h1><p>Follow cricket and reading circles near you, meet adult-led groups and create a circle that grows into a community.</p>'+startButton+'</div>'+
+ '<section><div class="sec-head"><div><span class="eyebrow">Explore circles</span><h2>There is room to belong</h2></div></div><div class="directory-tools"><div class="field"><label for="circleSearch">Search</label><input id="circleSearch" type="search" placeholder="Name, area or activity" value="'+esc(S.circleQuery)+'"></div><div class="field" style="flex:0 1 180px"><label for="circleType">Type</label><select id="circleType"><option'+(S.circleType==="All"?" selected":"")+'>All</option><option'+(S.circleType==="Cricket"?" selected":"")+'>Cricket</option><option'+(S.circleType==="Reading"?" selected":"")+'>Reading</option></select></div></div><div class="circle-grid" id="circleGrid" style="margin-top:14px">'+(circles.length?circles.map(circleCard).join(""):'<div class="msg">No Circles match this search yet.</div>')+'</div></section>'+
  '<section><div class="ad-slot" data-enabled="false"><div><b>Community partner</b><br><span>A sponsored youth programme can appear here.</span></div></div></section>'+
- '<section id="circleCreate" hidden><div class="grid2" style="align-items:start"><div class="panel"><h3>Create your own circle</h3><form id="createCircleForm" style="display:grid;gap:14px;margin-top:12px"><div class="grid2"><div class="field"><label for="circleName">Circle name</label><input id="circleName" required maxlength="80"></div><div class="field"><label for="circleKind">Circle type</label><select id="circleKind"><option>Cricket</option><option>Reading</option></select></div></div><div class="grid2"><div class="field"><label for="circleArea">Town or area</label><input id="circleArea" required maxlength="80"></div><div class="field"><label for="circleMeet">Usual meeting time</label><input id="circleMeet" maxlength="80" placeholder="Saturday 09:00"></div></div><div class="field"><label for="circleDescription">What will members do?</label><textarea id="circleDescription" required maxlength="400"></textarea></div>'+consent()+'<button class="btn" type="submit">Create circle</button><div id="createCircleMsg" aria-live="polite"></div></form></div><aside class="panel join-side"><span class="eyebrow">Circle manager essentials</span><h3>Lead with confidence</h3><div class="join-check"><i>1</i><span>Add an adult leader and adult contact.</span></div><div class="join-check"><i>2</i><span>Share plans, dates and useful resources.</span></div><div class="join-check"><i>3</i><span>Invite members and moderate discussion.</span></div></aside></div></section>'+
+ createPanel+
  '<section id="circleDetail"><div id="circleDetailBody"></div></section></div>';
 }
 function circlePostsHTML(circle){
  var posts=S.posts.filter(function(p){return p.circle_id===circle.id});
  if(!posts.length)posts=[{id:"welcome",circle_id:circle.id,author:"Mini Circles",body:"Welcome! Introduce your circle, share one friendly idea for the next meet and keep conversations kind.",created_at:"Community notice"}];
- return posts.map(function(p){var initials=String(p.author||"M").split(/\s+/).map(function(x){return x[0]}).slice(0,2).join("").toUpperCase();
-  return '<article class="post"><div class="post-head"><div class="post-author"><span class="avatar">'+esc(initials)+'</span><div><b>'+esc(p.author||"Member")+'</b><div class="note">'+esc(p.created_at||"Just now")+'</div></div></div></div><p>'+esc(p.body||"")+'</p></article>'}).join("");
+ return posts.map(function(p){var initials=String(p.author||"M").split(/\s+/).map(function(x){return x[0]}).slice(0,2).join("").toUpperCase(),comments=S.comments.filter(function(c){return String(c.post_id)===String(p.id)}),persisted=String(p.id)!=="welcome";
+  var commentList=comments.map(function(c){return '<div class="reply"><b>'+esc(c.author||"Member")+'</b> '+esc(c.body)+(canModerateCircle(circle)||c.author_id===S.me.id?' <button class="btn line sm" type="button" data-delete-comment="'+esc(c.id)+'">Remove</button>':'')+'</div>'}).join("");
+  var commentForm=S.signedIn&&persisted?'<form data-circle-comment="'+esc(p.id)+'" style="display:flex;gap:8px;margin-top:8px"><label class="sr" for="comment_'+esc(p.id)+'">Reply to this update</label><input id="comment_'+esc(p.id)+'" data-comment-body="'+esc(p.id)+'" maxlength="1000" required placeholder="Write a reply"><button class="btn sm" type="submit">Reply</button></form><span class="note" data-comment-msg="'+esc(p.id)+'" aria-live="polite"></span>':'';
+  return '<article class="post" id="post_'+esc(p.id)+'"><div class="post-head"><div class="post-author"><span class="avatar">'+esc(initials)+'</span><div><b>'+esc(p.author||"Member")+'</b><div class="note">'+esc(p.created_at||"Just now")+'</div></div></div>'+(canModerateCircle(circle)&&persisted?'<button class="btn line sm" type="button" data-delete-post="'+esc(p.id)+'">Remove update</button>':'')+'</div><p>'+esc(p.body||"")+'</p><div class="reply-list">'+(commentList||'<p class="note">No replies yet.</p>')+commentForm+'</div></article>'}).join("");
+}
+function circleMembersHTML(circle){
+ if(!canManageCircle(circle))return"";
+ var members=S.circleMembersFor===String(circle.id)?S.circleMembers:[];
+ var rows=members.map(function(m){var profile=S.directory.find(function(d){return d.id===m.user_id});return '<div class="member"><span><b>'+esc(profile&&profile.name||"Member")+'</b><br><small class="note">'+esc(m.role)+'</small></span></div>'}).join("");
+ var options=S.directory.filter(function(d){return d.id!==S.me.id}).map(function(d){var existing=members.find(function(m){return m.user_id===d.id});return '<option value="'+esc(d.id)+'">'+esc(d.name)+(existing?" · "+esc(existing.role):"")+'</option>'}).join("");
+ return '<div class="panel" style="display:grid;gap:12px;margin-top:14px"><div><span class="badge">Circle Admin tools</span><h3 style="margin-top:8px">Manage Circle details and roles</h3></div><form id="circleEditForm" style="display:grid;gap:10px"><div class="grid2"><div class="field"><label for="editCircleName">Circle name</label><input id="editCircleName" maxlength="80" required value="'+esc(circle.name)+'"></div><div class="field"><label for="editCircleSlug">Unique share tag</label><input id="editCircleSlug" maxlength="60" required value="'+esc(circle.slug||slugify(circle.name))+'"></div><div class="field"><label for="editCircleArea">Area</label><input id="editCircleArea" maxlength="80" value="'+esc(circle.area||"")+'"></div><div class="field"><label for="editCircleMeeting">Meeting time</label><input id="editCircleMeeting" maxlength="80" value="'+esc(circle.meeting||"")+'"></div></div><div class="field"><label for="editCircleDescription">Description</label><textarea id="editCircleDescription" maxlength="400">'+esc(circle.description||"")+'</textarea></div><button class="btn sm" type="submit">Save Circle</button><span id="circleEditMsg" class="note" aria-live="polite"></span></form><div><h3>Member roles</h3><div class="member-list">'+(rows||'<p class="note">No members listed yet.</p>')+'</div><span id="circleMembersMsg" class="note" aria-live="polite"></span><form id="circleRoleForm" style="display:grid;gap:10px;margin-top:12px"><div class="field"><label for="circleRoleUser">Signed-in member</label><select id="circleRoleUser" required>'+options+'</select></div><div class="field"><label for="circleRoleValue">Role</label><select id="circleRoleValue"><option value="member">Member</option><option value="moderator">Moderator</option><option value="admin">Circle Admin</option><option value="remove">Remove from Circle</option></select></div><button class="btn alt sm" type="submit"'+(options?"":" disabled")+'>Save role</button><span id="circleRoleMsg" class="note" aria-live="polite"></span></form><button class="btn line sm danger" type="button" data-delete-circle="'+esc(circle.id)+'">Delete this Circle</button></div></div>';
+}
+function loadCircleMembers(circle){
+ var id=String(circle.id);
+ if(!S.client||!canManageCircle(circle)||S.circleMembersFor===id)return;
+ S.circleMembersFor=id;S.circleMembers=[];
+ S.client.from("circle_members").select("user_id,role").eq("circle_id",circle.id).then(function(r){
+  if(r.error)throw r.error;
+  S.circleMembers=r.data||[];
+  if(S.selectedCircle&&String(S.selectedCircle.id)===id&&S.route==="communities")openCircle(id);
+ }).catch(function(){
+  S.circleMembersFor=null;
+  var msg=$("#circleMembersMsg");if(msg)msg.textContent="Could not load member roles. Check Circle Admin access.";
+ });
 }
 function openCircle(id){
+ if(!S.siteSettings.circles_enabled)return;
  var circle=circlesList().find(function(c){return String(c.id)==String(id)});
  if(!circle)return;
  S.selectedCircle=circle;
  var el=$("#circleDetailBody");if(!el)return;
- var member=S.memberships.some(function(m){return String(m.circle_id)===String(circle.id)});
+ var role=circleRole(circle),member=role!=="Visitor",link=circleLink(circle);
  var circleFeed=member?circlePostsHTML(circle):'<div class="msg">Sign in and join this Circle to enter its member feed.</div>';
  var entry=S.signedIn?(member?'<form id="circlePostForm" style="display:grid;gap:10px;margin-top:12px"><label class="sr" for="circlePost">Post to the circle</label><textarea id="circlePost" maxlength="600" required placeholder="Share an update with the circle..."></textarea><button class="btn sm" type="submit">Post update</button><span id="circlePostMsg" class="note" aria-live="polite"></span></form>':'<div class="msg" style="margin-top:12px">Join this Circle to see your member feed and share updates.<br><button class="btn sm" id="joinCircle" type="button" style="margin-top:10px">Join this circle</button><span id="circleEntryMsg" class="note" aria-live="polite" style="display:block;margin-top:6px"></span></div>'):'<form id="circleEntryForm" style="display:grid;gap:10px;margin-top:12px"><label for="circleEntryEmail">Sign in to '+esc(circle.name)+'</label><input id="circleEntryEmail" type="email" required autocomplete="email" placeholder="Email address"><button class="btn sm" type="submit">Email me a sign-in link</button><span id="circleEntryMsg" class="note" aria-live="polite"></span></form>';
- el.innerHTML='<div class="panel" style="margin-top:8px"><div class="sec-head"><div><span class="eyebrow">'+esc(circle.type)+' circle portal</span><h2>'+esc(circle.name)+'</h2><p>'+esc(circle.area||"Community")+' &bull; '+esc(circle.members||0)+' members</p></div><button class="btn alt sm" type="button" data-close-circle>Close</button></div><p style="margin-bottom:14px">'+esc(circle.description||"")+'</p><div class="grid2"><div><h3 style="margin-bottom:10px">Circle feed</h3><div class="feed">'+circleFeed+'</div>'+entry+'</div><aside><h3 style="margin-bottom:10px">About this circle</h3><div class="member-list"><div class="member"><span><b>Meeting</b><br><small class="note">'+esc(circle.meeting||"Contact the manager")+'</small></span></div><div class="member"><span><b>Adult-led</b><br><small class="note">An adult coordinator manages this circle</small></span></div></div></aside></div></div>';
+ var managerTools=circleMembersHTML(circle),moderatorHelp=role==="Moderator"?'<div class="msg" style="margin-top:14px"><b>Moderator tools</b><br>Remove harmful or off-topic updates and replies using the controls on each post.</div>':"";
+ el.innerHTML='<div class="panel" style="margin-top:8px"><div class="sec-head"><div><span class="eyebrow">'+esc(circle.type)+' circle portal</span><h2>'+esc(circle.name)+'</h2><p>'+esc(circle.area||"Community")+' &bull; '+esc(circle.members||0)+' members</p><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px"><span class="badge">'+esc(role)+'</span><span class="badge soft">@'+esc(circle.slug||slugify(circle.name))+'</span><a class="btn line sm" href="'+esc(link)+'">Share page</a><button class="btn alt sm" type="button" data-copy-circle="'+esc(link)+'">Copy link</button></div><span id="circleShareMsg" class="note" aria-live="polite"></span></div><button class="btn alt sm" type="button" data-close-circle>Close</button></div><p style="margin-bottom:14px">'+esc(circle.description||"")+'</p><div class="grid2"><div><h3 style="margin-bottom:10px">Circle feed</h3><div class="feed">'+circleFeed+'</div>'+entry+moderatorHelp+'</div><aside><h3 style="margin-bottom:10px">About this circle</h3><div class="member-list"><div class="member"><span><b>Meeting</b><br><small class="note">'+esc(circle.meeting||"Contact the manager")+'</small></span></div><div class="member"><span><b>Role guide</b><br><small class="note">Admins manage details and roles; moderators remove content; members post and reply.</small></span></div></div></aside></div>'+managerTools+'</div>';
  $("#circleDetail").scrollIntoView({block:"start",behavior:reduce?"auto":"smooth"});
  bindCircleDetail(circle);
+ loadCircleMembers(circle);
 }
 function bindCircleDetail(circle){
  var close=$("[data-close-circle]");
- if(close)close.onclick=function(){$("#circleDetailBody").innerHTML=""};
+ if(close)close.onclick=function(){S.selectedCircle=null;$("#circleDetailBody").innerHTML=""};
+ var copy=$("[data-copy-circle]");
+ if(copy)copy.onclick=function(){var msg=$("#circleShareMsg"),link=copy.getAttribute("data-copy-circle");
+  if(!navigator.clipboard){if(msg)msg.textContent=link;return}
+  navigator.clipboard.writeText(link).then(function(){if(msg)msg.textContent="Link copied."},function(){if(msg)msg.textContent=link});
+ };
+ var edit=$("#circleEditForm");
+ if(edit)edit.onsubmit=function(e){e.preventDefault();var msg=$("#circleEditMsg"),slug=slugify($("#editCircleSlug").value);
+  if(S.circles.some(function(c){return String(c.id)!==String(circle.id)&&String(c.slug||"").toLowerCase()===slug})){msg.textContent="That share tag is already in use.";return}
+  if(!S.client){msg.textContent="Saving Circle details requires the site data service.";return}
+  S.client.from("circles").update({name:$("#editCircleName").value.trim(),slug:slug,area:$("#editCircleArea").value.trim(),meeting:$("#editCircleMeeting").value.trim(),description:$("#editCircleDescription").value.trim()}).eq("id",circle.id).select("*").single()
+   .then(function(r){if(r.error)throw r.error;var updated=r.data;S.circles=S.circles.map(function(c){return String(c.id)===String(updated.id)?updated:c});S.selectedCircle=updated;S.pendingCircleSlug=slug;history.replaceState(null,"",location.pathname+"#c/"+encodeURIComponent(slug));openCircle(updated.id)})
+   .catch(function(){msg.textContent="Could not save. The tag may be in use or you may not have Circle Admin access."});
+ };
+ var roleForm=$("#circleRoleForm");
+ if(roleForm)roleForm.onsubmit=function(e){e.preventDefault();var msg=$("#circleRoleMsg"),userId=$("#circleRoleUser").value,role=$("#circleRoleValue").value,existing=S.circleMembers.find(function(m){return m.user_id===userId});
+  if(!S.client){msg.textContent="Role management requires the site data service.";return}
+  var request=role==="remove"?S.client.from("circle_members").delete().match({circle_id:circle.id,user_id:userId}):existing?S.client.from("circle_members").update({role:role}).match({circle_id:circle.id,user_id:userId}):S.client.from("circle_members").insert({circle_id:circle.id,user_id:userId,role:role});
+  request.then(function(r){if(r.error)throw r.error;S.circleMembersFor=null;loadCircleMembers(circle)})
+   .catch(function(){msg.textContent="Could not change the member role. Check Circle Admin access."});
+ };
  var entry=$("#circleEntryForm");
  if(entry)entry.onsubmit=function(e){e.preventDefault();var msg=$("#circleEntryMsg"),email=$("#circleEntryEmail").value.trim();
   if(!S.client){msg.textContent="Circle sign-in is unavailable until the site account service is configured.";return}
@@ -677,6 +759,38 @@ function bindCircleDetail(circle){
    S.client.from("circle_posts").insert({circle_id:circle.id,author_id:S.me.id,author:S.me.name||S.me.email||"Member",body:text}).then(function(r){if(r.error)throw r.error;$("#circlePost").value="";msg.textContent="Posted.";loadSupabaseContent()}).catch(function(){msg.textContent="Could not post this update."});
   }else{S.posts.push({circle_id:circle.id,author:S.me&&S.me.name||"Member",body:text,created_at:"Just now"});openCircle(circle.id)}
  };
+ $$("[data-circle-comment]").forEach(function(form){form.onsubmit=function(e){e.preventDefault();var postId=form.getAttribute("data-circle-comment"),input=$("[data-comment-body='"+postId+"']"),msg=$("[data-comment-msg='"+postId+"']");
+  if(!S.client){msg.textContent="Replies require the site data service.";return}
+  S.client.from("circle_post_comments").insert({post_id:postId,author_id:S.me.id,author:S.me.name||S.me.email||"Member",body:input.value.trim()})
+   .then(function(r){if(r.error)throw r.error;input.value="";msg.textContent="Reply posted.";loadCircleComments(circle)})
+   .catch(function(){msg.textContent="Could not post this reply."});
+ }});
+ $$("[data-delete-post]").forEach(function(b){b.onclick=function(){b.disabled=true;S.client.from("circle_posts").delete().eq("id",b.getAttribute("data-delete-post"))
+  .then(function(r){if(r.error)throw r.error;S.posts=S.posts.filter(function(p){return String(p.id)!==b.getAttribute("data-delete-post")});openCircle(circle.id)})
+  .catch(function(){b.disabled=false;b.textContent="Could not remove"});
+ }});
+ $$("[data-delete-comment]").forEach(function(b){b.onclick=function(){b.disabled=true;S.client.from("circle_post_comments").delete().eq("id",b.getAttribute("data-delete-comment"))
+  .then(function(r){if(r.error)throw r.error;loadCircleComments(circle)})
+  .catch(function(){b.disabled=false;b.textContent="Could not remove"});
+ }});
+ $$("[data-delete-circle]").forEach(function(b){b.onclick=function(){
+  if(!S.client||!canManageCircle(circle))return;
+  if(!window.confirm("Permanently delete "+circle.name+" and its posts, replies, memberships and invitations?"))return;
+  b.disabled=true;S.client.from("circles").delete().eq("id",circle.id).then(function(r){
+   if(r.error)throw r.error;
+   S.circles=S.circles.filter(function(c){return String(c.id)!==String(circle.id)});
+   S.memberships=S.memberships.filter(function(m){return String(m.circle_id)!==String(circle.id)});
+   S.selectedCircle=null;S.circleMembers=[];S.circleMembersFor=null;render(true);
+  }).catch(function(){b.disabled=false;window.alert("Could not delete this Circle. Check your admin role and try again.")});
+ };});
+}
+function loadCircleComments(circle){
+ if(!S.client)return;
+ var ids=S.posts.filter(function(p){return String(p.circle_id)===String(circle.id)}).map(function(p){return p.id});
+ if(!ids.length)return;
+ S.client.from("circle_post_comments").select("*").in("post_id",ids).order("created_at",{ascending:true})
+  .then(function(r){if(r.error)throw r.error;S.comments=r.data||[];if(S.selectedCircle&&String(S.selectedCircle.id)===String(circle.id))openCircle(circle.id)})
+  .catch(function(){var msg=$("#circlePostMsg");if(msg)msg.textContent="Could not load replies."});
 }
 function bindCommunities(){
  var search=$("#circleSearch"),type=$("#circleType");
@@ -685,7 +799,9 @@ function bindCommunities(){
  bindCommunityButtons();
  var create=$("#createCircleForm");
  if(create)create.onsubmit=function(e){e.preventDefault();if(!create.reportValidity())return;var msg=$("#createCircleMsg");
-  var rec={name:$("#circleName").value.trim(),type:$("#circleKind").value,area:$("#circleArea").value.trim(),meeting:$("#circleMeet").value.trim(),description:$("#circleDescription").value.trim(),status:"open"};
+  var name=$("#circleName").value.trim(),typedSlug=$("#circleSlug").value.trim(),slug=typedSlug?slugify(typedSlug):uniqueCircleSlug(name);
+  if(circlesList().some(function(c){return c.slug&&c.slug.toLowerCase()===slug})){msg.innerHTML='<div class="msg warn">That share tag is already in use. Choose another.</div>';return}
+  var rec={name:name,slug:slug,type:$("#circleKind").value,area:$("#circleArea").value.trim(),meeting:$("#circleMeet").value.trim(),description:$("#circleDescription").value.trim(),status:"open"};
   if(S.client){
    if(S.signedIn)rec.manager_id=S.me.id;
    S.client.from("circles").insert(rec).then(function(r){if(r.error)throw r.error;msg.innerHTML='<div class="msg ok">Circle created. Add members and updates from the dashboard.</div>';create.reset();loadSupabaseContent()}).catch(function(){msg.innerHTML='<div class="msg warn">Could not create the circle. Sign in and check manager access.</div>'});
@@ -711,8 +827,50 @@ function lessonsHTML(list,key){
 }
 function communityManagerHTML(){
  var followed=S.memberships.map(function(m){var c=circlesList().find(function(x){return String(x.id)==String(m.circle_id)});return c?c:null}).filter(Boolean);
+ var managed=circlesList().filter(canManageCircle);
  var list=followed.length?'<div class="circle-grid">'+followed.map(circleCard).join("")+'</div>':'<div class="msg">You are not following a circle yet. Explore the Circles page and follow one.</div>';
- return '<div class="grid2" style="align-items:start"><div><div class="circle-grid">'+list+'</div></div><div class="panel"><h3>Invite people to a circle</h3><form id="inviteForm" style="display:grid;gap:12px;margin-top:12px"><div class="field"><label for="inviteCircle">Circle</label><select id="inviteCircle">'+followed.map(function(c){return '<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>'}).join("")+'</select></div><div class="field"><label for="inviteEmail">Adult email</label><input id="inviteEmail" type="email" required></div><button class="btn" type="submit"'+(followed.length?"":" disabled")+'>Send invite</button><span id="inviteMsg" class="note" aria-live="polite"></span></form></div></div>';
+ var invite=managed.length?'<div class="panel"><h3>Record an invitation</h3><p class="note">This records an invitation in the Circle; it does not send an email. Share the Circle link separately.</p><form id="inviteForm" style="display:grid;gap:12px;margin-top:12px"><div class="field"><label for="inviteCircle">Circle</label><select id="inviteCircle">'+managed.map(function(c){return '<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>'}).join("")+'</select></div><div class="field"><label for="inviteEmail">Adult email</label><input id="inviteEmail" type="email" required></div><button class="btn" type="submit">Record invitation</button><span id="inviteMsg" class="note" aria-live="polite"></span></form></div>':'<div class="panel"><h3>Circle Admin access</h3><p class="note">Circle invitations and role management are available to Circle Admins. Open one of your managed Circles to manage its members.</p></div>';
+ return '<div class="grid2" style="align-items:start"><div><div class="circle-grid">'+list+'</div></div>'+invite+'</div>';
+}
+function rolePortalHTML(){
+ var moderated=circlesList().filter(function(c){return circleRole(c)==="Moderator"});
+ var tiles=[];
+ if(S.canEdit){
+  tiles.push(toolTile("events","Announcements & events","Publish now or schedule key dates and campaigns for the whole community.",'<a class="btn alt" href="#home" data-go="home">Manage updates</a>',"Site Admin"));
+  tiles.push(toolTile("people","Members & accounts","Review signed-in members and securely remove an account when needed.",'<button class="btn alt" type="button" data-dash="users">Manage users</button>',"Site Admin"));
+  tiles.push(toolTile("settings","Platform settings","Set the site-wide theme and enable or pause platform features.",'<button class="btn alt" type="button" data-dash="settings">Manage settings</button>',"Site Admin"));
+  tiles.push(toolTile("circle","All Circles","Open Circle pages, manage roles, moderate content and share public links.",'<a class="btn alt" href="#communities" data-go="communities">Manage Circles</a>',"Site Admin"));
+  tiles.push(toolTile("news","Newsroom & league","Publish foundation news and maintain league results.",'<div class="post-actions"><a class="btn alt sm" href="#press" data-go="press">Newsroom</a><a class="btn alt sm" href="#cricket" data-go="cricket">League</a></div>',"Site Admin"));
+ }
+ var owned=circlesList().filter(function(c){return circleRole(c)==="Circle Admin"});
+ if(owned.length)owned.forEach(function(c){tiles.push(toolTile("circle",c.name,"Edit Circle details, manage members, assign roles and copy its shareable link.",'<button class="btn alt" type="button" data-circle-open="'+esc(c.id)+'">Open Circle Admin</button>',"Circle Admin"))});
+ if(moderated.length)moderated.forEach(function(c){tiles.push(toolTile("shield",c.name,"Review the Circle conversation and remove inappropriate posts or replies.",'<button class="btn alt" type="button" data-circle-open="'+esc(c.id)+'">Open moderation tools</button>',"Moderator"))});
+ tiles.push(toolTile("circle","Member community","Follow Circles, publish updates and reply in spaces you have joined.",'<a class="btn alt" href="#communities" data-go="communities">Explore Circles</a>',"Signed-in member"));
+ if(S.siteSettings.messages_enabled)tiles.push(toolTile("message","Direct messages","Coordinate privately with other signed-in members.",'<button class="btn alt" type="button" data-dash="messages">Open messages</button>',"Signed-in member"));
+ return '<section><div class="sec-head"><div><span class="eyebrow">Role-based tools</span><h3>Portals & tools</h3><p>Each tile shows the actions available to your role.</p></div></div><div class="cards">'+tiles.join("")+'</div></section>';
+}
+function usersAdminHTML(){
+ if(!S.canEdit)return '<div class="msg warn">Site Admin access is required.</div>';
+ var options=S.adminUsers.filter(function(d){return d.id!==S.me.id}).map(function(d){var label=(d.name?d.name+" · ":"")+(d.email||d.id.slice(0,8));return '<option value="'+esc(d.id)+'">'+esc(label)+'</option>'}).join("");
+ var status=S.adminUsersError?'Admin user list failed to load: '+esc(S.adminUsersError):!S.adminUsersLoaded?"Loading all accounts…":options?"Select an account to remove.":"No other accounts are available.";
+ return '<div class="panel" style="display:grid;gap:12px"><div><span class="eyebrow">Site Admin</span><h3>Member directory & account actions</h3><p class="note">This list is restricted to Site Admins. Account deletion is permanent: Circle memberships, authored replies and private messages are removed, and public Circle posts are anonymised.</p></div><div class="msg" id="userCount">'+(S.adminUsersLoaded?S.adminUsers.length+" accounts loaded.":"Loading accounts…")+'</div><form id="deleteUserForm" style="display:grid;gap:10px"><div class="field"><label for="deleteUserId">Account</label><select id="deleteUserId" required>'+options+'</select></div><button class="btn danger" type="submit"'+(options?"":" disabled")+'>Permanently delete account</button><span id="deleteUserMsg" class="note" role="status" aria-live="polite">'+status+'</span></form></div>';
+}
+function siteSettingsHTML(){
+ if(!S.canEdit)return '<div class="msg warn">Site Admin access is required.</div>';
+ var f=S.siteSettings;
+ return '<form id="siteSettingsForm" class="panel" style="display:grid;gap:14px"><div><span class="eyebrow">Site Admin</span><h3>Global appearance and features</h3><p class="note">Feature switches control what visitors see and whether private messaging is available.</p></div><div class="field"><label for="siteTheme">Default site theme</label><select id="siteTheme"><option value="system"'+(f.theme==="system"?" selected":"")+'>Use device preference</option><option value="light"'+(f.theme==="light"?" selected":"")+'>Light</option><option value="dark"'+(f.theme==="dark"?" selected":"")+'>Dark</option></select></div><div class="interest-list"><label class="check"><input type="checkbox" name="siteFeature" value="circles_enabled"'+(f.circles_enabled?" checked":"")+'>Enable Circle discovery</label><label class="check"><input type="checkbox" name="siteFeature" value="feed_enabled"'+(f.feed_enabled?" checked":"")+'>Enable personalised feed</label><label class="check"><input type="checkbox" name="siteFeature" value="messages_enabled"'+(f.messages_enabled?" checked":"")+'>Enable direct messages</label><label class="check"><input type="checkbox" name="siteFeature" value="events_enabled"'+(f.events_enabled?" checked":"")+'>Enable announcements and events</label></div><button class="btn" type="submit">Save site settings</button><span id="siteSettingsMsg" class="note" role="status" aria-live="polite"></span></form>';
+}
+function messagesContentHTML(){
+ var options=messageRecipientOptions();
+ return '<div class="grid2" style="align-items:start"><form id="messageForm" class="panel" style="display:grid;gap:12px"><h3>New direct message</h3><div class="field"><label for="messageRecipient">Signed-in member</label><select id="messageRecipient" required>'+options+'</select></div><div class="field"><label for="messageBody">Message</label><textarea id="messageBody" maxlength="2000" required></textarea></div><button class="btn" type="submit"'+(options?"":" disabled")+'>Send message</button><span id="messageStatus" class="note" aria-live="polite">'+(options?"":"No other members are listed yet.")+'</span></form><section><h3 style="margin-bottom:10px">Inbox and sent</h3><div id="messagesList" class="feed">'+messagesListHTML()+'</div></section></div>';
+}
+function messageRecipientOptions(){return S.directory.filter(function(d){return !S.me||d.id!==S.me.id}).map(function(d){return '<option value="'+esc(d.id)+'">'+esc(d.name)+'</option>'}).join("")}
+function messagesListHTML(){
+ var list=S.directMessages.slice().sort(function(a,b){return String(b.created_at).localeCompare(String(a.created_at))}).map(function(m){
+  var peer=m.sender_id===S.me.id?m.recipient_id:m.sender_id,person=S.directory.find(function(d){return d.id===peer}),sent=m.sender_id===S.me.id;
+  return '<article class="post"><div class="post-head"><b>'+(sent?"To ":"From ")+esc(person&&person.name||"Member")+'</b><span class="note">'+esc(new Date(m.created_at).toLocaleString())+'</span></div><p>'+esc(m.body)+'</p></article>';
+ }).join("");
+ return list||'<div class="msg">No messages yet.</div>';
 }
 function signupsHTML(){
  if(!S.canEdit)return '<div class="msg">Sign-up records are visible to foundation editors only.</div>';
@@ -727,28 +885,40 @@ function dashPage(){
   return '<div class="wrap"><div class="lock"><div class="panel" style="display:grid;gap:12px"><span class="eyebrow">Stakeholder dashboard</span><h2>Sign in to open the dashboard</h2><p class="note">The dashboard holds the cricket tutorials, reading club training and downloadable session plans for partners, schools, coaches and departments. Sign in with your account to continue.</p><form id="authForm" style="display:grid;gap:12px"><div class="field"><label for="authEmail">Email address</label><input id="authEmail" type="email" required autocomplete="email"></div><button class="btn" type="submit">Email me a sign-in link</button><div id="authMsg" class="note" aria-live="polite"></div></form><div class="msg warn" id="gateNote">Not signed in yet. If you have an account, use the link above.</div></div>'+
   '<div class="panel"><h3>No account yet?</h3><p class="note" style="margin:6px 0 14px">Ask for stakeholder access and the foundation will get back to you.</p><form id="joinForm" data-type="access" style="display:grid;gap:14px"><div class="grid2"><div class="field"><label for="fName">Organisation</label><input id="fName" required maxlength="80" placeholder="School, department, club or partner"></div><div class="field"><label for="fContactName">Your name</label><input id="fContactName" required maxlength="80" autocomplete="name"></div></div><div class="field"><label for="fContact">Email or phone</label><input id="fContact" required maxlength="80" autocomplete="email"></div><div class="field"><label for="fNotes">What would you like to use? (optional)</label><textarea id="fNotes" maxlength="400"></textarea></div>'+consent()+'<div><button class="btn" type="submit">Request access</button></div></form><div id="joinMsg" aria-live="polite" style="margin-top:14px"></div></div></div></div>';
  }
- var tabs=[["overview","Overview"],["communities","My circles"],["cricket","Cricket tutorials"],["reading","Reading training"],["resources","Resources"]];
- if(S.canEdit)tabs.push(["signups","Sign-ups"]);
+ var tabs=[["overview","Overview"],["communities","My circles"]];
+ if(S.siteSettings.messages_enabled)tabs.push(["messages","Messages"]);
+ tabs= tabs.concat([["cricket","Cricket tutorials"],["reading","Reading training"],["resources","Resources"]]);
+ if(S.canEdit)tabs.push(["users","Users"],["settings","Site settings"],["signups","Sign-ups"]);
  var name=(S.me&&S.me.name)||"";
  var c;
  if(S.dashTab==="cricket")c='<h2 style="margin-bottom:14px">Cricket tutorials</h2>'+lessonsHTML(CRICKET,"c");
  else if(S.dashTab==="reading")c='<h2 style="margin-bottom:14px">Reading club training</h2>'+lessonsHTML(READING,"r");
  else if(S.dashTab==="communities")c='<h2 style="margin-bottom:14px">My circles</h2>'+communityManagerHTML();
+ else if(S.dashTab==="messages"&&S.siteSettings.messages_enabled)c='<h2 style="margin-bottom:14px">Direct messages</h2>'+messagesContentHTML();
+ else if(S.dashTab==="users")c='<h2 style="margin-bottom:14px">User management</h2>'+usersAdminHTML();
+ else if(S.dashTab==="settings")c='<h2 style="margin-bottom:14px">Site settings</h2>'+siteSettingsHTML();
  else if(S.dashTab==="resources")c='<h2 style="margin-bottom:14px">Resources</h2><div class="cards"><div class="card"><h3>Cricket session plan</h3><p>A 45-minute plan for a practice: warm-up, two skill stations, a small-sided game and a huddle.</p><button class="btn" data-dl="cricket">Download plan</button></div><div class="card"><h3>Reading circle session plan</h3><p>A 45-minute plan for a circle: settle in, read, talk, choose the next book and close.</p><button class="btn" data-dl="reading">Download plan</button></div></div><p class="note" id="dlMsg" style="margin-top:12px" aria-live="polite"></p>';
  else if(S.dashTab==="signups")c='<h2 style="margin-bottom:14px">Sign-ups</h2><div id="signupBox">'+signupsHTML()+'</div>';
  else c='<h2>Welcome'+(name?', '+esc(name):'')+'</h2><p class="note" style="margin-top:6px;max-width:60ch">Everything for coaches, facilitators and partners in one place. Your lesson progress is saved on this device.</p>'+
   '<div class="cards" style="margin-top:18px"><div class="card"><h3>Cricket tutorials</h3>'+progBar(S.prog.c.length,CRICKET.length)+'<p>'+S.prog.c.length+' of '+CRICKET.length+' lessons complete</p><button class="btn alt" data-dash="cricket">Continue</button></div>'+
   '<div class="card"><h3>Reading club training</h3>'+progBar(S.prog.r.length,READING.length)+'<p>'+S.prog.r.length+' of '+READING.length+' modules complete</p><button class="btn alt" data-dash="reading">Continue</button></div>'+
   '<div class="card"><h3>Session plans</h3><p>Printable-style plans for practice days and reading circles.</p><button class="btn alt" data-dash="resources">Open resources</button></div>'+
-  (S.canEdit?'<div class="card hl"><span class="badge">Editors</span><h3>Run the newsroom and league</h3><p>Publish press releases and record match results.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="#press" data-go="press">Press</a><a class="btn" href="#cricket" data-go="cricket">League</a></div></div>':'')+'</div>';
+  (S.canEdit?'<div class="card hl"><span class="badge">Editors</span><h3>Run the newsroom and league</h3><p>Publish press releases and record match results.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="#press" data-go="press">Press</a><a class="btn" href="#cricket" data-go="cricket">League</a></div></div>':'')+'</div>'+rolePortalHTML();
  return '<div class="wrap"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px"><div class="dtabs" role="tablist" aria-label="Dashboard sections">'+tabs.map(function(t){return '<button class="chip" role="tab" data-dash="'+t[0]+'" aria-selected="'+(S.dashTab===t[0])+'">'+t[1]+'</button>'}).join("")+'</div><button class="btn alt sm" type="button" data-signout>Sign out</button></div><div id="dashBody">'+c+'</div></div>';
 }
 function bindDash(){
+ var messageForm=$("#messageForm");
+ if(messageForm)messageForm.onsubmit=function(e){e.preventDefault();var status=$("#messageStatus"),body=$("#messageBody").value.trim();
+  if(!S.client){status.textContent="Messaging requires the site data service.";return}
+  S.client.from("direct_messages").insert({sender_id:S.me.id,recipient_id:$("#messageRecipient").value,body:body})
+   .then(function(r){if(r.error)throw r.error;messageForm.reset();status.textContent="Message sent.";loadSupabaseContent()})
+   .catch(function(){status.textContent="Could not send this message."});
+ };
  var invite=$("#inviteForm");
  if(invite)invite.onsubmit=function(e){e.preventDefault();var msg=$("#inviteMsg"),email=$("#inviteEmail").value.trim(),circle=$("#inviteCircle").value;
   if(S.client){
-   S.client.from("circle_invitations").insert({circle_id:circle,email:email,invited_by:S.me&&S.me.id,status:"pending"}).then(function(r){if(r.error)throw r.error;msg.textContent="Invitation recorded.";invite.reset()}).catch(function(){msg.textContent="Could not send the invitation."});
-  }else{msg.textContent="Invitation saved for this device. Connect Supabase to send it."}
+   S.client.from("circle_invitations").insert({circle_id:circle,email:email,invited_by:S.me&&S.me.id,status:"pending"}).then(function(r){if(r.error)throw r.error;msg.textContent="Invitation recorded. Share the Circle link separately.";invite.reset()}).catch(function(){msg.textContent="Could not record the invitation."});
+  }else{msg.textContent="Invitation recording requires the site data service."}
  };
  $$("[data-tick]").forEach(function(cb){cb.onchange=function(){var k=cb.getAttribute("data-tick"),id=cb.getAttribute("data-id"),a=S.prog[k],i=a.indexOf(id);if(cb.checked&&i<0)a.push(id);if(!cb.checked&&i>-1)a.splice(i,1);saveProg();render(true)}});
  $$("[data-dl]").forEach(function(b){b.onclick=function(){var k=b.getAttribute("data-dl"),m=$("#dlMsg");
@@ -758,6 +928,29 @@ function bindDash(){
   var l=(S.signups||[]).map(function(x){return [x.type,x.name,x.contactName,x.contact,x.summary,new Date(x.createdAt||0).toISOString()].map(q).join(",")});
   var data="type,name,contact name,contact,details,date\n"+l.join("\n"),m=$("#csvMsg");
   downloadText("mini-circles-signups.csv",data);m.textContent="CSV download started.";
+ };
+ var deleteUser=$("#deleteUserForm");
+ if(deleteUser)deleteUser.onsubmit=function(e){
+  e.preventDefault();
+  var status=$("#deleteUserMsg"),id=$("#deleteUserId").value,person=S.adminUsers.find(function(d){return d.id===id});
+  if(!S.client||!S.canEdit){status.textContent="Account management requires Site Admin access and the site data service.";return}
+  if(!person){status.textContent="Select a valid member account.";return}
+  if(!window.confirm("Permanently delete "+(person.name||person.email||id.slice(0,8))+" ("+id.slice(0,8)+") and linked account data? This cannot be undone."))return;
+  var submit=deleteUser.querySelector('button[type="submit"]');submit.disabled=true;status.textContent="Deleting account…";
+  S.client.functions.invoke("admin-delete-user",{body:{userId:id}})
+   .then(function(r){if(r.error)throw r.error;if(!r.data||!r.data.success)throw new Error(r.data&&r.data.error||"The deletion service returned no confirmation.");S.adminUsers=S.adminUsers.filter(function(d){return d.id!==id});S.directory=S.directory.filter(function(d){return d.id!==id});S.circleMembers=S.circleMembers.filter(function(m){return m.user_id!==id});var selected=$("#deleteUserId").selectedOptions[0];if(selected)selected.remove();$("#userCount").textContent=S.adminUsers.length+" accounts loaded.";status.textContent="Account deleted.";if(!$("#deleteUserId").options.length)submit.disabled=true})
+   .catch(function(err){submit.disabled=false;status.textContent="Account deletion failed: "+(err&&err.message||"check Edge Function deployment and Site Admin access.")});
+ };
+ var settingsForm=$("#siteSettingsForm");
+ if(settingsForm)settingsForm.onsubmit=function(e){
+  e.preventDefault();var status=$("#siteSettingsMsg");
+  if(!S.client||!S.canEdit){status.textContent="Saving site settings requires the configured data service and Site Admin access.";return}
+  var next={id:true,theme:$("#siteTheme").value,circles_enabled:false,feed_enabled:false,messages_enabled:false,events_enabled:false,updated_at:new Date().toISOString()};
+  $$('input[name="siteFeature"]:checked',settingsForm).forEach(function(input){next[input.value]=true});
+  var submit=settingsForm.querySelector('button[type="submit"]');submit.disabled=true;
+  S.client.from("site_settings").upsert(next,{onConflict:"id"}).then(function(r){if(r.error)throw r.error;S.siteSettings=next;applyTheme();render(true);var newStatus=$("#siteSettingsMsg");if(newStatus)newStatus.textContent="Site settings saved."})
+   .catch(function(){status.textContent="Could not save settings. Check the site administrator schema and access."})
+   .finally(function(){submit.disabled=false});
  };
  var signout=$("[data-signout]");
  if(signout)signout.onclick=function(){if(S.client)S.client.auth.signOut().then(function(){S.me=null;S.signedIn=false;S.canEdit=false;render(true)})};
@@ -810,11 +1003,14 @@ function bindHomeUpdates(){
  var f=$("#siteUpdateForm");
  if(f)f.onsubmit=function(e){e.preventDefault();var msg=$("#updateMsg");
   if(!S.client){msg.textContent="Publishing requires the site data service.";return}
-  S.client.from("site_updates").insert({title:$("#updateTitle").value.trim(),kind:$("#updateKind").value,date:$("#updateDate").value,summary:$("#updateSummary").value.trim()})
-   .then(function(r){if(r.error)throw r.error;f.reset();$("#updateDate").value=today();msg.textContent="Update published.";loadSupabaseContent()})
+  var publishAt=new Date($("#updatePublishAt").value);
+  if(isNaN(publishAt.getTime())){msg.textContent="Choose a valid publication date and time.";return}
+  S.client.from("site_updates").insert({title:$("#updateTitle").value.trim(),kind:$("#updateKind").value,date:$("#updateDate").value,publish_at:publishAt.toISOString(),summary:$("#updateSummary").value.trim()})
+   .then(function(r){if(r.error)throw r.error;f.reset();$("#updateDate").value=today();$("#updatePublishAt").value=localDateTime();msg.textContent=publishAt.getTime()>Date.now()?"Update scheduled.":"Update published.";loadSupabaseContent()})
    .catch(function(){msg.textContent="Could not publish. Check site administrator access."});
  };
  $$("[data-delete-update]").forEach(function(b){b.onclick=function(){
+  if(!window.confirm("Delete this announcement or event?"))return;
   b.disabled=true;S.client.from("site_updates").delete().eq("id",b.getAttribute("data-delete-update"))
    .then(function(r){if(r.error)throw r.error;loadSupabaseContent()})
    .catch(function(){b.disabled=false;window.alert("Could not delete this update. Check site administrator access.")});
@@ -861,6 +1057,9 @@ function render(keepScroll){
  var y=window.scrollY;
  stopTimer();
  var r=S.route;
+ S.route=r;
+ var circleNav=$('#nav a[data-r="communities"]');
+ if(circleNav)circleNav.hidden=!S.siteSettings.circles_enabled;
  $$("#nav a").forEach(function(a){if(a.getAttribute("data-r")===r)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
  $("#lockico").style.display=S.signedIn?"none":"";
  $("#app").innerHTML=pages[r]();
@@ -876,14 +1075,19 @@ function live(){
  var pl=$("#pressList");if(pl){mountPress()}else{var hp=$("#homePress");if(hp)mountPress()}
  var updates=$("#homeUpdates");if(updates){updates.innerHTML=updatesHTML();bindHomeUpdates()}
  if($("#homeFeedList")){renderHomeFeed();bindHomeFeed()}
+ var messages=$("#messagesList");if(messages)messages.innerHTML=messagesListHTML();
+ var recipient=$("#messageRecipient");if(recipient){var selected=recipient.value;recipient.innerHTML=messageRecipientOptions();recipient.value=selected;var send=$("#messageForm button[type=submit]");if(send)send.disabled=!recipient.options.length}
+ if(S.selectedCircle&&S.route==="communities"&&S.circleRefreshRequested){S.circleRefreshRequested=false;openCircle(S.selectedCircle.id)}
  var sb=$("#signupBox");if(sb){sb.innerHTML=signupsHTML();bindDash()}
  var gs=$("#gsearch");if(gs&&gs.value)runSearch(gs.value);
 }
 function route(){
  var h=(location.hash||"").slice(1);
+ if(h.indexOf("c/")===0){try{S.pendingCircleSlug=decodeURIComponent(h.slice(2))}catch(e){S.pendingCircleSlug=h.slice(2)}h="communities"}else S.pendingCircleSlug=null;
  S.route=ROUTES.indexOf(h)>-1?h:"home";
  render(false);
- if(S.route==="communities"&&S.openCircleAfterRoute&&circlesList().some(function(c){return String(c.id)===String(S.openCircleAfterRoute)})){var id=S.openCircleAfterRoute;S.openCircleAfterRoute=null;openCircle(id)}
+ if(S.route==="communities"&&S.siteSettings.circles_enabled&&S.pendingCircleSlug)openCircleBySlug(S.pendingCircleSlug);
+ if(S.route==="communities"&&S.siteSettings.circles_enabled&&S.openCircleAfterRoute&&circlesList().some(function(c){return String(c.id)===String(S.openCircleAfterRoute)})){var id=S.openCircleAfterRoute;S.openCircleAfterRoute=null;openCircle(id)}
 }
 function go(r,o){
  o=o||{};
@@ -913,28 +1117,79 @@ document.addEventListener("click",function(e){
 window.addEventListener("hashchange",route);
 document.getElementById("skip").addEventListener("click",function(e){e.preventDefault();$("#app").focus()});
 function initTheme(){
- var saved=localStorage.getItem("mc-theme"),theme=saved||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
- document.documentElement.setAttribute("data-theme",theme);
+ applyTheme();
  var btn=$("#themeBtn");
- if(btn){btn.setAttribute("aria-label",theme==="dark"?"Switch to light theme":"Switch to dark theme");btn.onclick=function(){
+ if(btn){btn.onclick=function(){
   var next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
   document.documentElement.setAttribute("data-theme",next);localStorage.setItem("mc-theme",next);
   btn.setAttribute("aria-label",next==="dark"?"Switch to light theme":"Switch to dark theme");
  }}
 }
+function applyTheme(){
+ var saved=localStorage.getItem("mc-theme"),base=S.siteSettings.theme,theme=saved||(base&&base!=="system"?base:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
+ document.documentElement.setAttribute("data-theme",theme);
+ var btn=$("#themeBtn");
+ if(btn)btn.setAttribute("aria-label",theme==="dark"?"Switch to light theme":"Switch to dark theme");
+}
 
 /* ---------- Supabase data + identity ---------- */
+function loadMemberDirectoryPage(offset,loaded,accountId){
+ if(!S.signedIn||!S.me||S.me.id!==accountId)return;
+ S.client.from("member_directory").select("id,name").order("name",{ascending:true}).order("id",{ascending:true}).range(offset,offset+499)
+  .then(function(r){
+   if(!S.signedIn||!S.me||S.me.id!==accountId)return;
+   if(r.error)throw r.error;
+   var page=r.data||[],all=loaded.concat(page);
+   if(page.length===500){loadMemberDirectoryPage(offset+500,all,accountId);return}
+   S.directory=all;S.directoryLoaded=true;S.directoryError=null;
+   if(S.route==="dashboard"&&S.dashTab==="users")render(true);else live();
+   if(S.selectedCircle&&canManageCircle(S.selectedCircle))openCircle(S.selectedCircle.id);
+  })
+  .catch(function(err){
+   if(!S.signedIn||!S.me||S.me.id!==accountId)return;
+   S.directoryError=err&&err.message||"request failed";
+   S.directoryLoaded=true;
+   if(S.route==="dashboard"&&S.dashTab==="users")render(true);else live();
+  });
+}
+function loadAdminUsersPage(page,loaded,accountId){
+  if(!S.signedIn||!S.me||S.me.id!==accountId||!S.canEdit)return;
+  S.client.functions.invoke("admin-delete-user",{body:{action:"list",page:page}})
+   .then(function(r){
+    if(!S.signedIn||!S.me||S.me.id!==accountId||!S.canEdit)return;
+    if(r.error)throw r.error;
+    if(!r.data||!Array.isArray(r.data.users))throw new Error(r.data&&r.data.error||"Invalid account list response.");
+    var all=loaded.concat(r.data.users);
+    if(r.data.hasMore){loadAdminUsersPage(page+1,all,accountId);return}
+    S.adminUsers=all;S.adminUsersLoaded=true;S.adminUsersLoading=false;S.adminUsersError=null;
+    if(S.route==="dashboard"&&S.dashTab==="users")render(true);
+   })
+   .catch(function(err){
+    if(!S.signedIn||!S.me||S.me.id!==accountId)return;
+    S.adminUsersError=err&&err.message||"request failed";S.adminUsersLoaded=true;S.adminUsersLoading=false;
+    if(S.route==="dashboard"&&S.dashTab==="users")render(true);
+   });
+}
 function loadSupabaseContent(){
  if(!S.client)return;
+ S.client.from("site_settings").select("*").eq("id",true).maybeSingle().then(function(r){
+  if(!r.error&&r.data){S.siteSettings=r.data;applyTheme();render(true)}
+ });
  S.client.from("press").select("*").order("date",{ascending:false}).limit(200).then(function(r){if(!r.error){S.press=(r.data||[]).map(function(p){p.id=p.id;return p});live()}});
  S.client.from("league").select("groups").eq("id","current").maybeSingle().then(function(r){if(!r.error&&r.data){S.league={groups:r.data.groups};live()}});
- S.client.from("circles").select("*").order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){S.circles=(r.data||[]).map(function(c){c.members=c.members||0;return c});live();if(S.pendingCircleId&&S.route==="communities")openCircle(S.pendingCircleId);if(S.openCircleAfterRoute&&S.route==="communities"&&S.circles.some(function(c){return String(c.id)===String(S.openCircleAfterRoute)})){var id=S.openCircleAfterRoute;S.openCircleAfterRoute=null;openCircle(id)}}});
- S.client.from("circle_posts").select("*").order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){S.posts=r.data||[];live()}});
- S.client.from("site_updates").select("*").order("date",{ascending:true}).limit(100).then(function(r){if(!r.error){S.updates=r.data||[];live()}});
+ S.client.from("circles").select("*").order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){S.circles=(r.data||[]).map(function(c){c.members=c.members||0;return c});S.circlesLoaded=true;live();if(S.pendingCircleId&&S.route==="communities")openCircle(S.pendingCircleId);if(S.openCircleAfterRoute&&S.route==="communities"&&S.circles.some(function(c){return String(c.id)===String(S.openCircleAfterRoute)})){var id=S.openCircleAfterRoute;S.openCircleAfterRoute=null;openCircle(id)}if(S.pendingCircleSlug&&S.route==="communities")openCircleBySlug(S.pendingCircleSlug)}});
+ S.client.from("circle_posts").select("*").order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){S.posts=r.data||[];S.postsLoaded=true;S.circleRefreshRequested=true;live()}});
+ S.client.from("site_updates").select("*").order("date",{ascending:true}).limit(100).then(function(r){if(!r.error){S.updates=r.data||[];live();if(S.route==="home"){$("#homeUpdates")&&($("#homeUpdates").innerHTML=updatesHTML());bindHomeUpdates()}}});
  if(S.signedIn){
-  S.client.from("circle_members").select("circle_id,role").eq("user_id",S.me.id).then(function(r){if(!r.error){S.memberships=r.data||[];live()}});
+  S.client.from("circle_members").select("circle_id,role").eq("user_id",S.me.id).then(function(r){if(!r.error){S.memberships=r.data||[];S.circleRefreshRequested=true;live()}});
   S.client.from("user_follows").select("followed_id").eq("follower_id",S.me.id).then(function(r){if(!r.error){S.followingUsers=(r.data||[]).map(function(x){return x.followed_id});live()}});
   S.client.from("feed_engagements").select("post_id").eq("user_id",S.me.id).then(function(r){if(!r.error){S.engagements=(r.data||[]).map(function(x){return x.post_id});live()}});
+  S.directoryLoaded=false;S.directoryError=null;loadMemberDirectoryPage(0,[],S.me.id);
+  S.client.from("direct_messages").select("*").or("sender_id.eq."+S.me.id+",recipient_id.eq."+S.me.id).order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){S.directMessages=r.data||[];live()}});
+  S.client.from("circle_post_comments").select("*").order("created_at",{ascending:true}).limit(1000).then(function(r){if(!r.error){S.comments=r.data||[];S.circleRefreshRequested=true;live()}});
+ }
+ if(S.canEdit&&!S.adminUsersLoaded&&!S.adminUsersLoading){
+  S.adminUsersLoading=true;S.adminUsersError=null;loadAdminUsersPage(1,[],S.me.id);
  }
  if(S.canEdit)S.client.from("signups").select("*").order("created_at",{ascending:false}).limit(500).then(function(r){if(!r.error){S.signups=(r.data||[]).map(function(x){return {type:x.type,name:x.name,contactName:x.contact_name,contact:x.contact,summary:x.summary,createdAt:new Date(x.created_at).getTime()}});live()}});
 }
@@ -959,10 +1214,10 @@ function initData(){
   S.client.auth.getSession().then(function(r){
    var session=r.data&&r.data.session;
    var nextUser=session&&session.user?session.user:null;
-   if(S.me&&nextUser&&S.me.id!==nextUser.id){S.memberships=[];S.followingUsers=[];S.engagements=[];S.signups=null;S.canEdit=false;S.profileComplete=false}
+   if(S.me&&nextUser&&S.me.id!==nextUser.id){S.memberships=[];S.circleMembers=[];S.circleMembersFor=null;S.followingUsers=[];S.engagements=[];S.directMessages=[];S.directory=[];S.directoryLoaded=false;S.directoryError=null;S.adminUsers=[];S.adminUsersLoaded=false;S.adminUsersLoading=false;S.adminUsersError=null;S.comments=[];S.signups=null;S.canEdit=false;S.profileComplete=false}
    S.me=nextUser;
    S.signedIn=!!S.me;
-   if(!S.me){S.canEdit=false;S.profileComplete=false;S.memberships=[];S.followingUsers=[];S.engagements=[];S.signups=null;S.pendingCircleId=null;try{sessionStorage.removeItem("mc-circle-entry-id")}catch(e){}render(true);return}
+   if(!S.me){S.canEdit=false;S.profileComplete=false;S.memberships=[];S.circleMembers=[];S.circleMembersFor=null;S.followingUsers=[];S.engagements=[];S.directMessages=[];S.directory=[];S.directoryLoaded=false;S.directoryError=null;S.adminUsers=[];S.adminUsersLoaded=false;S.adminUsersLoading=false;S.adminUsersError=null;S.comments=[];S.signups=null;S.pendingCircleId=null;try{sessionStorage.removeItem("mc-circle-entry-id")}catch(e){}render(true);return}
    S.client.from("profiles").select("name,interests,can_edit,circle_manager").eq("id",S.me.id).maybeSingle().then(function(p){
     S.canEdit=!p.error&&!!(p.data&&p.data.can_edit);S.me.circle_manager=!p.error&&!!(p.data&&p.data.circle_manager);S.me.name=p.data&&p.data.name||"";S.me.interests=p.data&&p.data.interests||[];S.profileComplete=!!(p.data&&p.data.name);
     restoreCircleRoute();
