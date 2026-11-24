@@ -174,7 +174,7 @@ a{color:var(--accent)}
 @media (max-width:760px){.impact-strip,.programme-grid{grid-template-columns:minmax(0,1fr)}.impact-strip{gap:8px}.programme-card{min-height:200px}}
 
 /* header + tabs */
-.top{background:linear-gradient(115deg,#A80D27,#E51E4F 58%,#FF6A22)}
+.top{background:linear-gradient(115deg,#741126,#A91635 58%,#B92E38);border-bottom:2px solid rgba(255,214,10,.72);box-shadow:0 5px 22px rgba(34,5,18,.24)}
 .bar{display:flex;align-items:center;gap:10px;padding-block:10px;flex-wrap:nowrap}
 .brand{display:grid;justify-items:start;gap:0;text-decoration:none;color:#fff;min-width:0;flex:none;line-height:1}
 .brand-mark{display:block;width:clamp(76px,8vw,96px);height:auto;flex:none}
@@ -350,8 +350,8 @@ footer{border-top:1px solid var(--line);background:var(--surface);padding-block:
 footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 
-/* Friendly, scan-first wayfinding */
-body{background:radial-gradient(ellipse at 12% 2%,rgba(255,230,41,.96),transparent 25%),radial-gradient(ellipse at 94% 18%,rgba(255,59,61,.9),transparent 30%),radial-gradient(ellipse at 7% 75%,rgba(255,190,20,.76),transparent 28%),linear-gradient(128deg,#C91B47 0%,#EF304E 30%,#FF6A26 62%,#FFD11A 100%);background-attachment:fixed}
+/* Warm brand backdrop with a subtle circle motif behind readable content. */
+body{background-color:#421126;background-image:radial-gradient(circle at 10% 12%,transparent 0 118px,rgba(255,214,10,.055) 119px 121px,transparent 122px),radial-gradient(circle at 92% 72%,transparent 0 158px,rgba(255,214,10,.05) 159px 162px,transparent 163px),radial-gradient(ellipse at 14% 2%,rgba(255,214,10,.14),transparent 29%),radial-gradient(ellipse at 92% 20%,rgba(255,82,73,.22),transparent 32%),radial-gradient(ellipse at 76% 88%,rgba(255,214,10,.09),transparent 26%),linear-gradient(135deg,#421126 0%,#70162F 48%,#4C1230 100%);background-attachment:fixed}
 main{padding-top:24px}
 .content-group{border:2px solid rgba(255,255,255,.15);background:linear-gradient(145deg,#004aad,#003783 82%);box-shadow:0 16px 38px rgba(0,30,80,.3),0 0 26px rgba(255,214,10,.13)}
 .pathway-card{border-color:rgba(255,255,255,.18);box-shadow:0 9px 24px rgba(47,7,30,.28)}
