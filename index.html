@@ -75,6 +75,54 @@ a{color:var(--accent)}
 .circle-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
 .feed{display:grid;gap:12px}
 .post{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.feed-post{width:min(100%,680px);margin-inline:auto;padding:0;overflow:hidden}
+.feed-post .post-head{padding:14px 16px;margin:0}
+.feed-post .post-copy{padding:12px 16px}
+.feed-media{display:block;width:100%;max-height:min(78vh,720px);background:#090B10;object-fit:contain}
+.feed-profile-picture{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none;border:1px solid var(--line)}
+.feed-post .avatar.feed-profile-picture{width:44px;height:44px;display:grid;place-items:center}
+.feed-post-actions{display:flex;align-items:center;gap:4px;padding:6px 12px}
+.feed-post-actions .btn{min-height:42px;padding:7px 10px}
+.feed-post-actions .save-action{margin-left:auto}
+.feed-comment-list{padding:0 16px 10px;display:grid;gap:6px}
+.feed-comment-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:0 16px 14px}
+.feed-comment-form input{min-width:0}
+.circle-profile-picture{width:52px;height:52px;border-radius:50%;object-fit:cover;flex:none;border:1px solid var(--line);background:var(--soft)}
+.avatar.circle-profile-picture{width:52px;height:52px}
+.circle-card-heading{display:flex;align-items:center;gap:12px}
+.circle-card-heading h3{min-width:0}
+.media-upload{display:grid;gap:8px;padding:12px;border:1px dashed var(--line);border-radius:14px;background:var(--soft)}
+.media-upload input[type=file]{padding:8px;border:0;background:transparent}
+.post-media-status{min-height:1.3em}
+.feed-page{display:grid;gap:16px}
+.feed-page-head{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap}
+@media (max-width:640px){.feed-post{border-radius:0;border-left:0;border-right:0}.feed-post-actions{justify-content:space-between}.feed-post-actions .btn{padding-inline:7px;font-size:.84rem}}
+.content-group{margin-top:30px;padding:clamp(16px,3vw,26px);border:1px solid var(--line);border-radius:22px;background:var(--surface)}
+.content-group>.sec-head{margin-bottom:18px}
+.pathway-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pathway-card{position:relative;display:grid;align-content:start;gap:8px;min-height:154px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--surface);text-decoration:none;color:var(--ink);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.pathway-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 10px 24px rgba(27,42,65,.1)}
+.pathway-card:nth-child(1){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#F3A6AE 24%,var(--surface)))}
+.pathway-card:nth-child(2){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#FFC20E 22%,var(--surface)))}
+.pathway-card:nth-child(3){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#79D6B0 22%,var(--surface)))}
+.pathway-card:nth-child(4){background:linear-gradient(145deg,var(--surface),color-mix(in srgb,#A8B9F0 25%,var(--surface)))}
+.pathway-number{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:var(--pick);color:#fff;font:800 .78rem var(--font-d)}
+.pathway-card:nth-child(2) .pathway-number{background:#B47700}
+.pathway-card:nth-child(3) .pathway-number{background:#14724D}
+.pathway-card:nth-child(4) .pathway-number{background:#465EAD}
+.pathway-card b{font:700 1.08rem/1.2 var(--font-d)}
+.pathway-card span:last-child{color:var(--muted);font-size:.88rem}
+.content-group .programme-card{min-height:205px}
+.audience-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.audience-card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}
+.audience-card p{margin-top:7px;color:var(--muted);font-size:.92rem}
+.tool-group+.tool-group{margin-top:22px}
+.tool-group-heading{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.tool-group-heading h4{font:700 1rem var(--font-d)}
+.tool-group-heading .badge{flex:none}
+@media(max-width:850px){.pathway-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.audience-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:500px){.pathway-card{min-height:136px;padding:14px}.content-group{padding:14px;border-radius:16px}}
+@media(prefers-reduced-motion:reduce){.pathway-card{transition:none}}
 .post-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}
 .post-author{display:flex;align-items:center;gap:9px}
 .feed-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
@@ -109,13 +157,20 @@ a{color:var(--accent)}
 .mark::after{content:"";position:absolute;inset:15px;border-radius:50%;background:var(--navy)}
 .brand b{font-family:var(--font-d);font-size:1.25rem;font-weight:800;display:block;line-height:1}
 .brand small{display:block;color:var(--muted);font-size:.72rem;line-height:1.2;margin-top:2px}
-.tabs{display:flex;gap:4px;overflow-x:auto;margin-left:auto;scrollbar-width:none;max-width:100%}
+.tabs{display:flex;align-items:center;gap:4px;overflow:visible;margin-left:auto;scrollbar-width:none;max-width:100%;flex-wrap:wrap}
 .tabs::-webkit-scrollbar{display:none}
 .tabs a{white-space:nowrap;text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;padding:9px 14px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
 .tabs a:hover{background:var(--soft)}
 .tabs a[aria-current="page"]{background:var(--pick);color:#fff}
 .tabs svg{width:14px;height:14px}
-@media (max-width:760px){.tabs{margin-left:0;width:100%;padding-bottom:8px}}
+.nav-group{position:relative}
+.nav-group summary{list-style:none;cursor:pointer;white-space:nowrap;color:var(--ink);font-weight:600;font-size:.95rem;padding:9px 14px;border-radius:999px}
+.nav-group summary::-webkit-details-marker{display:none}
+.nav-group summary::after{content:"⌄";margin-left:6px;color:var(--muted)}
+.nav-group summary:hover,.nav-group[open]>summary,.nav-group.is-current>summary{background:var(--soft)}
+.nav-menu{position:absolute;top:calc(100% + 6px);left:0;z-index:25;min-width:190px;padding:7px;display:grid;gap:3px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:0 12px 30px rgba(18,21,28,.16)}
+.nav-menu a{padding:9px 11px!important;border-radius:9px!important}
+@media (max-width:760px){.tabs{margin-left:0;width:100%;padding-bottom:8px;align-items:flex-start}.nav-group{position:static}.nav-menu{position:static;min-width:0;box-shadow:none;margin:0 4px 8px;padding:4px;background:var(--soft)}.nav-group summary{padding:9px 11px}}
 
 main{display:block;padding-block:20px 48px;outline:none}
 section{margin-top:36px}
@@ -265,10 +320,21 @@ footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
     </a>
     <nav class="tabs" id="nav" aria-label="Main">
       <a href="#home" data-r="home">Home</a>
-      <a href="#cricket" data-r="cricket">Cricket</a>
-      <a href="#reading" data-r="reading">Reading</a>
-      <a href="#communities" data-r="communities">Circles</a>
-      <a href="#press" data-r="press">Press</a>
+      <details class="nav-group">
+        <summary>Discover</summary>
+        <div class="nav-menu">
+          <a href="#feed" data-r="feed">Personalised feed</a>
+          <a href="#communities" data-r="communities">Circles</a>
+          <a href="#press" data-r="press">Newsroom</a>
+        </div>
+      </details>
+      <details class="nav-group">
+        <summary>Programmes</summary>
+        <div class="nav-menu">
+          <a href="#cricket" data-r="cricket">Youth cricket</a>
+          <a href="#reading" data-r="reading">Reading circles</a>
+        </div>
+      </details>
       <a href="#join" data-r="join">Join</a>
       <a href="#dashboard" data-r="dashboard">Dashboard
         <svg id="lockico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-label="Sign-in required"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
@@ -291,7 +357,7 @@ footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
 <script>
 (function(){
 "use strict";
-var ROUTES=["home","cricket","reading","communities","press","join","dashboard"];
+var ROUTES=["home","feed","cricket","reading","communities","press","join","dashboard"];
 var $=function(s,r){return (r||document).querySelector(s)};
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
@@ -344,7 +410,7 @@ var SAMPLE_FEED=[
  {id:"sample-post-3",circle_id:"sample-3",author:"Tembisa Book Crew",body:"Graphic novels are on the table this week. Everyone can recommend one for our next read.",created_at:"2026-11-20T09:00:00Z"}
 ];
 
-var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,profileComplete:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,prog:{c:[],r:[]},ready:false,client:null,circles:[],circlesLoaded:false,memberships:[],circleMembers:[],circleMembersFor:null,followingUsers:[],engagements:[],posts:[],postsLoaded:false,comments:[],directMessages:[],directory:[],directoryLoaded:false,directoryError:null,adminUsers:[],adminUsersLoaded:false,adminUsersLoading:false,adminUsersError:null,updates:null,siteSettings:{theme:"system",circles_enabled:true,feed_enabled:true,messages_enabled:true,events_enabled:true},selectedCircle:null,openCircleAfterRoute:null,pendingCircleSlug:null,circleQuery:"",circleType:"All",feedTab:"recommended",pendingCircleId:null};
+var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,profileComplete:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,prog:{c:[],r:[]},ready:false,client:null,circles:[],circlesLoaded:false,memberships:[],circleMembers:[],circleMembersFor:null,followingUsers:[],engagements:[],savedPosts:[],savedPostRecords:[],savedPostsError:null,posts:[],postsLoaded:false,sharedPostId:null,sharedPostLoading:false,sharedPostError:null,comments:[],directMessages:[],directory:[],directoryLoaded:false,directoryError:null,adminUsers:[],adminUsersLoaded:false,adminUsersLoading:false,adminUsersError:null,updates:null,siteSettings:{theme:"system",circles_enabled:true,feed_enabled:true,messages_enabled:true,events_enabled:true},selectedCircle:null,openCircleAfterRoute:null,pendingCircleSlug:null,circleQuery:"",circleType:"All",feedTab:"recommended",pendingCircleId:null};
 try{S.pendingCircleId=sessionStorage.getItem("mc-circle-entry-id")}catch(e){}
 try{var pp=JSON.parse(localStorage.getItem("mc-progress")||"null");if(pp&&pp.c&&pp.r)S.prog=pp}catch(e){}
 function saveProg(){try{localStorage.setItem("mc-progress",JSON.stringify(S.prog))}catch(e){}}
@@ -506,11 +572,25 @@ function updatesHTML(){
  var editor=S.canEdit?'<form id="siteUpdateForm" class="panel" style="display:grid;gap:12px"><h3>Publish or schedule an announcement or event</h3><div class="grid2"><div class="field"><label for="updateTitle">Title</label><input id="updateTitle" maxlength="120" required></div><div class="field"><label for="updateKind">Type</label><select id="updateKind"><option>Announcement</option><option>Event</option></select></div><div class="field"><label for="updateDate">Event or key date</label><input id="updateDate" type="date" required value="'+today()+'"></div><div class="field"><label for="updatePublishAt">Publish at</label><input id="updatePublishAt" type="datetime-local" required value="'+localDateTime()+'"></div></div><div class="field"><label for="updateSummary">Details</label><input id="updateSummary" maxlength="240" required></div><button class="btn sm" type="submit">Save announcement</button><span id="updateMsg" class="note" aria-live="polite"></span></form>':'';
  return '<div class="site-updates">'+(list||'<div class="msg">There are no current announcements or events.</div>')+editor+'</div>';
 }
+function feedIcon(name){
+ var paths={like:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/>',comment:'<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/>',share:'<path d="M12 16V3m0 0L7 8m5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>',save:'<path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-6-4-6 4V4Z"/>'};
+ return '<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+paths[name]+'</svg>';
+}
+function feedDate(value){
+ var date=Date.parse(value||"");
+ return isNaN(date)?(value||"Just now"):new Date(date).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
+}
 function postCardHTML(p){
  var circle=circlesList().find(function(c){return String(c.id)===String(p.circle_id)});
- var liked=S.engagements&&S.engagements.indexOf(p.id)>-1;
+ var liked=S.engagements&&S.engagements.some(function(id){return String(id)===String(p.id)});
+ var saved=S.savedPosts&&S.savedPosts.some(function(id){return String(id)===String(p.id)});
  var following=S.followingUsers.indexOf(p.author_id)>-1;
- return '<article class="post"><div class="post-head"><div class="post-author"><span class="avatar">'+esc(String(p.author||"M").split(/\s+/).map(function(x){return x[0]}).slice(0,2).join("").toUpperCase())+'</span><div><b>'+esc(p.author||"Member")+'</b><div class="note">'+esc(circle?circle.name:"Mini Circles")+' · '+esc(p.created_at||"Just now")+'</div></div></div></div><p>'+esc(p.body||"")+'</p><div class="post-actions">'+(circle?'<button class="btn alt sm" type="button" data-circle-open="'+esc(circle.id)+'">Open circle</button>':'')+(S.signedIn?'<button class="btn line sm" type="button" data-like-post="'+esc(p.id)+'" aria-pressed="'+liked+'">'+(liked?"Liked":"Like")+'</button>':'')+(S.signedIn&&p.author_id&&p.author_id!==S.me.id?'<button class="btn line sm" type="button" data-follow-user="'+esc(p.author_id)+'">'+(following?"Following":"Follow member")+'</button>':'')+'</div></article>';
+ var comments=S.comments.filter(function(c){return String(c.post_id)===String(p.id)});
+ var commentsHTML=comments.slice(-3).map(function(c){return '<div class="note"><b>'+esc(c.author||"Member")+'</b> '+esc(c.body)+'</div>'}).join("");
+ var persisted=String(p.id).indexOf("sample-")!==0;
+ var avatar=circle?circleAvatarHTML(circle,"feed-profile-picture"):'<span class="avatar feed-profile-picture">'+esc(String(p.author||"M").split(/\s+/).map(function(x){return x[0]}).slice(0,2).join("").toUpperCase())+'</span>';
+ var media=postMediaHTML(p);
+ return '<article class="post feed-post" id="feedpost_'+esc(p.id)+'"><header class="post-head"><div class="post-author">'+avatar+'<div><b>'+esc(circle?circle.name:(p.author||"Member"))+'</b><div class="note">'+(circle&&p.author?'<span>by '+esc(p.author)+' · </span>':'')+esc(feedDate(p.created_at))+'</div></div></div>'+(circle?'<button class="btn alt sm" type="button" data-circle-open="'+esc(circle.id)+'">Open Circle</button>':'')+'</header>'+(media?media:'')+'<div class="post-copy"><p>'+esc(p.body||"")+'</p></div><div class="feed-post-actions"><button class="btn line sm" type="button" data-like-post="'+esc(p.id)+'" aria-pressed="'+liked+'">'+feedIcon("like")+' '+(liked?"Liked":"Like")+'</button><button class="btn line sm" type="button" data-focus-comments="'+esc(p.id)+'" aria-label="View or add '+comments.length+' comments">'+feedIcon("comment")+' Comment'+(comments.length?' ('+comments.length+')':'')+'</button><button class="btn line sm" type="button" data-share-post="'+esc(p.id)+'">'+feedIcon("share")+' Share</button><button class="btn line sm save-action" type="button" data-save-post="'+esc(p.id)+'" aria-pressed="'+saved+'">'+feedIcon("save")+' '+(saved?"Saved":"Save")+'</button></div>'+(commentsHTML?'<div class="feed-comment-list" aria-label="Recent comments">'+commentsHTML+'</div>':'')+(persisted?'<form class="feed-comment-form" data-feed-comment-form="'+esc(p.id)+'"><label class="sr" for="comment_'+esc(p.id)+'">Add a comment</label><input id="comment_'+esc(p.id)+'" data-feed-comment-body="'+esc(p.id)+'" maxlength="1000" required placeholder="'+(S.signedIn?"Add a comment...":"Sign in to comment")+'"'+(S.signedIn?"":" disabled")+'>'+(S.signedIn?'<button class="btn sm" type="submit">Post</button>':'<a class="btn alt sm" href="#dashboard" data-go="dashboard">Sign in</a>')+'</form>':'')+'<span class="note post-media-status" data-feed-msg="'+esc(p.id)+'" aria-live="polite"></span>'+(S.signedIn&&p.author_id&&p.author_id!==S.me.id?'<div class="post-copy"><button class="btn line sm" type="button" data-follow-user="'+esc(p.author_id)+'">'+(following?"Following":"Follow member")+'</button></div>':'')+'</article>';
 }
 function matchingPostScore(p){
  var score=0,circle=circlesList().find(function(c){return String(c.id)===String(p.circle_id)});
@@ -524,38 +604,60 @@ function matchingPostScore(p){
  var timestamp=Date.parse(p.created_at||"");if(!isNaN(timestamp))score+=Math.max(0,2-(Date.now()-timestamp)/86400000/7);
  return score;
 }
-function renderHomeFeed(){
- var box=$("#homeFeedList");if(!box)return;
+function renderFeed(){
+ var box=$("#feedList");if(!box)return;
  var posts=feedPosts(),followingPosts=posts.filter(function(p){return S.memberships.some(function(m){return String(m.circle_id)===String(p.circle_id)})||S.followingUsers.indexOf(p.author_id)>-1});
+ if(S.sharedPostId){
+  var shared=posts.find(function(p){return String(p.id)===String(S.sharedPostId)});
+  if(shared){box.innerHTML='<div class="msg">Shared community post</div>'+postCardHTML(shared);bindFeed();var sharedCard=$("#feedpost_"+S.sharedPostId);if(sharedCard)sharedCard.scrollIntoView({block:"start"});return}
+  if(S.sharedPostError){box.innerHTML='<div class="msg warn">Could not load this shared post: '+esc(S.sharedPostError)+'</div>';return}
+  if(!S.client){box.innerHTML='<div class="msg">Shared posts require the live community data service.</div>';return}
+  if(S.client&&!S.sharedPostLoading){
+   S.sharedPostLoading=true;
+   S.client.from("circle_posts").select("*").eq("id",S.sharedPostId).maybeSingle().then(function(r){
+    if(r.error)throw r.error;
+    if(!r.data)throw new Error("Post not found.");
+    if(!S.posts.some(function(p){return String(p.id)===String(r.data.id)}))S.posts.unshift(r.data);
+    S.postsLoaded=true;
+    S.sharedPostLoading=false;renderFeed();
+   }).catch(function(err){S.sharedPostLoading=false;S.sharedPostError=err&&err.message||"request failed";renderFeed()});
+  }
+  box.innerHTML='<div class="msg">Loading shared post...</div>';return;
+ }
  if(S.feedTab==="following"){
-  if(!S.signedIn)box.innerHTML='<div class="msg">Sign in through a Circle to see posts from Circles and members you follow. You can explore recommendations now.</div>';
+  if(!S.signedIn)box.innerHTML='<div class="msg">Sign in to see posts from Circles and members you follow. You can explore recommendations now.</div>';
   else box.innerHTML=followingPosts.length?followingPosts.map(postCardHTML).join(""):'<div class="msg">Your Following feed is ready when you join a Circle or follow a member.</div>';
+ }else if(S.feedTab==="saved"){
+  if(!S.signedIn)box.innerHTML='<div class="msg">Sign in to see saved posts.</div>';
+  else {var savedPosts=posts.filter(function(p){return S.savedPosts.some(function(id){return String(id)===String(p.id)})});S.savedPostRecords.forEach(function(p){if(S.savedPosts.some(function(id){return String(id)===String(p.id)})&&!savedPosts.some(function(x){return String(x.id)===String(p.id)}))savedPosts.push(p)});box.innerHTML=S.savedPostsError?'<div class="msg warn">Could not load saved posts: '+esc(S.savedPostsError)+'</div>':savedPosts.length?savedPosts.map(postCardHTML).join(""):'<div class="msg">Saved posts will appear here.</div>'}
  }else{
   var followingIds=followingPosts.map(function(p){return p.id});
   var recommended=posts.filter(function(p){return followingIds.indexOf(p.id)<0}).sort(function(a,b){return matchingPostScore(b)-matchingPostScore(a)}).slice(0,8);
-  box.innerHTML=recommended.length?recommended.map(postCardHTML).join(""):'<div class="msg">No recommendations yet. Check back as communities share updates.</div>';
+  box.innerHTML=(recommended.length?recommended:posts.slice(0,8)).map(postCardHTML).join("")||'<div class="msg">No recommendations yet. Check back as communities share updates.</div>';
  }
+ bindFeed();
+}
+function feedPage(){
+ if(!S.siteSettings.feed_enabled)return '<div class="wrap"><div class="msg warn">The personalised feed is temporarily disabled by the Site Admin.</div></div>';
+ return '<div class="wrap feed-page">'+profileSetupHTML()+'<div class="feed-page-head"><div><span class="eyebrow">Circles and community updates</span><h1>Personalised feed</h1><p class="note">Posts from Circles you follow and recommendations based on your interests.</p></div><a class="btn alt sm" href="#communities" data-go="communities">Explore Circles</a></div><div class="feed-tabs" role="tablist" aria-label="Feed"><button class="chip" role="tab" data-feed="following" aria-selected="'+(S.feedTab==="following")+'">Following</button><button class="chip" role="tab" data-feed="recommended" aria-selected="'+(S.feedTab==="recommended")+'">For you</button><button class="chip" role="tab" data-feed="saved" aria-selected="'+(S.feedTab==="saved")+'">Saved</button></div><div class="feed" id="feedList"></div></div>';
 }
 function homePage(){
- var updatesSection=S.siteSettings.events_enabled?'<section><div class="sec-head"><div><span class="eyebrow">From the foundation</span><h2>Announcements and dates</h2><p>Important site-wide news and upcoming community events.</p></div></div><div id="homeUpdates">'+updatesHTML()+'</div></section>':'';
- var feedSection=S.siteSettings.feed_enabled?'<section><div class="sec-head"><div><span class="eyebrow">Your community</span><h2>Personalised feed</h2><p>Keep up with Circles and members you follow, or discover recommended posts.</p></div><a class="btn alt sm" href="#communities" data-go="communities">Explore Circles</a></div><div class="feed-tabs" role="tablist" aria-label="Feed"><button class="chip" role="tab" data-feed="following" aria-selected="'+(S.feedTab==="following")+'">Following</button><button class="chip" role="tab" data-feed="recommended" aria-selected="'+(S.feedTab==="recommended")+'">Recommended</button></div><div class="feed" id="homeFeedList"></div></section>':'';
- var circlePromo=S.siteSettings.circles_enabled?'<section><div class="community-hero" style="margin-top:0"><span class="eyebrow" style="color:#FFC20E">Community circles</span><h2>Find a circle or build your own</h2><p>Follow activity, share updates and help a local cricket or reading community grow.</p><a class="btn" href="#communities" data-go="communities">Explore circles</a></div></section>':'';
+ var quickCards=[];
+ if(S.siteSettings.feed_enabled)quickCards.push('<a class="pathway-card" href="#feed" data-go="feed"><span class="pathway-number">01</span><b>Explore the feed</b><span>Discover posts, updates and ideas.</span></a>');
+ if(S.siteSettings.circles_enabled)quickCards.push('<a class="pathway-card" href="#communities" data-go="communities"><span class="pathway-number">02</span><b>Find a Circle</b><span>Explore groups or share a community page.</span></a>');
+ quickCards.push('<a class="pathway-card" href="#join" data-go="join" data-join="cricket"><span class="pathway-number">03</span><b>Join a programme</b><span>Register a cricket team or reading circle.</span></a>');
+ quickCards.push('<a class="pathway-card" href="#dashboard" data-go="dashboard"><span class="pathway-number">04</span><b>For schools & partners</b><span>Training, session plans and stakeholder access.</span></a>');
+ var quickPaths='<section class="content-group" aria-labelledby="pathwaysTitle"><div class="sec-head"><div><span class="eyebrow">Start here</span><h2 id="pathwaysTitle">What would you like to do?</h2><p>Find your next step in three clicks or less.</p></div></div><div class="pathway-grid">'+quickCards.join("")+'</div></section>';
+ var newsGroup='<section class="content-group" aria-labelledby="newsTitle"><div class="sec-head"><div><span class="eyebrow">News & dates</span><h2 id="newsTitle">What is happening</h2><p>Foundation announcements, upcoming events and the latest stories.</p></div></div>'+(S.siteSettings.events_enabled?'<div id="homeUpdates">'+updatesHTML()+'</div>':'')+'<div class="sec-head" style="margin-top:22px"><div><span class="eyebrow">From the newsroom</span><h3>Latest press</h3></div><a class="btn alt sm" href="#press" data-go="press">All press releases</a></div><div class="cards" id="homePress"></div></section>';
+ var programmeGroup='<section class="content-group" id="programmes" aria-labelledby="programmesTitle"><div class="sec-head"><div><span class="eyebrow">Explore programmes</span><h2 id="programmesTitle">Read, play and grow together</h2><p>Two practical pathways for young people, families and community organisations.</p></div></div><div class="impact-strip" aria-label="Mini Circles programmes"><div class="impact"><i>3</i><div><b>Age groups</b><span>Under 11, 13 and 15 cricket</span></div></div><div class="impact"><i>2</i><div><b>Ways to take part</b><span>Sport and reading, together</span></div></div><div class="impact"><i>1</i><div><b>Shared purpose</b><span>Every team and circle matters</span></div></div></div><div class="programme-grid"><article class="programme-card navy"><span class="badge">Sport</span><h3 style="font-size:1.55rem;margin-top:10px">Take the field</h3><p>Join a youth cricket team, find coaching guidance and follow every result in a fair, friendly league.</p><a class="btn" href="#join" data-go="join" data-join="cricket">Sign up a team</a></article><article class="programme-card red"><span class="badge">Literacy</span><h3 style="font-size:1.55rem;margin-top:10px">Open a new story</h3><p>Start a reading circle for your school or community, in a language and format members choose.</p><a class="btn" href="#join" data-go="join" data-join="reading">Start a circle</a></article></div></section>';
+ var leagueGroup='<section class="content-group"><div class="sec-head"><div><span class="eyebrow">Splendid Sports</span><h2>Youth cricket league</h2><p>Check the age-group standings and see how teams are progressing.</p></div><a class="btn alt sm" href="#cricket" data-go="cricket">Fixtures and details</a></div><div data-league="compact"></div></section>';
+ var partnerGroup='<section class="content-group"><div class="sec-head"><div><span class="eyebrow">For organisations</span><h2>Built for schools, libraries and community partners</h2><p>Useful resources and straightforward ways to take part—without a complicated setup.</p></div></div><div class="audience-grid"><article class="audience-card"><span class="badge soft">Schools & libraries</span><h3 style="margin-top:10px">Make reading social</h3><p>Set up a book circle, welcome home-language reading and access facilitator training.</p><a class="btn alt sm" style="margin-top:12px" href="#join" data-go="join" data-join="reading">Start a reading circle</a></article><article class="audience-card"><span class="badge soft">Clubs & NPOs</span><h3 style="margin-top:10px">Grow a local community</h3><p>Share a Circle page, post updates and coordinate with members and supporters.</p><a class="btn alt sm" style="margin-top:12px" href="#communities" data-go="communities">Explore Circles</a></article><article class="audience-card"><span class="badge soft">Sport bodies & partners</span><h3 style="margin-top:10px">Support youth participation</h3><p>Find league information, practical session plans and a clear route to partner access.</p><a class="btn alt sm" style="margin-top:12px" href="#dashboard" data-go="dashboard">Partner dashboard</a></article></div></section>';
  return '<div class="wrap">'+profileSetupHTML()+
  '<div class="banner" id="banner" role="region" aria-roledescription="carousel" aria-label="Featured news"><div class="track" id="track">'+slidesHTML()+'</div>'+
  '<div class="bnav"><div class="dots" id="dots">'+[0,1,2,3].map(function(i){return '<button class="dot" data-slide="'+i+'" aria-label="Go to slide '+(i+1)+'"></button>'}).join("")+'</div>'+
  '<button class="ctl" id="bpause" aria-label="Pause slideshow">'+ICON.pause+'</button><button class="ctl" id="bprev" aria-label="Previous slide">'+ICON.prev+'</button><button class="ctl" id="bnext" aria-label="Next slide">'+ICON.next+'</button></div></div>'+
- '<section style="margin-top:22px"><div class="search"><label class="sr" for="gsearch">Search the site</label>'+ICON.search+'<input id="gsearch" type="search" placeholder="Search teams, press releases, lessons&hellip;" autocomplete="off"></div><div id="searchRes" aria-live="polite"></div></section>'+
- updatesSection+feedSection+
-  '<div class="impact-strip" aria-label="Mini Circles programmes"><div class="impact"><i>3</i><div><b>Age groups</b><span>Under 11, 13 and 15 cricket</span></div></div><div class="impact"><i>2</i><div><b>Ways to take part</b><span>Sport and reading, together</span></div></div><div class="impact"><i>1</i><div><b>Community purpose</b><span>Every team and circle matters</span></div></div></div>'+
- '<section><div class="sec-head"><div><span class="eyebrow">Splendid Sports</span><h2>League table</h2></div><a class="btn alt sm" href="#cricket" data-go="cricket">Fixtures and cricket</a></div><div data-league="compact"></div></section>'+
-  '<section><div class="sec-head"><div><span class="eyebrow">Choose your next move</span><h2>Learn, play and belong</h2></div></div><div class="programme-grid">'+
-   '<article class="programme-card navy"><span class="badge">Sport</span><h3 style="font-size:1.55rem;margin-top:10px">Take the field</h3><p>Join a youth cricket team, find coaching guidance and follow every result in a fair, friendly league.</p><a class="btn" href="#join" data-go="join" data-join="cricket">Sign up a team</a></article>'+
-   '<article class="programme-card red"><span class="badge">Literacy</span><h3 style="font-size:1.55rem;margin-top:10px">Open a new story</h3><p>Start a reading circle for your school or community, in a language and format members choose.</p><a class="btn" href="#join" data-go="join" data-join="reading">Start a circle</a></article>'+
-  '</div></section>'+
- circlePromo+
- '<section><div class="sec-head"><div><span class="eyebrow">Newsroom</span><h2>Latest press</h2></div><a class="btn alt sm" href="#press" data-go="press">All press releases</a></div><div class="cards" id="homePress"></div></section>'+
- '<section><div class="two"><div class="panel"><span class="eyebrow">For schools and education departments</span><h3>Reading that learners choose</h3><p class="note" style="margin-top:8px">Boomerang circles build reading habits, vocabulary and confidence through choice and conversation, with no marks attached. Members can read in their home language, and facilitators get free training in the dashboard.</p></div>'+
- '<div class="panel"><span class="eyebrow">For sport bodies and fans</span><h3>A pathway from the first catch</h3><p class="note" style="margin-top:8px">Splendid Sports gives new teams a league structure, coaching tutorials and fair-play habits, with a public table that fans can follow week by week.</p></div></div></section>'+
+ '<section style="margin-top:22px"><div class="search"><label class="sr" for="gsearch">Search the site</label>'+ICON.search+'<input id="gsearch" type="search" placeholder="Search Circles, events, teams or lessons&hellip;" autocomplete="off"></div><div id="searchRes" aria-live="polite"></div></section>'+
+ quickPaths+newsGroup+programmeGroup+leagueGroup+partnerGroup+
  '<section><div class="trust-strip"><b>Built for real participation</b><span>Adult-led sign-up</span><span>Clear safeguarding</span><span>Free learning resources</span><span>Community-first programmes</span></div></section>'+
  '</div>';
 }
@@ -637,6 +739,34 @@ function circlesList(){return S.circlesLoaded?S.circles:(S.circles&&S.circles.le
 function slugify(s){return String(s||"circle").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"circle"}
 function uniqueCircleSlug(s){var base=slugify(s),slug=base,n=2;while(circlesList().some(function(c){return c.slug===slug}))slug=base+"-"+n++;return slug}
 function circleLink(c){return location.origin+location.pathname+"#c/"+encodeURIComponent(c.slug||slugify(c.name))}
+function circleMediaUrl(path){
+ if(!S.client||!path)return "";
+ return S.client.storage.from("circle-media").getPublicUrl(path).data.publicUrl;
+}
+function circleAvatarHTML(circle,extraClass){
+ var initials=String(circle&&circle.name||"C").split(/\s+/).map(function(x){return x[0]}).slice(0,2).join("").toUpperCase();
+ var path=circle&&circle.profile_image_path,url=path&&circleMediaUrl(path),cls="circle-profile-picture"+(extraClass?" "+extraClass:"");
+ return url?'<img class="'+cls+'" src="'+esc(url)+'" alt="'+esc(circle.name||"Circle")+' profile picture">':'<span class="avatar '+cls+'" aria-hidden="true">'+esc(initials)+'</span>';
+}
+function postMediaHTML(post){
+ if(!post||!post.media_path||!post.media_type)return "";
+ var url=circleMediaUrl(post.media_path);
+ if(!url)return "";
+ if(post.media_type.indexOf("video/")===0)return '<video class="feed-media" controls playsinline preload="metadata"><source src="'+esc(url)+'" type="'+esc(post.media_type)+'">Your browser does not support video.</video>';
+ if(post.media_type.indexOf("image/")===0)return '<img class="feed-media" src="'+esc(url)+'" alt="Photo shared by '+esc(post.author||"the Circle")+'" loading="lazy">';
+ return "";
+}
+function uploadCircleMedia(circle,file,folder){
+ var profile=folder==="profile",allowed=profile?["image/jpeg","image/png","image/webp"]:["image/jpeg","image/png","image/webp","video/mp4","video/webm"];
+ var extensions={"image/jpeg":"jpg","image/png":"png","image/webp":"webp","video/mp4":"mp4","video/webm":"webm"};
+ if(!file||allowed.indexOf(file.type)<0)return Promise.reject(new Error(profile?"Choose a JPEG, PNG or WebP profile picture.":"Choose a JPEG, PNG, WebP, MP4 or WebM file."));
+ if(file.size>20*1024*1024)return Promise.reject(new Error("Files must be 20 MB or smaller."));
+ if(!S.client)return Promise.reject(new Error("Media uploads require the site data service."));
+ var random=window.crypto&&window.crypto.randomUUID?window.crypto.randomUUID():Date.now()+"-"+Math.random().toString(36).slice(2);
+ var path=String(circle.id)+"/"+(profile?"profile":String(S.me.id))+"/"+random+"."+extensions[file.type];
+ return S.client.storage.from("circle-media").upload(path,file,{contentType:file.type,cacheControl:"3600",upsert:false})
+  .then(function(r){if(r.error)throw r.error;return {path:path,type:file.type}});
+}
 function circleRole(c){
  if(!S.signedIn)return"Visitor";
  if(S.canEdit)return"Site Admin";
@@ -657,7 +787,7 @@ function filteredCircles(){
 function circleCard(c){
  var member=S.memberships.some(function(m){return m.circle_id===c.id});
  var cls=c.type==="Reading"?"reading":"cricket";
- return '<article class="circle-card '+cls+' '+(c.featured?"featured":"")+'"><span class="badge soft">'+esc(c.type)+'</span><h3>'+esc(c.name)+'</h3><p class="note">'+esc(c.description||"")+'</p><div class="circle-meta"><span>'+esc(c.area||"Community")+'</span><span>&bull;</span><span>'+esc(c.members||0)+' members</span><span>&bull;</span><span>'+esc(c.status||"open")+'</span></div><div class="circle-actions"><button class="btn sm" type="button" data-circle-open="'+esc(c.id)+'">Enter circle</button><button class="btn alt sm" type="button" data-circle-follow="'+esc(c.id)+'">'+(member?"Following":"Join circle")+'</button><a class="btn line sm" href="#c/'+encodeURIComponent(c.slug||slugify(c.name))+'">Share page</a></div></article>';
+ return '<article class="circle-card '+cls+' '+(c.featured?"featured":"")+'"><span class="badge soft">'+esc(c.type)+'</span><div class="circle-card-heading">'+circleAvatarHTML(c)+'<h3>'+esc(c.name)+'</h3></div><p class="note">'+esc(c.description||"")+'</p><div class="circle-meta"><span>'+esc(c.area||"Community")+'</span><span>&bull;</span><span>'+esc(c.members||0)+' members</span><span>&bull;</span><span>'+esc(c.status||"open")+'</span></div><div class="circle-actions"><button class="btn sm" type="button" data-circle-open="'+esc(c.id)+'">Enter circle</button><button class="btn alt sm" type="button" data-circle-follow="'+esc(c.id)+'">'+(member?"Following":"Join circle")+'</button><a class="btn line sm" href="#c/'+encodeURIComponent(c.slug||slugify(c.name))+'">Share page</a></div></article>';
 }
 function communitiesPage(){
  if(!S.siteSettings.circles_enabled)return '<div class="wrap"><div class="msg warn">Circle discovery is temporarily disabled by the Site Admin.</div></div>';
@@ -677,14 +807,14 @@ function circlePostsHTML(circle){
  return posts.map(function(p){var initials=String(p.author||"M").split(/\s+/).map(function(x){return x[0]}).slice(0,2).join("").toUpperCase(),comments=S.comments.filter(function(c){return String(c.post_id)===String(p.id)}),persisted=String(p.id)!=="welcome";
   var commentList=comments.map(function(c){return '<div class="reply"><b>'+esc(c.author||"Member")+'</b> '+esc(c.body)+(canModerateCircle(circle)||c.author_id===S.me.id?' <button class="btn line sm" type="button" data-delete-comment="'+esc(c.id)+'">Remove</button>':'')+'</div>'}).join("");
   var commentForm=S.signedIn&&persisted?'<form data-circle-comment="'+esc(p.id)+'" style="display:flex;gap:8px;margin-top:8px"><label class="sr" for="comment_'+esc(p.id)+'">Reply to this update</label><input id="comment_'+esc(p.id)+'" data-comment-body="'+esc(p.id)+'" maxlength="1000" required placeholder="Write a reply"><button class="btn sm" type="submit">Reply</button></form><span class="note" data-comment-msg="'+esc(p.id)+'" aria-live="polite"></span>':'';
-  return '<article class="post" id="post_'+esc(p.id)+'"><div class="post-head"><div class="post-author"><span class="avatar">'+esc(initials)+'</span><div><b>'+esc(p.author||"Member")+'</b><div class="note">'+esc(p.created_at||"Just now")+'</div></div></div>'+(canModerateCircle(circle)&&persisted?'<button class="btn line sm" type="button" data-delete-post="'+esc(p.id)+'">Remove update</button>':'')+'</div><p>'+esc(p.body||"")+'</p><div class="reply-list">'+(commentList||'<p class="note">No replies yet.</p>')+commentForm+'</div></article>'}).join("");
+  return '<article class="post" id="post_'+esc(p.id)+'"><div class="post-head"><div class="post-author">'+circleAvatarHTML(circle,"feed-profile-picture")+'<div><b>'+esc(circle.name)+'</b><div class="note">'+esc(p.author||"Member")+' · '+esc(feedDate(p.created_at))+'</div></div></div>'+(canModerateCircle(circle)&&persisted?'<button class="btn line sm" type="button" data-delete-post="'+esc(p.id)+'">Remove update</button>':'')+'</div>'+postMediaHTML(p)+'<p class="post-copy">'+esc(p.body||"")+'</p><div class="reply-list">'+(commentList||'<p class="note">No replies yet.</p>')+commentForm+'</div></article>'}).join("");
 }
 function circleMembersHTML(circle){
  if(!canManageCircle(circle))return"";
  var members=S.circleMembersFor===String(circle.id)?S.circleMembers:[];
  var rows=members.map(function(m){var profile=S.directory.find(function(d){return d.id===m.user_id});return '<div class="member"><span><b>'+esc(profile&&profile.name||"Member")+'</b><br><small class="note">'+esc(m.role)+'</small></span></div>'}).join("");
  var options=S.directory.filter(function(d){return d.id!==S.me.id}).map(function(d){var existing=members.find(function(m){return m.user_id===d.id});return '<option value="'+esc(d.id)+'">'+esc(d.name)+(existing?" · "+esc(existing.role):"")+'</option>'}).join("");
- return '<div class="panel" style="display:grid;gap:12px;margin-top:14px"><div><span class="badge">Circle Admin tools</span><h3 style="margin-top:8px">Manage Circle details and roles</h3></div><form id="circleEditForm" style="display:grid;gap:10px"><div class="grid2"><div class="field"><label for="editCircleName">Circle name</label><input id="editCircleName" maxlength="80" required value="'+esc(circle.name)+'"></div><div class="field"><label for="editCircleSlug">Unique share tag</label><input id="editCircleSlug" maxlength="60" required value="'+esc(circle.slug||slugify(circle.name))+'"></div><div class="field"><label for="editCircleArea">Area</label><input id="editCircleArea" maxlength="80" value="'+esc(circle.area||"")+'"></div><div class="field"><label for="editCircleMeeting">Meeting time</label><input id="editCircleMeeting" maxlength="80" value="'+esc(circle.meeting||"")+'"></div></div><div class="field"><label for="editCircleDescription">Description</label><textarea id="editCircleDescription" maxlength="400">'+esc(circle.description||"")+'</textarea></div><button class="btn sm" type="submit">Save Circle</button><span id="circleEditMsg" class="note" aria-live="polite"></span></form><div><h3>Member roles</h3><div class="member-list">'+(rows||'<p class="note">No members listed yet.</p>')+'</div><span id="circleMembersMsg" class="note" aria-live="polite"></span><form id="circleRoleForm" style="display:grid;gap:10px;margin-top:12px"><div class="field"><label for="circleRoleUser">Signed-in member</label><select id="circleRoleUser" required>'+options+'</select></div><div class="field"><label for="circleRoleValue">Role</label><select id="circleRoleValue"><option value="member">Member</option><option value="moderator">Moderator</option><option value="admin">Circle Admin</option><option value="remove">Remove from Circle</option></select></div><button class="btn alt sm" type="submit"'+(options?"":" disabled")+'>Save role</button><span id="circleRoleMsg" class="note" aria-live="polite"></span></form><button class="btn line sm danger" type="button" data-delete-circle="'+esc(circle.id)+'">Delete this Circle</button></div></div>';
+ return '<div class="panel" style="display:grid;gap:12px;margin-top:14px"><div><span class="badge">Circle Admin tools</span><h3 style="margin-top:8px">Manage Circle details and roles</h3></div><form id="circleProfileImageForm" class="media-upload"><div>'+circleAvatarHTML(circle)+' <b>Organisation profile picture</b></div><div class="field"><label for="circleProfileImage">Upload a profile picture</label><input id="circleProfileImage" type="file" accept="image/jpeg,image/png,image/webp"><span class="note">JPEG, PNG or WebP; up to 20 MB.</span></div><button class="btn alt sm" type="submit">Save profile picture</button><span id="circleProfileImageMsg" class="note" aria-live="polite"></span></form><form id="circleEditForm" style="display:grid;gap:10px"><div class="grid2"><div class="field"><label for="editCircleName">Circle name</label><input id="editCircleName" maxlength="80" required value="'+esc(circle.name)+'"></div><div class="field"><label for="editCircleSlug">Unique share tag</label><input id="editCircleSlug" maxlength="60" required value="'+esc(circle.slug||slugify(circle.name))+'"></div><div class="field"><label for="editCircleArea">Area</label><input id="editCircleArea" maxlength="80" value="'+esc(circle.area||"")+'"></div><div class="field"><label for="editCircleMeeting">Meeting time</label><input id="editCircleMeeting" maxlength="80" value="'+esc(circle.meeting||"")+'"></div></div><div class="field"><label for="editCircleDescription">Description</label><textarea id="editCircleDescription" maxlength="400">'+esc(circle.description||"")+'</textarea></div><button class="btn sm" type="submit">Save Circle</button><span id="circleEditMsg" class="note" aria-live="polite"></span></form><div><h3>Member roles</h3><div class="member-list">'+(rows||'<p class="note">No members listed yet.</p>')+'</div><span id="circleMembersMsg" class="note" aria-live="polite"></span><form id="circleRoleForm" style="display:grid;gap:10px;margin-top:12px"><div class="field"><label for="circleRoleUser">Signed-in member</label><select id="circleRoleUser" required>'+options+'</select></div><div class="field"><label for="circleRoleValue">Role</label><select id="circleRoleValue"><option value="member">Member</option><option value="moderator">Moderator</option><option value="admin">Circle Admin</option><option value="remove">Remove from Circle</option></select></div><button class="btn alt sm" type="submit"'+(options?"":" disabled")+'>Save role</button><span id="circleRoleMsg" class="note" aria-live="polite"></span></form><button class="btn line sm danger" type="button" data-delete-circle="'+esc(circle.id)+'">Delete this Circle</button></div></div>';
 }
 function loadCircleMembers(circle){
  var id=String(circle.id);
@@ -707,9 +837,10 @@ function openCircle(id){
  var el=$("#circleDetailBody");if(!el)return;
  var role=circleRole(circle),member=role!=="Visitor",link=circleLink(circle);
  var circleFeed=member?circlePostsHTML(circle):'<div class="msg">Sign in and join this Circle to enter its member feed.</div>';
- var entry=S.signedIn?(member?'<form id="circlePostForm" style="display:grid;gap:10px;margin-top:12px"><label class="sr" for="circlePost">Post to the circle</label><textarea id="circlePost" maxlength="600" required placeholder="Share an update with the circle..."></textarea><button class="btn sm" type="submit">Post update</button><span id="circlePostMsg" class="note" aria-live="polite"></span></form>':'<div class="msg" style="margin-top:12px">Join this Circle to see your member feed and share updates.<br><button class="btn sm" id="joinCircle" type="button" style="margin-top:10px">Join this circle</button><span id="circleEntryMsg" class="note" aria-live="polite" style="display:block;margin-top:6px"></span></div>'):'<form id="circleEntryForm" style="display:grid;gap:10px;margin-top:12px"><label for="circleEntryEmail">Sign in to '+esc(circle.name)+'</label><input id="circleEntryEmail" type="email" required autocomplete="email" placeholder="Email address"><button class="btn sm" type="submit">Email me a sign-in link</button><span id="circleEntryMsg" class="note" aria-live="polite"></span></form>';
+ var mediaComposer=canManageCircle(circle)?'<div class="media-upload"><div class="field"><label for="circlePostMedia">Add a photo or video</label><input id="circlePostMedia" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"><span class="note">JPEG, PNG, WebP, MP4 or WebM; up to 20 MB.</span></div></div>':'';
+ var entry=S.signedIn?(member?'<form id="circlePostForm" style="display:grid;gap:10px;margin-top:12px"><label class="sr" for="circlePost">Post to the circle</label><textarea id="circlePost" maxlength="600" required placeholder="Share an update with the circle..."></textarea>'+mediaComposer+'<button class="btn sm" type="submit">Post update</button><span id="circlePostMsg" class="note" aria-live="polite"></span></form>':'<div class="msg" style="margin-top:12px">Join this Circle to see your member feed and share updates.<br><button class="btn sm" id="joinCircle" type="button" style="margin-top:10px">Join this circle</button><span id="circleEntryMsg" class="note" aria-live="polite" style="display:block;margin-top:6px"></span></div>'):'<form id="circleEntryForm" style="display:grid;gap:10px;margin-top:12px"><label for="circleEntryEmail">Sign in to '+esc(circle.name)+'</label><input id="circleEntryEmail" type="email" required autocomplete="email" placeholder="Email address"><button class="btn sm" type="submit">Email me a sign-in link</button><span id="circleEntryMsg" class="note" aria-live="polite"></span></form>';
  var managerTools=circleMembersHTML(circle),moderatorHelp=role==="Moderator"?'<div class="msg" style="margin-top:14px"><b>Moderator tools</b><br>Remove harmful or off-topic updates and replies using the controls on each post.</div>':"";
- el.innerHTML='<div class="panel" style="margin-top:8px"><div class="sec-head"><div><span class="eyebrow">'+esc(circle.type)+' circle portal</span><h2>'+esc(circle.name)+'</h2><p>'+esc(circle.area||"Community")+' &bull; '+esc(circle.members||0)+' members</p><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px"><span class="badge">'+esc(role)+'</span><span class="badge soft">@'+esc(circle.slug||slugify(circle.name))+'</span><a class="btn line sm" href="'+esc(link)+'">Share page</a><button class="btn alt sm" type="button" data-copy-circle="'+esc(link)+'">Copy link</button></div><span id="circleShareMsg" class="note" aria-live="polite"></span></div><button class="btn alt sm" type="button" data-close-circle>Close</button></div><p style="margin-bottom:14px">'+esc(circle.description||"")+'</p><div class="grid2"><div><h3 style="margin-bottom:10px">Circle feed</h3><div class="feed">'+circleFeed+'</div>'+entry+moderatorHelp+'</div><aside><h3 style="margin-bottom:10px">About this circle</h3><div class="member-list"><div class="member"><span><b>Meeting</b><br><small class="note">'+esc(circle.meeting||"Contact the manager")+'</small></span></div><div class="member"><span><b>Role guide</b><br><small class="note">Admins manage details and roles; moderators remove content; members post and reply.</small></span></div></div></aside></div>'+managerTools+'</div>';
+ el.innerHTML='<div class="panel" style="margin-top:8px"><div class="sec-head"><div style="display:flex;gap:12px;align-items:center">'+circleAvatarHTML(circle)+'<div><span class="eyebrow">'+esc(circle.type)+' circle portal</span><h2>'+esc(circle.name)+'</h2></div></div><button class="btn alt sm" type="button" data-close-circle>Close</button></div><p>'+esc(circle.area||"Community")+' &bull; '+esc(circle.members||0)+' members</p><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px"><span class="badge">'+esc(role)+'</span><span class="badge soft">@'+esc(circle.slug||slugify(circle.name))+'</span><a class="btn line sm" href="'+esc(link)+'">Share page</a><button class="btn alt sm" type="button" data-copy-circle="'+esc(link)+'">Copy link</button></div><span id="circleShareMsg" class="note" aria-live="polite"></span><p style="margin:12px 0 14px">'+esc(circle.description||"")+'</p><div class="grid2"><div><h3 style="margin-bottom:10px">Circle feed</h3><div class="feed">'+circleFeed+'</div>'+entry+moderatorHelp+'</div><aside><h3 style="margin-bottom:10px">About this circle</h3><div class="member-list"><div class="member"><span><b>Meeting</b><br><small class="note">'+esc(circle.meeting||"Contact the manager")+'</small></span></div><div class="member"><span><b>Role guide</b><br><small class="note">Admins manage details and roles; moderators remove content; members post and reply.</small></span></div></div></aside></div>'+managerTools+'</div>';
  $("#circleDetail").scrollIntoView({block:"start",behavior:reduce?"auto":"smooth"});
  bindCircleDetail(circle);
  loadCircleMembers(circle);
@@ -717,6 +848,30 @@ function openCircle(id){
 function bindCircleDetail(circle){
  var close=$("[data-close-circle]");
  if(close)close.onclick=function(){S.selectedCircle=null;$("#circleDetailBody").innerHTML=""};
+ var profileImageForm=$("#circleProfileImageForm");
+ if(profileImageForm)profileImageForm.onsubmit=function(e){
+  e.preventDefault();var msg=$("#circleProfileImageMsg"),input=$("#circleProfileImage"),file=input.files&&input.files[0],button=profileImageForm.querySelector("button[type=submit]");
+  if(!file){msg.textContent="Choose a profile picture first.";return}
+  if(!canManageCircle(circle)){msg.textContent="Only Circle Admins can update this picture.";return}
+  var uploadedPath=null;button.disabled=true;msg.textContent="Uploading...";
+  uploadCircleMedia(circle,file,"profile").then(function(upload){
+   uploadedPath=upload.path;
+   return S.client.from("circles").update({profile_image_path:upload.path}).eq("id",circle.id).select("*").single()
+    .then(function(r){if(r.error)throw r.error;return {updated:r.data,oldPath:circle.profile_image_path,newPath:upload.path}});
+  }).then(function(result){
+   S.circles=S.circles.map(function(c){return String(c.id)===String(result.updated.id)?result.updated:c});
+   S.selectedCircle=result.updated;openCircle(result.updated.id);
+   var status=$("#circleProfileImageMsg");if(status)status.textContent="Profile picture updated.";
+   if(result.oldPath)S.client.storage.from("circle-media").remove([result.oldPath]).then(function(r){var status=$("#circleProfileImageMsg");if(r.error&&status)status.textContent="Picture updated, but the previous file could not be removed."})
+    .catch(function(){var status=$("#circleProfileImageMsg");if(status)status.textContent="Picture updated, but the previous file could not be removed."});
+  }).catch(function(err){
+   var message=err&&err.message||"Could not upload the profile picture. Check Circle Admin access and Storage setup.";
+   if(uploadedPath)S.client.storage.from("circle-media").remove([uploadedPath]).then(function(r){msg.textContent=message+(r.error?" The unused upload could not be removed.":"")})
+    .catch(function(){msg.textContent=message+" The unused upload could not be removed."})
+    .finally(function(){button.disabled=false});
+   else{msg.textContent=message;button.disabled=false}
+  });
+ };
  var copy=$("[data-copy-circle]");
  if(copy)copy.onclick=function(){var msg=$("#circleShareMsg"),link=copy.getAttribute("data-copy-circle");
   if(!navigator.clipboard){if(msg)msg.textContent=link;return}
@@ -755,9 +910,26 @@ function bindCircleDetail(circle){
  var f=$("#circlePostForm");
  if(f)f.onsubmit=function(e){e.preventDefault();var text=$("#circlePost").value.trim(),msg=$("#circlePostMsg");if(!text)return;
   if(!S.signedIn){msg.textContent="Sign in through this Circle to post.";return}
-  if(S.client){
-   S.client.from("circle_posts").insert({circle_id:circle.id,author_id:S.me.id,author:S.me.name||S.me.email||"Member",body:text}).then(function(r){if(r.error)throw r.error;$("#circlePost").value="";msg.textContent="Posted.";loadSupabaseContent()}).catch(function(){msg.textContent="Could not post this update."});
-  }else{S.posts.push({circle_id:circle.id,author:S.me&&S.me.name||"Member",body:text,created_at:"Just now"});openCircle(circle.id)}
+  if(!S.client){msg.textContent="Posting requires the site data service.";return}
+  var file=$("#circlePostMedia")&&$("#circlePostMedia").files[0],button=f.querySelector("button[type=submit]");
+  var uploadedPath=null,uploadPromise=file?uploadCircleMedia(circle,file,String(S.me.id)):Promise.resolve(null);
+  button.disabled=true;msg.textContent=file?"Uploading media...":"Posting...";
+  uploadPromise.then(function(media){
+   if(media)uploadedPath=media.path;
+   var record={circle_id:circle.id,author_id:S.me.id,author:S.me.name||S.me.email||"Member",body:text};
+   if(media&&canManageCircle(circle)){record.media_path=media.path;record.media_type=media.type}
+   else if(media)throw new Error("Only Circle Admins can attach post media.");
+   return S.client.from("circle_posts").insert(record).then(function(r){
+    if(r.error)throw r.error;
+    $("#circlePost").value="";if($("#circlePostMedia"))$("#circlePostMedia").value="";button.disabled=false;msg.textContent="Posted.";loadSupabaseContent();
+   });
+  }).catch(function(err){
+   var message=err&&err.message||"Could not post this update. Check your Circle role and try again.";
+   if(uploadedPath)S.client.storage.from("circle-media").remove([uploadedPath]).then(function(r){msg.textContent=message+(r.error?" The unused upload could not be removed.":"")})
+    .catch(function(){msg.textContent=message+" The unused upload could not be removed."})
+    .finally(function(){button.disabled=false});
+   else{msg.textContent=message;button.disabled=false}
+  });
  };
  $$("[data-circle-comment]").forEach(function(form){form.onsubmit=function(e){e.preventDefault();var postId=form.getAttribute("data-circle-comment"),input=$("[data-comment-body='"+postId+"']"),msg=$("[data-comment-msg='"+postId+"']");
   if(!S.client){msg.textContent="Replies require the site data service.";return}
@@ -834,20 +1006,21 @@ function communityManagerHTML(){
 }
 function rolePortalHTML(){
  var moderated=circlesList().filter(function(c){return circleRole(c)==="Moderator"});
- var tiles=[];
+ var adminTiles=[],adminCircleTiles=[],moderatorTiles=[],memberTiles=[];
  if(S.canEdit){
-  tiles.push(toolTile("events","Announcements & events","Publish now or schedule key dates and campaigns for the whole community.",'<a class="btn alt" href="#home" data-go="home">Manage updates</a>',"Site Admin"));
-  tiles.push(toolTile("people","Members & accounts","Review signed-in members and securely remove an account when needed.",'<button class="btn alt" type="button" data-dash="users">Manage users</button>',"Site Admin"));
-  tiles.push(toolTile("settings","Platform settings","Set the site-wide theme and enable or pause platform features.",'<button class="btn alt" type="button" data-dash="settings">Manage settings</button>',"Site Admin"));
-  tiles.push(toolTile("circle","All Circles","Open Circle pages, manage roles, moderate content and share public links.",'<a class="btn alt" href="#communities" data-go="communities">Manage Circles</a>',"Site Admin"));
-  tiles.push(toolTile("news","Newsroom & league","Publish foundation news and maintain league results.",'<div class="post-actions"><a class="btn alt sm" href="#press" data-go="press">Newsroom</a><a class="btn alt sm" href="#cricket" data-go="cricket">League</a></div>',"Site Admin"));
+  adminTiles.push(toolTile("events","Announcements & events","Publish now or schedule key dates and campaigns for the whole community.",'<a class="btn alt" href="#home" data-go="home">Manage updates</a>',"Site Admin"));
+  adminTiles.push(toolTile("people","Members & accounts","Review signed-in members and securely remove an account when needed.",'<button class="btn alt" type="button" data-dash="users">Manage users</button>',"Site Admin"));
+  adminTiles.push(toolTile("settings","Platform settings","Set the site-wide theme and enable or pause platform features.",'<button class="btn alt" type="button" data-dash="settings">Manage settings</button>',"Site Admin"));
+  adminTiles.push(toolTile("circle","All Circles","Open Circle pages, manage roles, moderate content and share public links.",'<a class="btn alt" href="#communities" data-go="communities">Manage Circles</a>',"Site Admin"));
+  adminTiles.push(toolTile("news","Newsroom & league","Publish foundation news and maintain league results.",'<div class="post-actions"><a class="btn alt sm" href="#press" data-go="press">Newsroom</a><a class="btn alt sm" href="#cricket" data-go="cricket">League</a></div>',"Site Admin"));
  }
  var owned=circlesList().filter(function(c){return circleRole(c)==="Circle Admin"});
- if(owned.length)owned.forEach(function(c){tiles.push(toolTile("circle",c.name,"Edit Circle details, manage members, assign roles and copy its shareable link.",'<button class="btn alt" type="button" data-circle-open="'+esc(c.id)+'">Open Circle Admin</button>',"Circle Admin"))});
- if(moderated.length)moderated.forEach(function(c){tiles.push(toolTile("shield",c.name,"Review the Circle conversation and remove inappropriate posts or replies.",'<button class="btn alt" type="button" data-circle-open="'+esc(c.id)+'">Open moderation tools</button>',"Moderator"))});
- tiles.push(toolTile("circle","Member community","Follow Circles, publish updates and reply in spaces you have joined.",'<a class="btn alt" href="#communities" data-go="communities">Explore Circles</a>',"Signed-in member"));
- if(S.siteSettings.messages_enabled)tiles.push(toolTile("message","Direct messages","Coordinate privately with other signed-in members.",'<button class="btn alt" type="button" data-dash="messages">Open messages</button>',"Signed-in member"));
- return '<section><div class="sec-head"><div><span class="eyebrow">Role-based tools</span><h3>Portals & tools</h3><p>Each tile shows the actions available to your role.</p></div></div><div class="cards">'+tiles.join("")+'</div></section>';
+ if(owned.length)owned.forEach(function(c){adminCircleTiles.push(toolTile("circle",c.name,"Edit Circle details, manage members, assign roles and copy its shareable link.",'<button class="btn alt" type="button" data-circle-open="'+esc(c.id)+'">Open Circle Admin</button>',"Circle Admin"))});
+ if(moderated.length)moderated.forEach(function(c){moderatorTiles.push(toolTile("shield",c.name,"Review the Circle conversation and remove inappropriate posts or replies.",'<button class="btn alt" type="button" data-circle-open="'+esc(c.id)+'">Open moderation tools</button>',"Moderator"))});
+ memberTiles.push(toolTile("circle","Member community","Follow Circles, publish updates and reply in spaces you have joined.",'<a class="btn alt" href="#communities" data-go="communities">Explore Circles</a>',"Signed-in member"));
+ if(S.siteSettings.messages_enabled)memberTiles.push(toolTile("message","Direct messages","Coordinate privately with other signed-in members.",'<button class="btn alt" type="button" data-dash="messages">Open messages</button>',"Signed-in member"));
+ function group(title,role,items){return items.length?'<div class="tool-group"><div class="tool-group-heading"><span class="badge soft">'+role+'</span><h4>'+title+'</h4></div><div class="cards">'+items.join("")+'</div></div>':""}
+ return '<section><div class="sec-head"><div><span class="eyebrow">Role-based tools</span><h3>Portals & tools</h3><p>Related actions are grouped by role so the next step is easy to find.</p></div></div>'+group("Platform-wide controls","Site Admin",adminTiles)+group("Your Circle workspaces","Circle Admin",adminCircleTiles)+group("Community moderation","Moderator",moderatorTiles)+group("Member tools","Signed-in member",memberTiles)+'</section>';
 }
 function usersAdminHTML(){
  if(!S.canEdit)return '<div class="msg warn">Site Admin access is required.</div>';
@@ -953,11 +1126,12 @@ function bindDash(){
    .finally(function(){submit.disabled=false});
  };
  var signout=$("[data-signout]");
- if(signout)signout.onclick=function(){if(S.client)S.client.auth.signOut().then(function(){S.me=null;S.signedIn=false;S.canEdit=false;render(true)})};
+ if(signout)signout.onclick=function(){if(S.client)S.client.auth.signOut().then(function(){S.me=null;S.signedIn=false;S.canEdit=false;S.savedPosts=[];S.savedPostRecords=[];S.savedPostsError=null;render(true)})};
 }
 
 /* ---------- router + render ---------- */
 var pages={home:homePage,cricket:cricketPage,reading:readingPage,communities:communitiesPage,press:pressPage,join:joinPage,dashboard:dashPage};
+pages.feed=feedPage;
 function stopTimer(){if(S.timer){clearInterval(S.timer);S.timer=null}}
 function setSlide(i){
  var n=4;S.slide=(i+n)%n;var t=$("#track");if(!t)return;
@@ -980,23 +1154,56 @@ function bindHome(){
  var ban=$("#banner");ban.onmouseenter=stopTimer;ban.onmouseleave=startTimer;ban.onfocusin=stopTimer;ban.onfocusout=startTimer;
  startTimer();
  var gs=$("#gsearch");gs.oninput=function(){runSearch(gs.value)};
- renderHomeFeed();
- bindHomeFeed();
  bindHomeUpdates();
  bindProfileSetup();
 }
-function bindHomeFeed(){
- $$("[data-feed]").forEach(function(b){b.onclick=function(){S.feedTab=b.getAttribute("data-feed");$$("[data-feed]").forEach(function(x){x.setAttribute("aria-selected",x===b)});renderHomeFeed();bindHomeFeed()}});
+function bindFeed(){
+ bindProfileSetup();
+ $$("[data-feed]").forEach(function(b){b.onclick=function(){S.feedTab=b.getAttribute("data-feed");renderFeed()}});
  $$("[data-like-post]").forEach(function(b){b.onclick=function(){
-  var id=b.getAttribute("data-like-post"),liked=S.engagements.indexOf(id)>-1;
-  if(String(id).indexOf("sample-")===0){S.engagements=liked?S.engagements.filter(function(x){return x!==id}):S.engagements.concat([id]);renderHomeFeed();bindHomeFeed();return}
+  var id=b.getAttribute("data-like-post"),liked=S.engagements.some(function(x){return String(x)===String(id)}),msg=$("[data-feed-msg='"+id+"']");
+  if(!S.signedIn){if(msg)msg.textContent="Sign in to like posts.";return}
+  if(String(id).indexOf("sample-")===0){S.engagements=liked?S.engagements.filter(function(x){return String(x)!==String(id)}):S.engagements.concat([id]);renderFeed();return}
+  if(!S.client){if(msg)msg.textContent="Likes require the site data service.";return}
   var request=liked?S.client.from("feed_engagements").delete().match({post_id:id,user_id:S.me.id}):S.client.from("feed_engagements").insert({post_id:id,user_id:S.me.id,kind:"like"});
-  request.then(function(r){if(r.error&&!(r.error.code==="23505"&&!liked))throw r.error;S.engagements=liked?S.engagements.filter(function(x){return x!==id}):S.engagements.concat([id]);renderHomeFeed();bindHomeFeed()}).catch(function(){b.textContent="Try again"});
+  request.then(function(r){if(r.error&&!(r.error.code==="23505"&&!liked))throw r.error;S.engagements=liked?S.engagements.filter(function(x){return String(x)!==String(id)}):S.engagements.concat([id]);renderFeed()}).catch(function(){if(msg)msg.textContent="Could not update your like. Try again."});
+ }});
+ $$("[data-save-post]").forEach(function(b){b.onclick=function(){
+  var id=b.getAttribute("data-save-post"),saved=S.savedPosts.some(function(x){return String(x)===String(id)}),msg=$("[data-feed-msg='"+id+"']");
+  if(!S.signedIn){if(msg)msg.textContent="Sign in to save posts.";return}
+  if(String(id).indexOf("sample-")===0){S.savedPosts=saved?S.savedPosts.filter(function(x){return String(x)!==String(id)}):S.savedPosts.concat([id]);renderFeed();return}
+  if(!S.client){if(msg)msg.textContent="Saving posts requires the site data service.";return}
+  var request=saved?S.client.from("saved_posts").delete().match({post_id:id,user_id:S.me.id}):S.client.from("saved_posts").insert({post_id:id,user_id:S.me.id});
+  request.then(function(r){if(r.error&&!(r.error.code==="23505"&&!saved))throw r.error;S.savedPosts=saved?S.savedPosts.filter(function(x){return String(x)!==String(id)}):S.savedPosts.concat([id]);renderFeed()})
+   .catch(function(){if(msg)msg.textContent="Could not update saved posts. Try again."});
+ }});
+ $$("[data-share-post]").forEach(function(b){b.onclick=function(){
+  var id=b.getAttribute("data-share-post"),post=feedPosts().find(function(p){return String(p.id)===String(id)}),circle=post&&circlesList().find(function(c){return String(c.id)===String(post.circle_id)}),url=String(id).indexOf("sample-")===0?(circle?circleLink(circle):location.href):location.origin+location.pathname+"#feed/post/"+encodeURIComponent(id),msg=$("[data-feed-msg='"+id+"']");
+  var payload={title:circle?circle.name:"Mini Circles",text:post&&post.body||"Community update",url:url};
+  if(navigator.share){navigator.share(payload).catch(function(err){if(err&&err.name!=="AbortError"&&msg)msg.textContent="Could not open the share sheet. Copy this link: "+url})}
+  else if(navigator.clipboard)navigator.clipboard.writeText(url).then(function(){if(msg)msg.textContent="Circle link copied."},function(){if(msg)msg.textContent="Copy this Circle link: "+url});
+  else if(msg)msg.textContent="Share this Circle link: "+url;
+ }});
+ $$("[data-focus-comments]").forEach(function(b){b.onclick=function(){
+  var id=b.getAttribute("data-focus-comments"),input=document.getElementById("comment_"+id),msg=$("[data-feed-msg='"+id+"']");
+  if(!S.signedIn){if(msg)msg.textContent="Sign in to comment on posts.";return}
+  if(input){input.focus();input.scrollIntoView({block:"nearest",behavior:reduce?"auto":"smooth"});}
+ }});
+ $$("[data-feed-comment-form]").forEach(function(form){form.onsubmit=function(e){
+  e.preventDefault();var id=form.getAttribute("data-feed-comment-form"),input=$("[data-feed-comment-body='"+id+"']"),msg=$("[data-feed-msg='"+id+"']"),body=input.value.trim();
+  if(!S.signedIn){if(msg)msg.textContent="Sign in to comment on posts.";return}
+  if(!S.client){if(msg)msg.textContent="Comments require the site data service.";return}
+  if(!body)return;
+  var button=form.querySelector("button[type=submit]");button.disabled=true;
+  S.client.from("circle_post_comments").insert({post_id:id,author_id:S.me.id,author:S.me.name||S.me.email||"Member",body:body}).select("*").single()
+   .then(function(r){if(r.error)throw r.error;S.comments=S.comments.concat([r.data]);renderFeed()})
+   .catch(function(){button.disabled=false;if(msg)msg.textContent="Could not post your comment. Please try again."});
  }});
  $$("[data-follow-user]").forEach(function(b){b.onclick=function(){
   var id=b.getAttribute("data-follow-user"),following=S.followingUsers.indexOf(id)>-1;
+  if(!S.signedIn||!S.client)return;
   var request=following?S.client.from("user_follows").delete().match({follower_id:S.me.id,followed_id:id}):S.client.from("user_follows").insert({follower_id:S.me.id,followed_id:id});
-  request.then(function(r){if(r.error&&!(r.error.code==="23505"&&!following))throw r.error;S.followingUsers=following?S.followingUsers.filter(function(x){return x!==id}):S.followingUsers.concat([id]);renderHomeFeed();bindHomeFeed()}).catch(function(){b.textContent="Try again"});
+  request.then(function(r){if(r.error&&!(r.error.code==="23505"&&!following))throw r.error;S.followingUsers=following?S.followingUsers.filter(function(x){return x!==id}):S.followingUsers.concat([id]);renderFeed()}).catch(function(){var msg=b.closest(".feed-post").querySelector(".post-media-status");if(msg)msg.textContent="Could not update your follow. Try again."});
  }});
 }
 function bindHomeUpdates(){
@@ -1030,6 +1237,7 @@ function bindProfileSetup(){
 }
 function bindRoute(r){
  if(r==="home")bindHome();
+ if(r==="feed"&&S.siteSettings.feed_enabled)renderFeed();
  if(r==="communities")bindCommunities();
  if(r==="reading"){var sel=$("#fmtAge"),out=$("#fmtOut");var T={a:"Shorter sessions of 30 minutes, picture books and short stories, lots of reading aloud and pair reading.",b:"45-minute sessions, novels and graphic novels, member-led choices and talk about the characters' decisions.",c:"Sessions of 40 minutes, a mix of short and longer reads, and one shared book that every age can join."};var p=function(){out.textContent=T[sel.value]};sel.onchange=p;p()}
  if(r==="press"){
@@ -1060,7 +1268,10 @@ function render(keepScroll){
  S.route=r;
  var circleNav=$('#nav a[data-r="communities"]');
  if(circleNav)circleNav.hidden=!S.siteSettings.circles_enabled;
+ var feedNav=$('#nav a[data-r="feed"]');
+ if(feedNav)feedNav.hidden=!S.siteSettings.feed_enabled;
  $$("#nav a").forEach(function(a){if(a.getAttribute("data-r")===r)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+ $$(".nav-group").forEach(function(group){group.classList.toggle("is-current",!!$("a[aria-current]",group));group.open=false});
  $("#lockico").style.display=S.signedIn?"none":"";
  $("#app").innerHTML=pages[r]();
  mountLeague();mountPress();bindLeagueBind();
@@ -1074,7 +1285,7 @@ function live(){
  mountLeague();bindLeagueEditor();
  var pl=$("#pressList");if(pl){mountPress()}else{var hp=$("#homePress");if(hp)mountPress()}
  var updates=$("#homeUpdates");if(updates){updates.innerHTML=updatesHTML();bindHomeUpdates()}
- if($("#homeFeedList")){renderHomeFeed();bindHomeFeed()}
+ if($("#feedList"))renderFeed();
  var messages=$("#messagesList");if(messages)messages.innerHTML=messagesListHTML();
  var recipient=$("#messageRecipient");if(recipient){var selected=recipient.value;recipient.innerHTML=messageRecipientOptions();recipient.value=selected;var send=$("#messageForm button[type=submit]");if(send)send.disabled=!recipient.options.length}
  if(S.selectedCircle&&S.route==="communities"&&S.circleRefreshRequested){S.circleRefreshRequested=false;openCircle(S.selectedCircle.id)}
@@ -1083,6 +1294,9 @@ function live(){
 }
 function route(){
  var h=(location.hash||"").slice(1);
+ var sharedMatch=h.match(/^feed\/post\/(.+)$/);
+ if(sharedMatch){try{S.sharedPostId=decodeURIComponent(sharedMatch[1])}catch(e){S.sharedPostId=sharedMatch[1]}S.sharedPostLoading=false;S.sharedPostError=null;h="feed"}
+ else {S.sharedPostId=null;S.sharedPostLoading=false;S.sharedPostError=null}
  if(h.indexOf("c/")===0){try{S.pendingCircleSlug=decodeURIComponent(h.slice(2))}catch(e){S.pendingCircleSlug=h.slice(2)}h="communities"}else S.pendingCircleSlug=null;
  S.route=ROUTES.indexOf(h)>-1?h:"home";
  render(false);
@@ -1178,12 +1392,22 @@ function loadSupabaseContent(){
  S.client.from("press").select("*").order("date",{ascending:false}).limit(200).then(function(r){if(!r.error){S.press=(r.data||[]).map(function(p){p.id=p.id;return p});live()}});
  S.client.from("league").select("groups").eq("id","current").maybeSingle().then(function(r){if(!r.error&&r.data){S.league={groups:r.data.groups};live()}});
  S.client.from("circles").select("*").order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){S.circles=(r.data||[]).map(function(c){c.members=c.members||0;return c});S.circlesLoaded=true;live();if(S.pendingCircleId&&S.route==="communities")openCircle(S.pendingCircleId);if(S.openCircleAfterRoute&&S.route==="communities"&&S.circles.some(function(c){return String(c.id)===String(S.openCircleAfterRoute)})){var id=S.openCircleAfterRoute;S.openCircleAfterRoute=null;openCircle(id)}if(S.pendingCircleSlug&&S.route==="communities")openCircleBySlug(S.pendingCircleSlug)}});
- S.client.from("circle_posts").select("*").order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){S.posts=r.data||[];S.postsLoaded=true;S.circleRefreshRequested=true;live()}});
+ S.client.from("circle_posts").select("*").order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){var posts=r.data||[],shared=S.sharedPostId&&S.posts.find(function(p){return String(p.id)===String(S.sharedPostId)});if(shared&&!posts.some(function(p){return String(p.id)===String(shared.id)}))posts.push(shared);S.posts=posts;S.postsLoaded=true;S.circleRefreshRequested=true;live()}});
  S.client.from("site_updates").select("*").order("date",{ascending:true}).limit(100).then(function(r){if(!r.error){S.updates=r.data||[];live();if(S.route==="home"){$("#homeUpdates")&&($("#homeUpdates").innerHTML=updatesHTML());bindHomeUpdates()}}});
  if(S.signedIn){
   S.client.from("circle_members").select("circle_id,role").eq("user_id",S.me.id).then(function(r){if(!r.error){S.memberships=r.data||[];S.circleRefreshRequested=true;live()}});
   S.client.from("user_follows").select("followed_id").eq("follower_id",S.me.id).then(function(r){if(!r.error){S.followingUsers=(r.data||[]).map(function(x){return x.followed_id});live()}});
   S.client.from("feed_engagements").select("post_id").eq("user_id",S.me.id).then(function(r){if(!r.error){S.engagements=(r.data||[]).map(function(x){return x.post_id});live()}});
+  S.client.from("saved_posts").select("post_id").eq("user_id",S.me.id).then(function(r){
+   if(r.error)throw r.error;
+   S.savedPostsError=null;
+   S.savedPosts=(r.data||[]).map(function(x){return x.post_id});
+   if(!S.savedPosts.length){S.savedPostRecords=[];live();return}
+   return S.client.from("circle_posts").select("*").in("id",S.savedPosts).then(function(posts){
+    if(posts.error)throw posts.error;
+    S.savedPostRecords=posts.data||[];live();
+   });
+  }).catch(function(err){S.savedPostsError=err&&err.message||"request failed";live()});
   S.directoryLoaded=false;S.directoryError=null;loadMemberDirectoryPage(0,[],S.me.id);
   S.client.from("direct_messages").select("*").or("sender_id.eq."+S.me.id+",recipient_id.eq."+S.me.id).order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){S.directMessages=r.data||[];live()}});
   S.client.from("circle_post_comments").select("*").order("created_at",{ascending:true}).limit(1000).then(function(r){if(!r.error){S.comments=r.data||[];S.circleRefreshRequested=true;live()}});
@@ -1214,10 +1438,10 @@ function initData(){
   S.client.auth.getSession().then(function(r){
    var session=r.data&&r.data.session;
    var nextUser=session&&session.user?session.user:null;
-   if(S.me&&nextUser&&S.me.id!==nextUser.id){S.memberships=[];S.circleMembers=[];S.circleMembersFor=null;S.followingUsers=[];S.engagements=[];S.directMessages=[];S.directory=[];S.directoryLoaded=false;S.directoryError=null;S.adminUsers=[];S.adminUsersLoaded=false;S.adminUsersLoading=false;S.adminUsersError=null;S.comments=[];S.signups=null;S.canEdit=false;S.profileComplete=false}
+   if(S.me&&nextUser&&S.me.id!==nextUser.id){S.memberships=[];S.circleMembers=[];S.circleMembersFor=null;S.followingUsers=[];S.engagements=[];S.savedPosts=[];S.savedPostRecords=[];S.savedPostsError=null;S.directMessages=[];S.directory=[];S.directoryLoaded=false;S.directoryError=null;S.adminUsers=[];S.adminUsersLoaded=false;S.adminUsersLoading=false;S.adminUsersError=null;S.comments=[];S.signups=null;S.canEdit=false;S.profileComplete=false}
    S.me=nextUser;
    S.signedIn=!!S.me;
-   if(!S.me){S.canEdit=false;S.profileComplete=false;S.memberships=[];S.circleMembers=[];S.circleMembersFor=null;S.followingUsers=[];S.engagements=[];S.directMessages=[];S.directory=[];S.directoryLoaded=false;S.directoryError=null;S.adminUsers=[];S.adminUsersLoaded=false;S.adminUsersLoading=false;S.adminUsersError=null;S.comments=[];S.signups=null;S.pendingCircleId=null;try{sessionStorage.removeItem("mc-circle-entry-id")}catch(e){}render(true);return}
+   if(!S.me){S.canEdit=false;S.profileComplete=false;S.memberships=[];S.circleMembers=[];S.circleMembersFor=null;S.followingUsers=[];S.engagements=[];S.savedPosts=[];S.savedPostRecords=[];S.savedPostsError=null;S.directMessages=[];S.directory=[];S.directoryLoaded=false;S.directoryError=null;S.adminUsers=[];S.adminUsersLoaded=false;S.adminUsersLoading=false;S.adminUsersError=null;S.comments=[];S.signups=null;S.pendingCircleId=null;try{sessionStorage.removeItem("mc-circle-entry-id")}catch(e){}render(true);return}
    S.client.from("profiles").select("name,interests,can_edit,circle_manager").eq("id",S.me.id).maybeSingle().then(function(p){
     S.canEdit=!p.error&&!!(p.data&&p.data.can_edit);S.me.circle_manager=!p.error&&!!(p.data&&p.data.circle_manager);S.me.name=p.data&&p.data.name||"";S.me.interests=p.data&&p.data.interests||[];S.profileComplete=!!(p.data&&p.data.name);
     restoreCircleRoute();

@@ -659,3 +659,149 @@ using (
 with check (
   public.is_circle_admin(circle_id)
 );
+
+-- Dedicated feed interactions and Circle-owned media.
+alter table public.circles
+  add column if not exists profile_image_path text;
+alter table public.circles
+  drop constraint if exists circles_profile_image_path_check;
+alter table public.circles
+  add constraint circles_profile_image_path_check
+  check (
+    profile_image_path is null
+    or profile_image_path like (id::text || '/profile/%')
+  );
+
+alter table public.circle_posts
+  add column if not exists media_path text,
+  add column if not exists media_type text;
+alter table public.circle_posts
+  drop constraint if exists circle_posts_media_metadata_check;
+alter table public.circle_posts
+  add constraint circle_posts_media_metadata_check
+  check (
+    (media_path is null and media_type is null)
+    or (
+      media_path is not null
+      and media_path like (circle_id::text || '/%')
+      and media_type in ('image/jpeg','image/png','image/webp','video/mp4','video/webm')
+    )
+  );
+
+drop policy if exists "Members can post" on public.circle_posts;
+create policy "Members can post"
+on public.circle_posts for insert
+to authenticated
+with check (
+  author_id = auth.uid()
+  and public.is_circle_member(circle_id)
+  and (
+    media_path is null
+    or (
+      public.is_circle_admin(circle_id)
+      and media_path like (circle_id::text || '/%')
+      and media_type in ('image/jpeg','image/png','image/webp','video/mp4','video/webm')
+    )
+  )
+);
+
+drop policy if exists "Members can read circle comments" on public.circle_post_comments;
+create policy "Public can read comments on public posts"
+on public.circle_post_comments for select
+to anon, authenticated
+using (
+  exists (
+    select 1 from public.circle_posts p
+    where p.id = circle_post_comments.post_id
+  )
+);
+
+drop policy if exists "Members can comment on circle posts" on public.circle_post_comments;
+create policy "Signed-in users can comment on public posts"
+on public.circle_post_comments for insert
+to authenticated
+with check (
+  author_id = auth.uid()
+  and exists (
+    select 1 from public.circle_posts p
+    where p.id = circle_post_comments.post_id
+  )
+);
+
+create table if not exists public.saved_posts (
+  user_id uuid not null references auth.users(id) on delete cascade,
+  post_id uuid not null references public.circle_posts(id) on delete cascade,
+  saved_at timestamptz not null default now(),
+  primary key (user_id, post_id)
+);
+
+alter table public.saved_posts enable row level security;
+
+drop policy if exists "Users can read own saved posts" on public.saved_posts;
+create policy "Users can read own saved posts"
+on public.saved_posts for select
+to authenticated
+using (user_id = auth.uid());
+
+drop policy if exists "Users can save posts" on public.saved_posts;
+create policy "Users can save posts"
+on public.saved_posts for insert
+to authenticated
+with check (user_id = auth.uid());
+
+drop policy if exists "Users can unsave posts" on public.saved_posts;
+create policy "Users can unsave posts"
+on public.saved_posts for delete
+to authenticated
+using (user_id = auth.uid());
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'circle-media',
+  'circle-media',
+  true,
+  20971520,
+  array['image/jpeg','image/png','image/webp','video/mp4','video/webm']::text[]
+)
+on conflict (id) do update
+set public = excluded.public,
+    file_size_limit = excluded.file_size_limit,
+    allowed_mime_types = excluded.allowed_mime_types;
+
+drop policy if exists "Public can read circle media" on storage.objects;
+create policy "Public can read circle media"
+on storage.objects for select
+to anon, authenticated
+using (bucket_id = 'circle-media');
+
+drop policy if exists "Circle admins can upload circle media" on storage.objects;
+create policy "Circle admins can upload circle media"
+on storage.objects for insert
+to authenticated
+with check (
+  bucket_id = 'circle-media'
+  and case
+    when (storage.foldername(name))[1] ~*
+      '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    then public.is_circle_admin(((storage.foldername(name))[1])::uuid)
+    else false
+  end
+  and (
+    (storage.foldername(name))[2] = 'profile'
+    or (storage.foldername(name))[2] = auth.uid()::text
+  )
+);
+
+drop policy if exists "Circle admins can remove circle media" on storage.objects;
+create policy "Circle admins can remove circle media"
+on storage.objects for delete
+to authenticated
+using (
+  bucket_id = 'circle-media'
+  and case
+    when (storage.foldername(name))[1] ~*
+      '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    then public.is_circle_admin(((storage.foldername(name))[1])::uuid)
+    else false
+  end
+);
