@@ -22,6 +22,10 @@ The easiest no-server option is Supabase plus Netlify or GitHub Pages.
 6. Put the project URL and public publishable/anon key in `window.MINICIRCLES_CONFIG` in [`index.html`](index.html).
 7. Deploy `index.html` to Netlify or GitHub Pages.
 
+The Home page is the default landing page. From there, visitors can explore Circle portals and sign in with a Circle-specific email link. Signed-in members can follow Circles and other members, like posts, and set interests for their recommended feed. Site editors manage announcements and events from the Home page.
+
+The SQL setup includes profile interests, follows, feed engagement, and site updates. For an existing Supabase project, apply the newly added schema definitions and policies from [`supabase.sql`](supabase.sql); do not rerun its original `create policy` statements.
+
 The original `Mini Circles.html` file is preserved as a source copy. `index.html` is the launch file.
 
 ## Launch checks
@@ -29,5 +33,5 @@ The original `Mini Circles.html` file is preserved as a source copy. `index.html
 - Never collect learner names or learner ID numbers.
 - Require an adult contact for cricket teams and reading circles.
 - Verify Supabase email confirmation and redirect URLs.
-- Test public sign-ups, editor sign-in, press publishing, league updates, CSV downloads, and mobile layouts.
+- Test public sign-ups, editor sign-in, profile setup, Circle entry and membership, personalized feed actions, announcement/event publishing, press publishing, league updates, CSV downloads, and mobile layouts.
 - Replace the sample league standings and press releases before launch.

@@ -62,6 +62,42 @@ a{color:var(--accent)}
 .join-side{display:grid;gap:12px}
 .join-check{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--line);padding-top:12px;color:var(--muted)}
 .join-check i{width:24px;height:24px;border-radius:50%;background:var(--yellow);color:#12151C;display:grid;place-items:center;font-size:.75rem;font-weight:800;font-style:normal;flex:none}
+.community-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy),#35507A);color:#fff;border-radius:24px;padding:30px}
+.community-hero p{max-width:48ch;margin:8px 0 16px;opacity:.86}
+.community-hero .btn{background:#fff;color:#12151C}
+.circle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}
+.circle-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:12px;position:relative}
+.circle-card.featured{border-top:5px solid var(--yellow)}
+.circle-card.reading{border-top-color:#F3A6AE}
+.circle-card.cricket{border-top-color:#35507A}
+.circle-card h3{font-size:1.25rem}
+.circle-meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.86rem}
+.circle-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.feed{display:grid;gap:12px}
+.post{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.post-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}
+.post-author{display:flex;align-items:center;gap:9px}
+.feed-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.post-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.site-updates{display:grid;gap:10px}
+.site-update{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.site-update header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.site-update p{margin-top:7px}
+.profile-setup{display:grid;gap:12px}
+.interest-list{display:flex;gap:8px;flex-wrap:wrap}
+.interest-list label{margin:0}
+.interest-list input{width:18px;height:18px;min-height:0}
+.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--yellow);color:#12151C;font-family:var(--font-d);font-weight:800}
+.post p{white-space:pre-wrap}
+.reply-list{display:grid;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.reply{padding:8px 10px;border-radius:10px;background:var(--soft);font-size:.92rem}
+.directory-tools{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
+.directory-tools .field{flex:1 1 220px}
+.member-list{display:grid;gap:8px}
+.member{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:12px}
+.member span{min-width:0}
+.ad-slot{min-height:120px;border:1px dashed var(--line);border-radius:16px;display:none;place-items:center;color:var(--muted);background:var(--soft);text-align:center;padding:16px}
+.ad-slot[data-enabled="true"]{display:grid}
 @media (max-width:760px){.impact-strip,.programme-grid{grid-template-columns:minmax(0,1fr)}.impact-strip{gap:8px}.programme-card{min-height:200px}}
 
 /* header + tabs */
@@ -224,6 +260,7 @@ footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
       <a href="#home" data-r="home">Home</a>
       <a href="#cricket" data-r="cricket">Cricket</a>
       <a href="#reading" data-r="reading">Reading</a>
+      <a href="#communities" data-r="communities">Circles</a>
       <a href="#press" data-r="press">Press</a>
       <a href="#join" data-r="join">Join</a>
       <a href="#dashboard" data-r="dashboard">Dashboard
@@ -247,7 +284,7 @@ footer .wrap{display:grid;gap:8px;color:var(--muted);font-size:.9rem}
 <script>
 (function(){
 "use strict";
-var ROUTES=["home","cricket","reading","press","join","dashboard"];
+var ROUTES=["home","cricket","reading","communities","press","join","dashboard"];
 var $=function(s,r){return (r||document).querySelector(s)};
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
@@ -285,8 +322,23 @@ var PLANS={
  cricket:"MINI CIRCLES - CRICKET SESSION PLAN (45 minutes)\n\n1. Welcome and warm-up (5 min): jog, stretch, call names.\n2. Skill station A (10 min): grip and stance or bowling action.\n3. Skill station B (10 min): catching and ground fielding.\n4. Small-sided game (15 min): every player bats and bowls.\n5. Huddle (5 min): one thing each player did well. Fair play handshake.\n\nSafety: check the ground, keep water close, use soft balls for beginners.\nRecord attendance with the adult contact only. Do not collect learners' ID numbers.",
  reading:"MINI CIRCLES - READING CIRCLE SESSION PLAN (45 minutes)\n\n1. Settle in (5 min): sit in a circle, share one good thing from the week.\n2. Read together (15 min): pair reading or read aloud from the chosen book.\n3. Talk (15 min): use two open questions. Wait ten seconds before filling silences.\n4. Choose (5 min): vote on the next book or chapter.\n5. Close (5 min): each member names one thing they liked.\n\nRules: nobody is forced to read aloud. Members may read in their home language.\nKeep it fun, not a test. No marks."
 };
+var SAMPLE_CIRCLES=[
+ {id:"sample-1",name:"Alex Saturday Readers",type:"Reading",area:"Alexandra",members:18,description:"A friendly weekly book circle for teens and families. Bring a book or borrow one.",status:"open"},
+ {id:"sample-2",name:"Soweto Spinners",type:"Cricket",area:"Soweto",members:24,description:"Weekend cricket practice, small-sided games and fair-play learning for U13 players.",status:"open"},
+ {id:"sample-3",name:"Tembisa Book Crew",type:"Reading",area:"Tembisa",members:12,description:"A relaxed after-school circle reading graphic novels, stories and comics in every language.",status:"open"}
+];
+var SAMPLE_UPDATES=[
+ {id:"sample-update-1",kind:"Event",title:"World Read Aloud Day",date:"2027-02-03",summary:"Celebrate stories by reading aloud together in every language."},
+ {id:"sample-update-2",kind:"Announcement",title:"Welcome to Mini Circles",date:"2026-11-24",summary:"Follow local reading circles and youth cricket communities from one place."}
+];
+var SAMPLE_FEED=[
+ {id:"sample-post-1",circle_id:"sample-1",author:"Alex Saturday Readers",body:"This week we are sharing a favourite page from a book we love. Bring a story in any language.",created_at:"2026-11-22T09:00:00Z"},
+ {id:"sample-post-2",circle_id:"sample-2",author:"Soweto Spinners",body:"Practice reminder: warm up together, encourage every player and finish with our fair-play handshake.",created_at:"2026-11-21T09:00:00Z"},
+ {id:"sample-post-3",circle_id:"sample-3",author:"Tembisa Book Crew",body:"Graphic novels are on the table this week. Everyone can recommend one for our next read.",created_at:"2026-11-20T09:00:00Z"}
+];
 
-var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,prog:{c:[],r:[]},ready:false,client:null};
+var S={route:"home",db:null,me:null,canEdit:false,signedIn:false,profileComplete:false,press:null,league:null,signups:null,group:"u13",joinType:"cricket",dashTab:"overview",pressQ:"",pressTag:"All",slide:0,paused:false,timer:null,prog:{c:[],r:[]},ready:false,client:null,circles:[],memberships:[],followingUsers:[],engagements:[],posts:[],updates:null,selectedCircle:null,openCircleAfterRoute:null,circleQuery:"",circleType:"All",feedTab:"recommended",pendingCircleId:null};
+try{S.pendingCircleId=sessionStorage.getItem("mc-circle-entry-id")}catch(e){}
 try{var pp=JSON.parse(localStorage.getItem("mc-progress")||"null");if(pp&&pp.c&&pp.r)S.prog=pp}catch(e){}
 function saveProg(){try{localStorage.setItem("mc-progress",JSON.stringify(S.prog))}catch(e){}}
 function fmtDate(d){try{return new Date(d+"T00:00:00").toLocaleDateString("en-ZA",{day:"numeric",month:"short",year:"numeric"})}catch(e){return d}}
@@ -296,6 +348,8 @@ function downloadText(filename,data){
 }
 function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function pressList(){var l=(S.press&&S.press.length)?S.press:SAMPLE_PRESS;return l.slice().sort(function(a,b){return String(b.date).localeCompare(String(a.date))})}
+function siteUpdates(){var d=today();return (S.updates||SAMPLE_UPDATES).slice().sort(function(a,b){var af=String(a.date)>=d,bf=String(b.date)>=d;if(af!==bf)return af?-1:1;return af?String(a.date).localeCompare(String(b.date)):String(b.date).localeCompare(String(a.date))})}
+function feedPosts(){return S.posts.length?S.posts:SAMPLE_FEED}
 function groupsData(){return (S.league&&S.league.groups)?S.league.groups:SAMPLE_LEAGUE}
 function isSampleLeague(){return !(S.league&&S.league.groups)}
 function rows(g){var r=(groupsData()[g]||[]).map(function(x){return {n:x.n,w:x.w|0,l:x.l|0,t:x.t|0,p:(x.w|0)+(x.l|0)+(x.t|0),pts:2*(x.w|0)+(x.t|0)}});
@@ -424,18 +478,61 @@ function slidesHTML(){
   {c:"s4",k:"Newsroom",h:"The latest from the foundation.",p:"Press releases, partner news and announcements, easy to search.",a:[["Read press releases","press"],["Open dashboard","dashboard",null,1]]}];
  return d.map(function(s,i){return '<div class="slide '+s.c+'" role="group" aria-roledescription="slide" aria-label="'+(i+1)+' of '+d.length+'"><div class="rings" aria-hidden="true"><i></i><i></i><i></i></div><span class="k">'+s.k+'</span><h1>'+s.h+'</h1><p>'+s.p+'</p><div class="acts">'+s.a.map(function(a){return '<a class="btn'+(a[3]?' ghost':'')+'" href="#'+a[1]+'" data-go="'+a[1]+'"'+(a[2]?' data-join="'+a[2]+'"':'')+'>'+a[0]+'</a>'}).join("")+'</div></div>'}).join("");
 }
+function profileSetupHTML(){
+ if(!S.signedIn||S.profileComplete)return"";
+ return '<section class="panel profile-setup"><div><span class="eyebrow">Quick profile</span><h2 style="font-size:1.35rem">Make your feed yours</h2><p class="note">Add a name and choose what interests you. You can update this later.</p></div><form id="profileForm" style="display:grid;gap:12px"><div class="field"><label for="profileName">Display name</label><input id="profileName" maxlength="60" required value="'+esc(S.me&&S.me.name||"")+'"></div><fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:600;margin-bottom:6px">Interests</legend><div class="interest-list"><label class="check"><input type="checkbox" name="interest" value="Cricket"'+(S.me&&S.me.interests&&S.me.interests.indexOf("Cricket")>-1?" checked":"")+'>Cricket</label><label class="check"><input type="checkbox" name="interest" value="Reading"'+(S.me&&S.me.interests&&S.me.interests.indexOf("Reading")>-1?" checked":"")+'>Reading</label></div></fieldset><div><button class="btn sm" type="submit">Save profile</button> <button class="btn line sm" type="button" id="skipProfile">Do this later</button></div><span id="profileMsg" class="note" aria-live="polite"></span></form></section>';
+}
+function updatesHTML(){
+ var updates=siteUpdates();
+ var list=updates.map(function(u){return '<article class="site-update"><header><div><span class="badge '+(u.kind==="Event"?"":"soft")+'">'+esc(u.kind||"Announcement")+'</span> <span class="note">'+esc(fmtDate(u.date))+'</span></div>'+(S.canEdit&&S.client&&!u.sample?'<button class="btn line sm" type="button" data-delete-update="'+esc(u.id)+'">Delete</button>':'')+'</header><h3 style="margin-top:7px">'+esc(u.title)+'</h3><p class="note">'+esc(u.summary||"")+'</p></article>'}).join("");
+ var editor=S.canEdit?'<form id="siteUpdateForm" class="panel" style="display:grid;gap:12px"><h3>Publish an announcement or event</h3><div class="grid2"><div class="field"><label for="updateTitle">Title</label><input id="updateTitle" maxlength="120" required></div><div class="field"><label for="updateKind">Type</label><select id="updateKind"><option>Announcement</option><option>Event</option></select></div><div class="field"><label for="updateDate">Date</label><input id="updateDate" type="date" required value="'+today()+'"></div><div class="field"><label for="updateSummary">Details</label><input id="updateSummary" maxlength="240" required></div></div><button class="btn sm" type="submit">Publish update</button><span id="updateMsg" class="note" aria-live="polite"></span></form>':'';
+ return '<div class="site-updates">'+(list||'<div class="msg">There are no current announcements or events.</div>')+editor+'</div>';
+}
+function postCardHTML(p){
+ var circle=circlesList().find(function(c){return String(c.id)===String(p.circle_id)});
+ var liked=S.engagements&&S.engagements.indexOf(p.id)>-1;
+ var following=S.followingUsers.indexOf(p.author_id)>-1;
+ return '<article class="post"><div class="post-head"><div class="post-author"><span class="avatar">'+esc(String(p.author||"M").split(/\s+/).map(function(x){return x[0]}).slice(0,2).join("").toUpperCase())+'</span><div><b>'+esc(p.author||"Member")+'</b><div class="note">'+esc(circle?circle.name:"Mini Circles")+' · '+esc(p.created_at||"Just now")+'</div></div></div></div><p>'+esc(p.body||"")+'</p><div class="post-actions">'+(circle?'<button class="btn alt sm" type="button" data-circle-open="'+esc(circle.id)+'">Open circle</button>':'')+(S.signedIn?'<button class="btn line sm" type="button" data-like-post="'+esc(p.id)+'" aria-pressed="'+liked+'">'+(liked?"Liked":"Like")+'</button>':'')+(S.signedIn&&p.author_id&&p.author_id!==S.me.id?'<button class="btn line sm" type="button" data-follow-user="'+esc(p.author_id)+'">'+(following?"Following":"Follow member")+'</button>':'')+'</div></article>';
+}
+function matchingPostScore(p){
+ var score=0,circle=circlesList().find(function(c){return String(c.id)===String(p.circle_id)});
+ var interests=S.me&&S.me.interests||[];
+ if(circle&&interests.indexOf(circle.type)>-1)score+=4;
+ var followedTypes=S.memberships.map(function(m){var c=circlesList().find(function(x){return String(x.id)===String(m.circle_id)});return c&&c.type});
+ if(circle&&followedTypes.indexOf(circle.type)>-1)score+=3;
+ var engagedCircles=(S.engagements||[]).map(function(id){var liked=feedPosts().find(function(x){return String(x.id)===String(id)});return liked&&liked.circle_id});
+ if(circle&&engagedCircles.indexOf(p.circle_id)>-1)score+=2;
+ if(p.author_id&&S.followingUsers.indexOf(p.author_id)>-1)score+=2;
+ var timestamp=Date.parse(p.created_at||"");if(!isNaN(timestamp))score+=Math.max(0,2-(Date.now()-timestamp)/86400000/7);
+ return score;
+}
+function renderHomeFeed(){
+ var box=$("#homeFeedList");if(!box)return;
+ var posts=feedPosts(),followingPosts=posts.filter(function(p){return S.memberships.some(function(m){return String(m.circle_id)===String(p.circle_id)})||S.followingUsers.indexOf(p.author_id)>-1});
+ if(S.feedTab==="following"){
+  if(!S.signedIn)box.innerHTML='<div class="msg">Sign in through a Circle to see posts from Circles and members you follow. You can explore recommendations now.</div>';
+  else box.innerHTML=followingPosts.length?followingPosts.map(postCardHTML).join(""):'<div class="msg">Your Following feed is ready when you join a Circle or follow a member.</div>';
+ }else{
+  var followingIds=followingPosts.map(function(p){return p.id});
+  var recommended=posts.filter(function(p){return followingIds.indexOf(p.id)<0}).sort(function(a,b){return matchingPostScore(b)-matchingPostScore(a)}).slice(0,8);
+  box.innerHTML=recommended.length?recommended.map(postCardHTML).join(""):'<div class="msg">No recommendations yet. Check back as communities share updates.</div>';
+ }
+}
 function homePage(){
- return '<div class="wrap">'+
+ return '<div class="wrap">'+profileSetupHTML()+
  '<div class="banner" id="banner" role="region" aria-roledescription="carousel" aria-label="Featured news"><div class="track" id="track">'+slidesHTML()+'</div>'+
  '<div class="bnav"><div class="dots" id="dots">'+[0,1,2,3].map(function(i){return '<button class="dot" data-slide="'+i+'" aria-label="Go to slide '+(i+1)+'"></button>'}).join("")+'</div>'+
  '<button class="ctl" id="bpause" aria-label="Pause slideshow">'+ICON.pause+'</button><button class="ctl" id="bprev" aria-label="Previous slide">'+ICON.prev+'</button><button class="ctl" id="bnext" aria-label="Next slide">'+ICON.next+'</button></div></div>'+
  '<section style="margin-top:22px"><div class="search"><label class="sr" for="gsearch">Search the site</label>'+ICON.search+'<input id="gsearch" type="search" placeholder="Search teams, press releases, lessons&hellip;" autocomplete="off"></div><div id="searchRes" aria-live="polite"></div></section>'+
+ '<section><div class="sec-head"><div><span class="eyebrow">From the foundation</span><h2>Announcements and dates</h2><p>Important site-wide news and upcoming community events.</p></div></div><div id="homeUpdates">'+updatesHTML()+'</div></section>'+
+ '<section><div class="sec-head"><div><span class="eyebrow">Your community</span><h2>Personalised feed</h2><p>Keep up with Circles and members you follow, or discover recommended posts.</p></div><a class="btn alt sm" href="#communities" data-go="communities">Explore Circles</a></div><div class="feed-tabs" role="tablist" aria-label="Feed"><button class="chip" role="tab" data-feed="following" aria-selected="'+(S.feedTab==="following")+'">Following</button><button class="chip" role="tab" data-feed="recommended" aria-selected="'+(S.feedTab==="recommended")+'">Recommended</button></div><div class="feed" id="homeFeedList"></div></section>'+
   '<div class="impact-strip" aria-label="Mini Circles programmes"><div class="impact"><i>3</i><div><b>Age groups</b><span>Under 11, 13 and 15 cricket</span></div></div><div class="impact"><i>2</i><div><b>Ways to take part</b><span>Sport and reading, together</span></div></div><div class="impact"><i>1</i><div><b>Community purpose</b><span>Every team and circle matters</span></div></div></div>'+
  '<section><div class="sec-head"><div><span class="eyebrow">Splendid Sports</span><h2>League table</h2></div><a class="btn alt sm" href="#cricket" data-go="cricket">Fixtures and cricket</a></div><div data-league="compact"></div></section>'+
   '<section><div class="sec-head"><div><span class="eyebrow">Choose your next move</span><h2>Learn, play and belong</h2></div></div><div class="programme-grid">'+
    '<article class="programme-card navy"><span class="badge">Sport</span><h3 style="font-size:1.55rem;margin-top:10px">Take the field</h3><p>Join a youth cricket team, find coaching guidance and follow every result in a fair, friendly league.</p><a class="btn" href="#join" data-go="join" data-join="cricket">Sign up a team</a></article>'+
    '<article class="programme-card red"><span class="badge">Literacy</span><h3 style="font-size:1.55rem;margin-top:10px">Open a new story</h3><p>Start a reading circle for your school or community, in a language and format members choose.</p><a class="btn" href="#join" data-go="join" data-join="reading">Start a circle</a></article>'+
   '</div></section>'+
+  '<section><div class="community-hero" style="margin-top:0"><span class="eyebrow" style="color:#FFC20E">Community circles</span><h2>Find a circle or build your own</h2><p>Follow activity, share updates and help a local cricket or reading community grow.</p><a class="btn" href="#communities" data-go="communities">Explore circles</a></div></section>'+
  '<section><div class="sec-head"><div><span class="eyebrow">Newsroom</span><h2>Latest press</h2></div><a class="btn alt sm" href="#press" data-go="press">All press releases</a></div><div class="cards" id="homePress"></div></section>'+
  '<section><div class="two"><div class="panel"><span class="eyebrow">For schools and education departments</span><h3>Reading that learners choose</h3><p class="note" style="margin-top:8px">Boomerang circles build reading habits, vocabulary and confidence through choice and conversation, with no marks attached. Members can read in their home language, and facilitators get free training in the dashboard.</p></div>'+
  '<div class="panel"><span class="eyebrow">For sport bodies and fans</span><h3>A pathway from the first catch</h3><p class="note" style="margin-top:8px">Splendid Sports gives new teams a league structure, coaching tutorials and fair-play habits, with a public table that fans can follow week by week.</p></div></div></section>'+
@@ -515,12 +612,107 @@ function bindJoin(){
   submitSignup(type,d).then(function(r){showJoinResult(r,d,type,box);if(r==="sent")f.reset();btn.disabled=false;box.scrollIntoView({block:"nearest"})})};
 }
 
+/* ---------- community circles ---------- */
+function circlesList(){return S.circles&&S.circles.length?S.circles:SAMPLE_CIRCLES}
+function filteredCircles(){
+ var q=S.circleQuery.trim().toLowerCase(),type=S.circleType;
+ return circlesList().filter(function(c){
+  if(type!=="All"&&c.type!==type)return false;
+  return !q||(c.name+" "+c.area+" "+c.description+" "+c.type).toLowerCase().indexOf(q)>-1;
+ });
+}
+function circleCard(c){
+ var member=S.memberships.some(function(m){return m.circle_id===c.id});
+ var cls=c.type==="Reading"?"reading":"cricket";
+ return '<article class="circle-card '+cls+' '+(c.featured?"featured":"")+'"><span class="badge soft">'+esc(c.type)+'</span><h3>'+esc(c.name)+'</h3><p class="note">'+esc(c.description||"")+'</p><div class="circle-meta"><span>'+esc(c.area||"Community")+'</span><span>&bull;</span><span>'+esc(c.members||0)+' members</span><span>&bull;</span><span>'+esc(c.status||"open")+'</span></div><div class="circle-actions"><button class="btn sm" type="button" data-circle-open="'+esc(c.id)+'">Enter circle</button><button class="btn alt sm" type="button" data-circle-follow="'+esc(c.id)+'">'+(member?"Following":"Join circle")+'</button></div></article>';
+}
+function communitiesPage(){
+ var c=circlesList();
+ return '<div class="wrap"><div class="community-hero"><span class="eyebrow" style="color:#FFC20E">Mini Circles community</span><h1>Find your people. Start something meaningful.</h1><p>Follow cricket and reading circles near you, meet adult-led groups and create a circle that grows into a community.</p><button class="btn" type="button" data-open-create>Start a circle</button></div>'+
+ '<section><div class="sec-head"><div><span class="eyebrow">Explore circles</span><h2>There is room to belong</h2></div></div><div class="directory-tools"><div class="field"><label for="circleSearch">Search</label><input id="circleSearch" type="search" placeholder="Name, area or activity" value="'+esc(S.circleQuery)+'"></div><div class="field" style="flex:0 1 180px"><label for="circleType">Type</label><select id="circleType"><option'+(S.circleType==="All"?" selected":"")+'>All</option><option'+(S.circleType==="Cricket"?" selected":"")+'>Cricket</option><option'+(S.circleType==="Reading"?" selected":"")+'>Reading</option></select></div></div><div class="circle-grid" id="circleGrid" style="margin-top:14px">'+filteredCircles().map(circleCard).join("")+'</div></section>'+
+ '<section><div class="ad-slot" data-enabled="false"><div><b>Community partner</b><br><span>A sponsored youth programme can appear here.</span></div></div></section>'+
+ '<section id="circleCreate" hidden><div class="grid2" style="align-items:start"><div class="panel"><h3>Create your own circle</h3><form id="createCircleForm" style="display:grid;gap:14px;margin-top:12px"><div class="grid2"><div class="field"><label for="circleName">Circle name</label><input id="circleName" required maxlength="80"></div><div class="field"><label for="circleKind">Circle type</label><select id="circleKind"><option>Cricket</option><option>Reading</option></select></div></div><div class="grid2"><div class="field"><label for="circleArea">Town or area</label><input id="circleArea" required maxlength="80"></div><div class="field"><label for="circleMeet">Usual meeting time</label><input id="circleMeet" maxlength="80" placeholder="Saturday 09:00"></div></div><div class="field"><label for="circleDescription">What will members do?</label><textarea id="circleDescription" required maxlength="400"></textarea></div>'+consent()+'<button class="btn" type="submit">Create circle</button><div id="createCircleMsg" aria-live="polite"></div></form></div><aside class="panel join-side"><span class="eyebrow">Circle manager essentials</span><h3>Lead with confidence</h3><div class="join-check"><i>1</i><span>Add an adult leader and adult contact.</span></div><div class="join-check"><i>2</i><span>Share plans, dates and useful resources.</span></div><div class="join-check"><i>3</i><span>Invite members and moderate discussion.</span></div></aside></div></section>'+
+ '<section id="circleDetail"><div id="circleDetailBody"></div></section></div>';
+}
+function circlePostsHTML(circle){
+ var posts=S.posts.filter(function(p){return p.circle_id===circle.id});
+ if(!posts.length)posts=[{id:"welcome",circle_id:circle.id,author:"Mini Circles",body:"Welcome! Introduce your circle, share one friendly idea for the next meet and keep conversations kind.",created_at:"Community notice"}];
+ return posts.map(function(p){var initials=String(p.author||"M").split(/\s+/).map(function(x){return x[0]}).slice(0,2).join("").toUpperCase();
+  return '<article class="post"><div class="post-head"><div class="post-author"><span class="avatar">'+esc(initials)+'</span><div><b>'+esc(p.author||"Member")+'</b><div class="note">'+esc(p.created_at||"Just now")+'</div></div></div></div><p>'+esc(p.body||"")+'</p></article>'}).join("");
+}
+function openCircle(id){
+ var circle=circlesList().find(function(c){return String(c.id)==String(id)});
+ if(!circle)return;
+ S.selectedCircle=circle;
+ var el=$("#circleDetailBody");if(!el)return;
+ var member=S.memberships.some(function(m){return String(m.circle_id)===String(circle.id)});
+ var circleFeed=member?circlePostsHTML(circle):'<div class="msg">Sign in and join this Circle to enter its member feed.</div>';
+ var entry=S.signedIn?(member?'<form id="circlePostForm" style="display:grid;gap:10px;margin-top:12px"><label class="sr" for="circlePost">Post to the circle</label><textarea id="circlePost" maxlength="600" required placeholder="Share an update with the circle..."></textarea><button class="btn sm" type="submit">Post update</button><span id="circlePostMsg" class="note" aria-live="polite"></span></form>':'<div class="msg" style="margin-top:12px">Join this Circle to see your member feed and share updates.<br><button class="btn sm" id="joinCircle" type="button" style="margin-top:10px">Join this circle</button><span id="circleEntryMsg" class="note" aria-live="polite" style="display:block;margin-top:6px"></span></div>'):'<form id="circleEntryForm" style="display:grid;gap:10px;margin-top:12px"><label for="circleEntryEmail">Sign in to '+esc(circle.name)+'</label><input id="circleEntryEmail" type="email" required autocomplete="email" placeholder="Email address"><button class="btn sm" type="submit">Email me a sign-in link</button><span id="circleEntryMsg" class="note" aria-live="polite"></span></form>';
+ el.innerHTML='<div class="panel" style="margin-top:8px"><div class="sec-head"><div><span class="eyebrow">'+esc(circle.type)+' circle portal</span><h2>'+esc(circle.name)+'</h2><p>'+esc(circle.area||"Community")+' &bull; '+esc(circle.members||0)+' members</p></div><button class="btn alt sm" type="button" data-close-circle>Close</button></div><p style="margin-bottom:14px">'+esc(circle.description||"")+'</p><div class="grid2"><div><h3 style="margin-bottom:10px">Circle feed</h3><div class="feed">'+circleFeed+'</div>'+entry+'</div><aside><h3 style="margin-bottom:10px">About this circle</h3><div class="member-list"><div class="member"><span><b>Meeting</b><br><small class="note">'+esc(circle.meeting||"Contact the manager")+'</small></span></div><div class="member"><span><b>Adult-led</b><br><small class="note">An adult coordinator manages this circle</small></span></div></div></aside></div></div>';
+ $("#circleDetail").scrollIntoView({block:"start",behavior:reduce?"auto":"smooth"});
+ bindCircleDetail(circle);
+}
+function bindCircleDetail(circle){
+ var close=$("[data-close-circle]");
+ if(close)close.onclick=function(){$("#circleDetailBody").innerHTML=""};
+ var entry=$("#circleEntryForm");
+ if(entry)entry.onsubmit=function(e){e.preventDefault();var msg=$("#circleEntryMsg"),email=$("#circleEntryEmail").value.trim();
+  if(!S.client){msg.textContent="Circle sign-in is unavailable until the site account service is configured.";return}
+  S.pendingCircleId=String(circle.id);try{sessionStorage.setItem("mc-circle-entry-id",String(circle.id))}catch(e){}
+  S.client.auth.signInWithOtp({email:email,options:{emailRedirectTo:location.href}})
+   .then(function(r){if(r.error)throw r.error;msg.textContent="Check your email for the sign-in link. It will return you to this Circle."})
+   .catch(function(){msg.textContent="Could not send a sign-in link. Please try again."});
+ };
+ var join=$("#joinCircle");
+ if(join)join.onclick=function(){join.disabled=true;var msg=$("#circleEntryMsg");
+  if(!S.client){S.memberships.push({circle_id:circle.id,role:"member"});S.pendingCircleId=null;openCircle(circle.id);return}
+  S.client.from("circle_members").insert({circle_id:circle.id,user_id:S.me.id,role:"member"})
+   .then(function(r){if(r.error&&r.error.code!=="23505")throw r.error;S.memberships=S.memberships.filter(function(m){return String(m.circle_id)!==String(circle.id)}).concat([{circle_id:circle.id,role:"member"}]);S.pendingCircleId=null;try{sessionStorage.removeItem("mc-circle-entry-id")}catch(e){}openCircle(circle.id)})
+   .catch(function(){join.disabled=false;if(msg)msg.textContent="Could not join this Circle. Please try again."});
+ };
+ var f=$("#circlePostForm");
+ if(f)f.onsubmit=function(e){e.preventDefault();var text=$("#circlePost").value.trim(),msg=$("#circlePostMsg");if(!text)return;
+  if(!S.signedIn){msg.textContent="Sign in through this Circle to post.";return}
+  if(S.client){
+   S.client.from("circle_posts").insert({circle_id:circle.id,author_id:S.me.id,author:S.me.name||S.me.email||"Member",body:text}).then(function(r){if(r.error)throw r.error;$("#circlePost").value="";msg.textContent="Posted.";loadSupabaseContent()}).catch(function(){msg.textContent="Could not post this update."});
+  }else{S.posts.push({circle_id:circle.id,author:S.me&&S.me.name||"Member",body:text,created_at:"Just now"});openCircle(circle.id)}
+ };
+}
+function bindCommunities(){
+ var search=$("#circleSearch"),type=$("#circleType");
+ if(search)search.oninput=function(){S.circleQuery=search.value;$("#circleGrid").innerHTML=filteredCircles().map(circleCard).join("");bindCommunityButtons()};
+ if(type)type.onchange=function(){S.circleType=type.value;$("#circleGrid").innerHTML=filteredCircles().map(circleCard).join("");bindCommunityButtons()};
+ bindCommunityButtons();
+ var create=$("#createCircleForm");
+ if(create)create.onsubmit=function(e){e.preventDefault();if(!create.reportValidity())return;var msg=$("#createCircleMsg");
+  var rec={name:$("#circleName").value.trim(),type:$("#circleKind").value,area:$("#circleArea").value.trim(),meeting:$("#circleMeet").value.trim(),description:$("#circleDescription").value.trim(),status:"open"};
+  if(S.client){
+   if(S.signedIn)rec.manager_id=S.me.id;
+   S.client.from("circles").insert(rec).then(function(r){if(r.error)throw r.error;msg.innerHTML='<div class="msg ok">Circle created. Add members and updates from the dashboard.</div>';create.reset();loadSupabaseContent()}).catch(function(){msg.innerHTML='<div class="msg warn">Could not create the circle. Sign in and check manager access.</div>'});
+  }else{rec.id="local-"+Date.now();rec.members=1;S.circles.push(rec);msg.innerHTML='<div class="msg ok">Circle created on this device.</div>';create.reset();render(true)}
+ };
+}
+function bindCommunityButtons(){
+ $$("[data-circle-follow]").forEach(function(b){b.onclick=function(){
+  var id=b.getAttribute("data-circle-follow"),member=S.memberships.some(function(m){return m.circle_id===id});
+  if(S.client&&S.signedIn){var request=member?S.client.from("circle_members").delete().match({circle_id:id,user_id:S.me.id}):S.client.from("circle_members").insert({circle_id:id,user_id:S.me.id,role:"member"});
+   request.then(function(r){if(r.error&&!(r.error.code==="23505"&&!member))throw r.error;loadSupabaseContent()}).catch(function(){b.textContent="Try again"});
+  }else if(!S.signedIn){openCircle(id)}else{S.memberships=member?S.memberships.filter(function(m){return m.circle_id!==id}):S.memberships.concat([{circle_id:id,role:"member"}]);render(true)}
+ }});
+ $$("[data-open-create]").forEach(function(b){b.onclick=function(){var el=$("#circleCreate");el.hidden=false;el.scrollIntoView({block:"start",behavior:reduce?"auto":"smooth"})}});
+}
+
 /* ---------- dashboard ---------- */
 function progBar(done,total){var pct=Math.round(done/total*100);return '<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="'+total+'" aria-valuenow="'+done+'"><i style="width:'+pct+'%"></i></div>'}
 function lessonsHTML(list,key){
  var d=S.prog[key];
  return '<div style="display:grid;gap:8px;margin-bottom:16px"><b>'+d.length+' of '+list.length+' complete</b>'+progBar(d.length,list.length)+'</div>'+
  list.map(function(l){var on=d.indexOf(l.id)>-1;return '<div class="lesson'+(on?' done':'')+'"><input class="tick" type="checkbox" id="t_'+l.id+'" data-tick="'+key+'" data-id="'+l.id+'"'+(on?' checked':'')+' aria-label="Mark '+esc(l.t)+' as done"><div><label for="t_'+l.id+'" style="margin:0;font-family:var(--font-d);font-size:1.1rem;font-weight:700">'+esc(l.t)+'</label><div class="note">'+l.m+' min &middot; '+l.lv+'</div><p style="margin-top:6px">'+esc(l.sum)+'</p><ul>'+l.pts.map(function(p){return '<li>'+esc(p)+'</li>'}).join("")+'</ul></div></div>'}).join("");
+}
+function communityManagerHTML(){
+ var followed=S.memberships.map(function(m){var c=circlesList().find(function(x){return String(x.id)==String(m.circle_id)});return c?c:null}).filter(Boolean);
+ var list=followed.length?'<div class="circle-grid">'+followed.map(circleCard).join("")+'</div>':'<div class="msg">You are not following a circle yet. Explore the Circles page and follow one.</div>';
+ return '<div class="grid2" style="align-items:start"><div><div class="circle-grid">'+list+'</div></div><div class="panel"><h3>Invite people to a circle</h3><form id="inviteForm" style="display:grid;gap:12px;margin-top:12px"><div class="field"><label for="inviteCircle">Circle</label><select id="inviteCircle">'+followed.map(function(c){return '<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>'}).join("")+'</select></div><div class="field"><label for="inviteEmail">Adult email</label><input id="inviteEmail" type="email" required></div><button class="btn" type="submit"'+(followed.length?"":" disabled")+'>Send invite</button><span id="inviteMsg" class="note" aria-live="polite"></span></form></div></div>';
 }
 function signupsHTML(){
  if(!S.canEdit)return '<div class="msg">Sign-up records are visible to foundation editors only.</div>';
@@ -535,12 +727,13 @@ function dashPage(){
   return '<div class="wrap"><div class="lock"><div class="panel" style="display:grid;gap:12px"><span class="eyebrow">Stakeholder dashboard</span><h2>Sign in to open the dashboard</h2><p class="note">The dashboard holds the cricket tutorials, reading club training and downloadable session plans for partners, schools, coaches and departments. Sign in with your account to continue.</p><form id="authForm" style="display:grid;gap:12px"><div class="field"><label for="authEmail">Email address</label><input id="authEmail" type="email" required autocomplete="email"></div><button class="btn" type="submit">Email me a sign-in link</button><div id="authMsg" class="note" aria-live="polite"></div></form><div class="msg warn" id="gateNote">Not signed in yet. If you have an account, use the link above.</div></div>'+
   '<div class="panel"><h3>No account yet?</h3><p class="note" style="margin:6px 0 14px">Ask for stakeholder access and the foundation will get back to you.</p><form id="joinForm" data-type="access" style="display:grid;gap:14px"><div class="grid2"><div class="field"><label for="fName">Organisation</label><input id="fName" required maxlength="80" placeholder="School, department, club or partner"></div><div class="field"><label for="fContactName">Your name</label><input id="fContactName" required maxlength="80" autocomplete="name"></div></div><div class="field"><label for="fContact">Email or phone</label><input id="fContact" required maxlength="80" autocomplete="email"></div><div class="field"><label for="fNotes">What would you like to use? (optional)</label><textarea id="fNotes" maxlength="400"></textarea></div>'+consent()+'<div><button class="btn" type="submit">Request access</button></div></form><div id="joinMsg" aria-live="polite" style="margin-top:14px"></div></div></div></div>';
  }
- var tabs=[["overview","Overview"],["cricket","Cricket tutorials"],["reading","Reading training"],["resources","Resources"]];
+ var tabs=[["overview","Overview"],["communities","My circles"],["cricket","Cricket tutorials"],["reading","Reading training"],["resources","Resources"]];
  if(S.canEdit)tabs.push(["signups","Sign-ups"]);
  var name=(S.me&&S.me.name)||"";
  var c;
  if(S.dashTab==="cricket")c='<h2 style="margin-bottom:14px">Cricket tutorials</h2>'+lessonsHTML(CRICKET,"c");
  else if(S.dashTab==="reading")c='<h2 style="margin-bottom:14px">Reading club training</h2>'+lessonsHTML(READING,"r");
+ else if(S.dashTab==="communities")c='<h2 style="margin-bottom:14px">My circles</h2>'+communityManagerHTML();
  else if(S.dashTab==="resources")c='<h2 style="margin-bottom:14px">Resources</h2><div class="cards"><div class="card"><h3>Cricket session plan</h3><p>A 45-minute plan for a practice: warm-up, two skill stations, a small-sided game and a huddle.</p><button class="btn" data-dl="cricket">Download plan</button></div><div class="card"><h3>Reading circle session plan</h3><p>A 45-minute plan for a circle: settle in, read, talk, choose the next book and close.</p><button class="btn" data-dl="reading">Download plan</button></div></div><p class="note" id="dlMsg" style="margin-top:12px" aria-live="polite"></p>';
  else if(S.dashTab==="signups")c='<h2 style="margin-bottom:14px">Sign-ups</h2><div id="signupBox">'+signupsHTML()+'</div>';
  else c='<h2>Welcome'+(name?', '+esc(name):'')+'</h2><p class="note" style="margin-top:6px;max-width:60ch">Everything for coaches, facilitators and partners in one place. Your lesson progress is saved on this device.</p>'+
@@ -551,6 +744,12 @@ function dashPage(){
  return '<div class="wrap"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px"><div class="dtabs" role="tablist" aria-label="Dashboard sections">'+tabs.map(function(t){return '<button class="chip" role="tab" data-dash="'+t[0]+'" aria-selected="'+(S.dashTab===t[0])+'">'+t[1]+'</button>'}).join("")+'</div><button class="btn alt sm" type="button" data-signout>Sign out</button></div><div id="dashBody">'+c+'</div></div>';
 }
 function bindDash(){
+ var invite=$("#inviteForm");
+ if(invite)invite.onsubmit=function(e){e.preventDefault();var msg=$("#inviteMsg"),email=$("#inviteEmail").value.trim(),circle=$("#inviteCircle").value;
+  if(S.client){
+   S.client.from("circle_invitations").insert({circle_id:circle,email:email,invited_by:S.me&&S.me.id,status:"pending"}).then(function(r){if(r.error)throw r.error;msg.textContent="Invitation recorded.";invite.reset()}).catch(function(){msg.textContent="Could not send the invitation."});
+  }else{msg.textContent="Invitation saved for this device. Connect Supabase to send it."}
+ };
  $$("[data-tick]").forEach(function(cb){cb.onchange=function(){var k=cb.getAttribute("data-tick"),id=cb.getAttribute("data-id"),a=S.prog[k],i=a.indexOf(id);if(cb.checked&&i<0)a.push(id);if(!cb.checked&&i>-1)a.splice(i,1);saveProg();render(true)}});
  $$("[data-dl]").forEach(function(b){b.onclick=function(){var k=b.getAttribute("data-dl"),m=$("#dlMsg");
   downloadText("mini-circles-"+k+"-session-plan.txt",PLANS[k]);m.textContent="Plan download started."}});
@@ -565,7 +764,7 @@ function bindDash(){
 }
 
 /* ---------- router + render ---------- */
-var pages={home:homePage,cricket:cricketPage,reading:readingPage,press:pressPage,join:joinPage,dashboard:dashPage};
+var pages={home:homePage,cricket:cricketPage,reading:readingPage,communities:communitiesPage,press:pressPage,join:joinPage,dashboard:dashPage};
 function stopTimer(){if(S.timer){clearInterval(S.timer);S.timer=null}}
 function setSlide(i){
  var n=4;S.slide=(i+n)%n;var t=$("#track");if(!t)return;
@@ -588,9 +787,54 @@ function bindHome(){
  var ban=$("#banner");ban.onmouseenter=stopTimer;ban.onmouseleave=startTimer;ban.onfocusin=stopTimer;ban.onfocusout=startTimer;
  startTimer();
  var gs=$("#gsearch");gs.oninput=function(){runSearch(gs.value)};
+ renderHomeFeed();
+ bindHomeFeed();
+ bindHomeUpdates();
+ bindProfileSetup();
+}
+function bindHomeFeed(){
+ $$("[data-feed]").forEach(function(b){b.onclick=function(){S.feedTab=b.getAttribute("data-feed");$$("[data-feed]").forEach(function(x){x.setAttribute("aria-selected",x===b)});renderHomeFeed();bindHomeFeed()}});
+ $$("[data-like-post]").forEach(function(b){b.onclick=function(){
+  var id=b.getAttribute("data-like-post"),liked=S.engagements.indexOf(id)>-1;
+  if(String(id).indexOf("sample-")===0){S.engagements=liked?S.engagements.filter(function(x){return x!==id}):S.engagements.concat([id]);renderHomeFeed();bindHomeFeed();return}
+  var request=liked?S.client.from("feed_engagements").delete().match({post_id:id,user_id:S.me.id}):S.client.from("feed_engagements").insert({post_id:id,user_id:S.me.id,kind:"like"});
+  request.then(function(r){if(r.error&&!(r.error.code==="23505"&&!liked))throw r.error;S.engagements=liked?S.engagements.filter(function(x){return x!==id}):S.engagements.concat([id]);renderHomeFeed();bindHomeFeed()}).catch(function(){b.textContent="Try again"});
+ }});
+ $$("[data-follow-user]").forEach(function(b){b.onclick=function(){
+  var id=b.getAttribute("data-follow-user"),following=S.followingUsers.indexOf(id)>-1;
+  var request=following?S.client.from("user_follows").delete().match({follower_id:S.me.id,followed_id:id}):S.client.from("user_follows").insert({follower_id:S.me.id,followed_id:id});
+  request.then(function(r){if(r.error&&!(r.error.code==="23505"&&!following))throw r.error;S.followingUsers=following?S.followingUsers.filter(function(x){return x!==id}):S.followingUsers.concat([id]);renderHomeFeed();bindHomeFeed()}).catch(function(){b.textContent="Try again"});
+ }});
+}
+function bindHomeUpdates(){
+ var f=$("#siteUpdateForm");
+ if(f)f.onsubmit=function(e){e.preventDefault();var msg=$("#updateMsg");
+  if(!S.client){msg.textContent="Publishing requires the site data service.";return}
+  S.client.from("site_updates").insert({title:$("#updateTitle").value.trim(),kind:$("#updateKind").value,date:$("#updateDate").value,summary:$("#updateSummary").value.trim()})
+   .then(function(r){if(r.error)throw r.error;f.reset();$("#updateDate").value=today();msg.textContent="Update published.";loadSupabaseContent()})
+   .catch(function(){msg.textContent="Could not publish. Check site administrator access."});
+ };
+ $$("[data-delete-update]").forEach(function(b){b.onclick=function(){
+  b.disabled=true;S.client.from("site_updates").delete().eq("id",b.getAttribute("data-delete-update"))
+   .then(function(r){if(r.error)throw r.error;loadSupabaseContent()})
+   .catch(function(){b.disabled=false;window.alert("Could not delete this update. Check site administrator access.")});
+ }});
+}
+function bindProfileSetup(){
+ var f=$("#profileForm");
+ if(f)f.onsubmit=function(e){e.preventDefault();var msg=$("#profileMsg"),name=$("#profileName").value.trim();
+  var interests=$$("input[name=interest]:checked",f).map(function(x){return x.value});
+  if(!S.client){msg.textContent="Profile saving is unavailable until the site account service is configured.";return}
+  S.client.from("profiles").upsert({id:S.me.id,name:name,interests:interests})
+   .then(function(r){if(r.error)throw r.error;S.me.name=name;S.me.interests=interests;S.profileComplete=true;render(true)})
+   .catch(function(){msg.textContent="Could not save your profile. Please try again."});
+ };
+ var skip=$("#skipProfile");
+ if(skip)skip.onclick=function(){S.profileComplete=true;render(true)};
 }
 function bindRoute(r){
  if(r==="home")bindHome();
+ if(r==="communities")bindCommunities();
  if(r==="reading"){var sel=$("#fmtAge"),out=$("#fmtOut");var T={a:"Shorter sessions of 30 minutes, picture books and short stories, lots of reading aloud and pair reading.",b:"45-minute sessions, novels and graphic novels, member-led choices and talk about the characters' decisions.",c:"Sessions of 40 minutes, a mix of short and longer reads, and one shared book that every age can join."};var p=function(){out.textContent=T[sel.value]};sel.onchange=p;p()}
  if(r==="press"){
   var ps=$("#psearch");ps.oninput=function(){S.pressQ=ps.value;mountPress()};
@@ -630,6 +874,8 @@ function live(){
  /* data changed: refresh only the live parts so forms keep what people typed */
  mountLeague();bindLeagueEditor();
  var pl=$("#pressList");if(pl){mountPress()}else{var hp=$("#homePress");if(hp)mountPress()}
+ var updates=$("#homeUpdates");if(updates){updates.innerHTML=updatesHTML();bindHomeUpdates()}
+ if($("#homeFeedList")){renderHomeFeed();bindHomeFeed()}
  var sb=$("#signupBox");if(sb){sb.innerHTML=signupsHTML();bindDash()}
  var gs=$("#gsearch");if(gs&&gs.value)runSearch(gs.value);
 }
@@ -637,6 +883,7 @@ function route(){
  var h=(location.hash||"").slice(1);
  S.route=ROUTES.indexOf(h)>-1?h:"home";
  render(false);
+ if(S.route==="communities"&&S.openCircleAfterRoute&&circlesList().some(function(c){return String(c.id)===String(S.openCircleAfterRoute)})){var id=S.openCircleAfterRoute;S.openCircleAfterRoute=null;openCircle(id)}
 }
 function go(r,o){
  o=o||{};
@@ -645,9 +892,17 @@ function go(r,o){
  if(o.group)S.group=o.group;
  if(location.hash.slice(1)===r)route();else location.hash=r;
 }
+function restoreCircleRoute(){
+ if(S.pendingCircleId&&S.route!=="communities"){
+  S.route="communities";
+  if(location.hash!=="#communities")location.hash="communities";
+ }
+}
 document.addEventListener("click",function(e){
  var g=e.target.closest("[data-go]");
  if(g){e.preventDefault();go(g.getAttribute("data-go"),{join:g.getAttribute("data-join"),dash:g.getAttribute("data-dash"),group:g.getAttribute("data-group")});return}
+ var circle=e.target.closest("[data-circle-open]");
+ if(circle){var id=circle.getAttribute("data-circle-open");if(S.route==="communities")openCircle(id);else{S.openCircleAfterRoute=id;go("communities")}return}
  var d=e.target.closest("button[data-dash]");
  if(d){S.dashTab=d.getAttribute("data-dash");render(false);return}
  var gr=e.target.closest("[data-group]");
@@ -673,6 +928,14 @@ function loadSupabaseContent(){
  if(!S.client)return;
  S.client.from("press").select("*").order("date",{ascending:false}).limit(200).then(function(r){if(!r.error){S.press=(r.data||[]).map(function(p){p.id=p.id;return p});live()}});
  S.client.from("league").select("groups").eq("id","current").maybeSingle().then(function(r){if(!r.error&&r.data){S.league={groups:r.data.groups};live()}});
+ S.client.from("circles").select("*").order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){S.circles=(r.data||[]).map(function(c){c.members=c.members||0;return c});live();if(S.pendingCircleId&&S.route==="communities")openCircle(S.pendingCircleId);if(S.openCircleAfterRoute&&S.route==="communities"&&S.circles.some(function(c){return String(c.id)===String(S.openCircleAfterRoute)})){var id=S.openCircleAfterRoute;S.openCircleAfterRoute=null;openCircle(id)}}});
+ S.client.from("circle_posts").select("*").order("created_at",{ascending:false}).limit(200).then(function(r){if(!r.error){S.posts=r.data||[];live()}});
+ S.client.from("site_updates").select("*").order("date",{ascending:true}).limit(100).then(function(r){if(!r.error){S.updates=r.data||[];live()}});
+ if(S.signedIn){
+  S.client.from("circle_members").select("circle_id,role").eq("user_id",S.me.id).then(function(r){if(!r.error){S.memberships=r.data||[];live()}});
+  S.client.from("user_follows").select("followed_id").eq("follower_id",S.me.id).then(function(r){if(!r.error){S.followingUsers=(r.data||[]).map(function(x){return x.followed_id});live()}});
+  S.client.from("feed_engagements").select("post_id").eq("user_id",S.me.id).then(function(r){if(!r.error){S.engagements=(r.data||[]).map(function(x){return x.post_id});live()}});
+ }
  if(S.canEdit)S.client.from("signups").select("*").order("created_at",{ascending:false}).limit(500).then(function(r){if(!r.error){S.signups=(r.data||[]).map(function(x){return {type:x.type,name:x.name,contactName:x.contact_name,contact:x.contact,summary:x.summary,createdAt:new Date(x.created_at).getTime()}});live()}});
 }
 function initData(){
@@ -684,21 +947,25 @@ function initData(){
   S.me=session&&session.user?session.user:null;
   S.signedIn=!!S.me;
   if(!S.me)return;
-  return S.client.from("profiles").select("name,can_edit").eq("id",S.me.id).maybeSingle().then(function(p){
-   if(!p.error&&p.data){S.canEdit=!!p.data.can_edit;S.me.name=p.data.name||S.me.email}
+  return S.client.from("profiles").select("name,interests,can_edit,circle_manager").eq("id",S.me.id).maybeSingle().then(function(p){
+   if(!p.error&&p.data){S.canEdit=!!p.data.can_edit;S.me.name=p.data.name||"";S.me.interests=p.data.interests||[];S.me.circle_manager=!!p.data.circle_manager;S.profileComplete=!!p.data.name}
   });
  }).then(function(){
+  restoreCircleRoute();
   loadSupabaseContent();
   render(true);
  });
  S.client.auth.onAuthStateChange(function(){
   S.client.auth.getSession().then(function(r){
    var session=r.data&&r.data.session;
-   S.me=session&&session.user?session.user:null;
+   var nextUser=session&&session.user?session.user:null;
+   if(S.me&&nextUser&&S.me.id!==nextUser.id){S.memberships=[];S.followingUsers=[];S.engagements=[];S.signups=null;S.canEdit=false;S.profileComplete=false}
+   S.me=nextUser;
    S.signedIn=!!S.me;
-   if(!S.me){S.canEdit=false;render(true);return}
-   S.client.from("profiles").select("name,can_edit").eq("id",S.me.id).maybeSingle().then(function(p){
-    S.canEdit=!p.error&&!!(p.data&&p.data.can_edit);S.me.name=p.data&&p.data.name||S.me.email;
+   if(!S.me){S.canEdit=false;S.profileComplete=false;S.memberships=[];S.followingUsers=[];S.engagements=[];S.signups=null;S.pendingCircleId=null;try{sessionStorage.removeItem("mc-circle-entry-id")}catch(e){}render(true);return}
+   S.client.from("profiles").select("name,interests,can_edit,circle_manager").eq("id",S.me.id).maybeSingle().then(function(p){
+    S.canEdit=!p.error&&!!(p.data&&p.data.can_edit);S.me.circle_manager=!p.error&&!!(p.data&&p.data.circle_manager);S.me.name=p.data&&p.data.name||"";S.me.interests=p.data&&p.data.interests||[];S.profileComplete=!!(p.data&&p.data.name);
+    restoreCircleRoute();
     loadSupabaseContent();render(true);
    });
   });
